@@ -1,12 +1,16 @@
-import RegistrationForm from "@/components/auth/RegisterPage/RegistrationForm/RegistationForm";
+'use client';
+
+import RegistrationForm from '@/components/auth/RegisterPage/RegistrationForm/RegistrationForm';
+import MainAuthNav from './MainAuthNav/MainAuthNav';
 
 function RegisterPage() {
-    return(
+  const handleClose = () => {};
+  return (
     <>
-    <h2>Register page</h2>
-    <RegistrationForm />
+      <MainAuthNav />
+      <RegistrationForm onClose={handleClose} />
     </>
-);
+  );
 }
 
 export default RegisterPage;

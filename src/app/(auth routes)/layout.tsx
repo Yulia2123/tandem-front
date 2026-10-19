@@ -1,19 +1,21 @@
 import Link from 'next/link';
+import styles from './layout.module.css';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <header>
-        <Link href="/">
-          Природні мандри<svg></svg>
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <Link href="/" className={styles.logo}>
+          <span>Природні мандри</span>
+          <svg></svg>
         </Link>
       </header>
-      {children}
-      <footer>
-        <p>
+      <main className={styles.content}>{children}</main>
+      <footer className={styles.footer}>
+        <p className={styles.copyright}>
           {'\u00A9'} {new Date().getFullYear()} Подорожники
         </p>
       </footer>
-    </>
+    </div>
   );
 }
