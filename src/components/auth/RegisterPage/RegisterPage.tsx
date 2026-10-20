@@ -4,11 +4,10 @@ import RegistrationForm from '@/components/auth/RegisterPage/RegistrationForm/Re
 import MainAuthNav from './MainAuthNav/MainAuthNav';
 
 function RegisterPage() {
-  const handleClose = () => {};
   return (
     <>
       <MainAuthNav />
-      <RegistrationForm onClose={handleClose} />
+      <RegistrationForm />
     </>
   );
 }

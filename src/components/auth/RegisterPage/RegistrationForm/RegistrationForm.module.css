@@ -64,6 +64,24 @@
   padding: 8px;
   width: 100%;
   height: 40px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  border-color: #5dbe5c;
+}
+
+.inputError {
+  border-color: #b00101 !important;
+}
+
+.error {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #b00101;
 }
 
 .actions {
