@@ -1,13 +1,13 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { getTravellers } from '@/lib/api/travellers';
 
-export function useTravellers() {
+export function useTravellers(perPage = 12) {
   return useInfiniteQuery({
-    queryKey: ['travellers'],
+    queryKey: ['travellers', perPage],
     queryFn: ({ pageParam }) =>
       getTravellers({
         page: pageParam,
-        perPage: 10,
+        perPage,
       }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {

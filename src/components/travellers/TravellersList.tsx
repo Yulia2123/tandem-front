@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useTravellers } from '@/lib/hooks/useTravellers';
 import TravellerCard from './TravellerCard';
+import styles from './TravellersList.module.css';
 
 export default function TravellersList() {
   const {
@@ -26,12 +27,12 @@ export default function TravellersList() {
   }
 
   if (isError && !data) {
-    return <p>Не вдалося завантажити мандрівників. Спробуй оновити сторінку.</p>;
+    return (
+      <p>Не вдалося завантажити мандрівників. Спробуй оновити сторінку.</p>
+    );
   }
 
-  const travellers = data?.pages.flatMap(
-    (page) => page.travellers,
-  ) ?? [];
+  const travellers = data?.pages.flatMap((page) => page.travellers) ?? [];
 
   if (travellers.length === 0) {
     return <p>Поки що мандрівників немає.</p>;
@@ -39,32 +40,34 @@ export default function TravellersList() {
 
   return (
     <section>
-      <ul>
-        {travellers.map((traveller) => (
-          <TravellerCard
-            key={traveller._id}
-            traveller={traveller}
-          />
-        ))}
-      </ul>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Мандрівники</h1>
 
-      {isError && (
-        <p role="alert">
-          Не вдалося завантажити наступну порцію мандрівників.
-        </p>
-      )}
+        <ul className={styles.list}>
+          {travellers.map((traveller) => (
+            <TravellerCard key={traveller._id} traveller={traveller} />
+          ))}
+        </ul>
 
-      {hasNextPage && (
-        <button
-          type="button"
-          onClick={() => fetchNextPage()}
-          disabled={isFetchingNextPage}
-        >
-          {isFetchingNextPage
-            ? 'Завантаження...'
-            : 'Завантажити ще'}
-        </button>
-      )}
+        {isError && (
+          <p role="alert">
+            Не вдалося завантажити наступну порцію мандрівників.
+          </p>
+        )}
+
+        {hasNextPage && (
+          <div className={styles.loadMoreWrapper}>
+            <button
+              type="button"
+              className={styles.loadMoreButton}
+              onClick={() => fetchNextPage()}
+              disabled={isFetchingNextPage}
+            >
+              {isFetchingNextPage ? 'Завантаження...' : 'Показати ще'}
+            </button>
+          </div>
+        )}
+      </div>
     </section>
   );
 }
