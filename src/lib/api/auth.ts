@@ -1,4 +1,5 @@
 import api from '@/lib/api/api';
+import { User } from '@/types/user';
 
 export interface RegisterData {
   name: string;
@@ -12,12 +13,12 @@ export interface LoginData {
 }
 
 export async function registerUser(payload: RegisterData) {
-  const { data } = await api.post('/auth/register', payload);
+  const { data } = await api.post<User>('/auth/register', payload);
   return data;
 }
 
 export async function loginUser(payload: LoginData) {
-  const { data } = await api.post('/auth/login', payload);
+  const { data } = await api.post<User>('/auth/login', payload);
   return data;
 }
 
