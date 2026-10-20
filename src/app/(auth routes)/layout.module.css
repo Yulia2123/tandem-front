@@ -1,10 +1,6 @@
 .container {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   flex-direction: column;
-  padding: 0 20px;
-  margin: 0 auto;
   min-height: 100vh;
 }
 
@@ -15,8 +11,9 @@
   flex-direction: column;
   gap: 32px;
   width: 100%;
-  max-width: 375px;
-  margin: auto;
+  max-width: 768px;
+  margin: 0 auto;
+  flex: 1;
 }
 
 .header {
@@ -53,4 +50,21 @@
   flex-direction: row;
   margin-top: auto;
   gap: 5px;
+}
+
+@media screen and (min-width: 768px) {
+  .content {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .footer {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    color: #000;
+  }
 }
