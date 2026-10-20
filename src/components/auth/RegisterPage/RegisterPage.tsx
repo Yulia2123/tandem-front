@@ -1,7 +1,7 @@
 'use client';
 
-import RegistrationForm from '@/components/auth/RegisterPage/RegistrationForm/RegistrationForm';
-import MainAuthNav from './MainAuthNav/MainAuthNav';
+import RegistrationForm from '@/components/auth/RegisterPage/RegisterForm/RegisterForm';
+import MainAuthNav from '@/components/auth/MainAuthNav/MainAuthNav';
 
 function RegisterPage() {
   return (
