@@ -103,6 +103,17 @@
   height: 44px;
 }
 
+.submitButton:hover,
+.submitButton:focus{
+  background-color: #def2de;
+  color: #1b391b;
+}
+
+.submitButton:active{
+  background-color: #4a9849;
+  color: #fff;
+}
+
 @media screen and (min-width: 768px) {
   .subtitle {
     font-family: 'Montserrat', sans-serif;
