@@ -1,0 +1,85 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import css from './Footer.module.css';
+
+const socials = [
+  { id: 'facebook', label: 'Facebook', href: '#' },
+  { id: 'instagram', label: 'Instagram', href: '#' },
+  { id: 'x', label: 'X', href: '#' },
+  { id: 'youtube', label: 'YouTube', href: '#' },
+];
+
+const AUTH_PAGES = [
+  '/login',
+  '/register',
+  '/forgot-password',
+  '/reset-password',
+];
+
+const isAuthPage = (pathname: string) => AUTH_PAGES.includes(pathname);
+
+export default function Footer() {
+  const pathname = usePathname();
+  const year = new Date().getFullYear();
+
+  if (isAuthPage(pathname)) {
+    return (
+      <footer className={css.authFooter}>
+        <p>© {year} Природні Мандри</p>{' '}
+      </footer>
+    );
+  }
+
+  return (
+    <footer className={css.footer}>
+      <div className={css.inner}>
+        <div className={css.top}>
+          <div className={css.brand}>
+            <Link className={css.logo} href="/" aria-label="Природні Мандри">
+              <svg
+                className={css.logoMark}
+                width="129"
+                height="36"
+                aria-hidden="true"
+              >
+                <use href="/sprite.svg#company-logo" />
+              </svg>
+            </Link>
+          </div>
+
+          <ul className={css.socials}>
+            {socials.map((item) => (
+              <li key={item.id}>
+                <a
+                  className={css.social}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={item.label}
+                >
+                  <svg width="24" height="24" aria-hidden="true">
+                    <use href={`/sprite.svg#${item.id}`} />
+                  </svg>
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <nav className={css.nav} aria-label="Навігація у підвалі">
+            <Link href="/">Головна</Link>
+            <Link href="/stories">Статті</Link>
+            <Link href="/travellers">Еко-Мандрівники</Link>
+          </nav>
+        </div>
+
+        <hr className={css.divider} />
+
+        <p className={css.copy}>
+          © {year} Природні Мандри. Усі права захищені.
+        </p>
+      </div>
+    </footer>
+  );
+}
