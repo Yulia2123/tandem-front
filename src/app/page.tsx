@@ -15,6 +15,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import api from '@/lib/api/api';
+import About from '@/components/about/About';
 
 export default function Home() {
   const [result, setResult] = useState('Loadin...');
@@ -39,9 +40,13 @@ export default function Home() {
   }, []);
 
   return (
-    <main style={{ padding: '24px', whiteSpace: 'pre-wrap' }}>
-      <h1>Перевірка підключення до API</h1>
-      <pre>{result}</pre>
+    <main>
+      <div style={{ padding: '24px', whiteSpace: 'pre-wrap' }}>
+        <h1>Перевірка підключення до API</h1>
+        <pre>{result}</pre>
+      </div>
+
+      <About />
     </main>
   );
 }
