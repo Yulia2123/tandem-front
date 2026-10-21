@@ -35,6 +35,7 @@
 // }
 
 import Header from '@/components/layout/Header/Header';
+import Hero from '@/components/home/Hero/Hero';
 import Footer from '@/components/layout/Footer/Footer';
 
 export default function Home() {
@@ -43,11 +44,9 @@ export default function Home() {
       <Header />
 
       <main>
-        <h1>Природні мандри</h1>
-        <p>
-          Відкривай нові маршрути, ділися історіями подорожей та знаходь
-          однодумців для мандрів.
-        </p>
+        <div className="section">
+          <Hero />
+        </div>
       </main>
       <Footer />
     </>
