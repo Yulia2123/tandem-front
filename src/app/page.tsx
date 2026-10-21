@@ -36,6 +36,7 @@
 
 import Header from '@/components/layout/Header/Header';
 import Footer from '@/components/layout/Footer/Footer';
+import PopularStories from '@/components/PopularStories/PopularStories';
 
 export default function Home() {
   return (
@@ -48,6 +49,7 @@ export default function Home() {
           Відкривай нові маршрути, ділися історіями подорожей та знаходь
           однодумців для мандрів.
         </p>
+        <PopularStories />
       </main>
       <Footer />
     </>
