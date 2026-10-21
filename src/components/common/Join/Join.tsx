@@ -8,14 +8,14 @@ export default function Join() {
         <Image
           className={styles.background}
           src="/moonlit-coral-reef.webp"
-          alt="Dark green fern leaves background"
+          alt=""
           sizes="(max-width: 768px) 100vw, 1312px"
           fill
         />
         <div className={styles.content}>
-          <h1 className={styles.title}>
+          <h2 className={styles.title}>
             Приєднуйся до спільноти свідомих мандрівників
-          </h1>
+          </h2>
           <p className={styles.description}>
             Стань частиною ком’юніті, де подорожі стають не лише пригодою, а й
             внеском у збереження природи. Тут ти знайдеш однодумців, поради для
