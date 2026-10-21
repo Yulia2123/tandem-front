@@ -1,18 +1,18 @@
 .join {
   display: flex;
   justify-content: center;
-  padding: 48px 64px;
+  padding: 32px 20px;
   width: 100%;
-  background: #eef8ee;
+  background: var(--color-background);
 }
 .joinContent {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   width: 100%;
-  max-width: 1312px;
-  min-height: 436px;
-  padding: 63px 64px;
+  max-width: 335px;
+  min-height: 397px;
+  padding: 16px;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 12px;
 }
@@ -36,45 +36,94 @@
   align-items: flex-start;
   position: relative;
   z-index: 1;
-  max-width: 768px;
-  height: 310px;
+  /* max-width: 768px; */
+  max-width: 303px;
+  height: 365px;
 }
 .title {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 48px;
+  font-weight: var(--font-bold);
+  font-size: 26px;
   line-height: 1.2;
   letter-spacing: -0.01em;
-  color: #fff;
+  color: var(--color-white);
   margin-bottom: 24px;
 }
 .description {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 400;
-  font-size: 20px;
+  font-weight: var(--font-regular);
+  font-size: 16px;
   line-height: 1.5;
-  color: #fff;
+  color: var(--color-white);
   margin-bottom: 32px;
 }
 .joinButton {
-  background: #4a9849;
-  border: 1px solid #4a9849;
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
   border-radius: 6px;
-  padding: 9px 12px;
-  width: 204px;
+  /* padding: 6px 12px; */
+  padding: 12px 79px;
+  width: 303px;
   height: 48px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: var(--font-medium);
+  font-size: 16px;
   line-height: 1.5;
-  color: #fff;
+  color: var(--color-white);
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base);
 }
 .joinButton:hover,
 .joinButton:focus {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 1.5;
-  color: #1b391b;
+  color: var(--color-heading);
   background: #def2de;
+  border-color: #def2de;
+}
+
+@media screen and (min-width: 768px) {
+  .join {
+    padding: 32px;
+  }
+  .joinContent {
+    max-width: 704px;
+    min-height: 284px;
+  }
+  .content {
+    max-width: 672px;
+    height: 252px;
+  }
+  .title {
+    font-size: 32px;
+  }
+  .joinButton {
+    /* padding: 6px 12px; */
+    padding: 12px;
+    width: 168px;
+    height: 48px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .join {
+    padding: 48px 64px;
+  }
+  .joinContent {
+    max-width: 1312px;
+    min-height: 436px;
+    padding: 63px 64px;
+  }
+  .content {
+    max-width: 768px;
+    height: 310px;
+  }
+  .title {
+    font-size: 48px;
+  }
+  .description {
+    font-size: 20px;
+  }
+  .joinButton {
+    padding: 9px 12px;
+    width: 204px;
+    height: 48px;
+    font-size: 20px;
+  }
 }
