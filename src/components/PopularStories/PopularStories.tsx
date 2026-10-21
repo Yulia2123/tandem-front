@@ -8,6 +8,10 @@ import { useState, useEffect } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
 function PopularStories() {
+  const users = async () => {
+    const res = await fetch('/api/users');
+    return res;
+  };
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage, setPerPage] = useState(3);
 

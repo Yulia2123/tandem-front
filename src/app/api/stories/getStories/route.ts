@@ -6,9 +6,9 @@ export async function GET(request: NextRequest) {
   try {
     const cookieStore = await cookies();
     const page = Number(request.nextUrl.searchParams.get('page') ?? 1);
-    const perPage = Number(request.nextUrl.searchParams.get('perPage') ?? 1);
+    const perPage = Number(request.nextUrl.searchParams.get('perPage') ?? 10);
 
-    const res = await api('/notes', {
+    const res = await api('/stories', {
       params: {
         page,
         perPage,
