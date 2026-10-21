@@ -1,0 +1,46 @@
+.header {
+  position: relative;
+  z-index: 30;
+  width: 100%;
+  background: #def2de;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  width: 100%;
+  max-width: 1440px;
+  min-height: 68px;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--color-heading);
+  text-decoration: none;
+}
+
+.logoMark {
+  display: block;
+  width: 129px;
+  height: 36px;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding: 16px 32px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .inner {
+    padding: 16px 64px;
+  }
+}
