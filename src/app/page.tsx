@@ -34,6 +34,7 @@
 //   );
 // }
 import Header from '@/components/layout/Header/Header';
+import Hero from '@/components/home/Hero/Hero';
 import Footer from '@/components/layout/Footer/Footer';
 import Join from '@/components/common/Join/Join';
 export default function Home() {
@@ -42,12 +43,10 @@ export default function Home() {
       <Header />
 
       <main>
-        <h1>Природні мандри</h1>
-        <p>
-          Відкривай нові маршрути, ділися історіями подорожей та знаходь
-          однодумців для мандрів.
-        </p>
-        <Join />
+        <div className="section">
+          <Hero />
+          <Join />
+        </div>
       </main>
 
       <Footer />
