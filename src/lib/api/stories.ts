@@ -1,3 +1,4 @@
+import { Article } from '@/types/article';
 import api from './api';
 
 export interface Story {
@@ -14,7 +15,7 @@ export interface StoriesResponse {
   perPage: number;
   totalItems: number;
   totalPages: number;
-  stories: Story[];
+  stories: Article[];
 }
 
 export interface GetStoriesParams {

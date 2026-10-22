@@ -56,7 +56,7 @@ export default function StoriesPage() {
               {data.stories.map((story) => (
                 <li key={story._id}>
                   <h2>{story.title ?? 'Історія мандрівника'}</h2>
-                  {story.description && <p>{story.description}</p>}
+                  {story.article && <p>{story.article}</p>}
                 </li>
               ))}
             </ul>
