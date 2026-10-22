@@ -1,0 +1,129 @@
+.join {
+  display: flex;
+  justify-content: center;
+  padding: 32px 20px;
+  width: 100%;
+  background: var(--color-background);
+}
+.joinContent {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  max-width: 335px;
+  min-height: 397px;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+}
+.background {
+  object-fit: cover;
+  object-position: center;
+  z-index: -2;
+}
+
+.joinContent::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: -1;
+  pointer-events: none;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+  max-width: 303px;
+  height: auto;
+}
+.title {
+  font-weight: var(--font-bold);
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-white);
+  margin-bottom: 24px;
+}
+.description {
+  font-weight: var(--font-regular);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-white);
+  margin-bottom: 32px;
+}
+.joinButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 80px;
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: 6px;
+  font-weight: var(--font-medium);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-white);
+  text-decoration: none;
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.joinButton:hover,
+.joinButton:focus {
+  color: var(--color-heading);
+  background: #def2de;
+  border-color: #def2de;
+}
+
+@media screen and (min-width: 768px) {
+  .join {
+    padding: 32px;
+  }
+  .joinContent {
+    max-width: 704px;
+    min-height: 284px;
+  }
+  .content {
+    max-width: 672px;
+  }
+  .title {
+    font-size: 32px;
+  }
+  .joinButton {
+    padding: 12px;
+    width: 168px;
+    min-height: 48px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .join {
+    padding: 48px 64px;
+  }
+  .joinContent {
+    max-width: 1312px;
+    min-height: 436px;
+    padding: 63px 64px;
+  }
+  .content {
+    max-width: 768px;
+  }
+  .title {
+    font-size: 48px;
+  }
+  .description {
+    font-size: 20px;
+  }
+  .joinButton {
+    padding: 9px 12px;
+    width: 204px;
+    height: 48px;
+    font-size: 20px;
+  }
+}
