@@ -100,9 +100,7 @@ export default function AuthNavigation() {
           </Link>
 
           <Link
-            className={
-              pathname.startsWith('/users') ? css.active : css.link
-            }
+            className={pathname.startsWith('/users') ? css.active : css.link}
             href="/users"
             onClick={() => setIsOpen(false)}
           >

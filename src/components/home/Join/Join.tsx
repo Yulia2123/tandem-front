@@ -21,7 +21,7 @@ export default function Join() {
             внеском у збереження природи. Тут ти знайдеш однодумців, поради для
             сталих мандрів та натхнення для нових маршрутів Україною.
           </p>
-          <Link className={styles.joinButton} href="/auth/register">
+          <Link className={styles.joinButton} href="/register">
             Зареєструватися
           </Link>
         </div>

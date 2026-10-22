@@ -15,8 +15,8 @@ import Link from 'next/link';
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {saveStory, isLoading: isSaveStoryLoading} = useSaveStory();
-  const {user, isAuthenticated} = useAuthStore();
+  const { saveStory, isLoading: isSaveStoryLoading } = useSaveStory();
+  const { user, isAuthenticated } = useAuthStore();
 
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -52,11 +52,11 @@ function PopularStories() {
     queryFn: () => getAllUsers(),
     placeholderData: keepPreviousData,
   });
-  
+
   const handleSaveStory = (storyId: string) => {
-    if(!isAuthenticated){
+    if (!isAuthenticated) {
       setIsModalOpen(true);
-      return
+      return;
     }
 
     saveStory(storyId);
