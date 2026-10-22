@@ -1,4 +1,18 @@
 import api from '@/lib/api/api';
+import { User } from '@/types/user';
+
+export interface GetUsersParams {
+  page?: number;
+  perPage?: number;
+}
+
+export interface UsersResponse {
+  page: number;
+  perPage: number;
+  totalItems: number;
+  totalPages: number;
+  users: User[];
+}
 
 export const getCurrentUser = async () => {
   const response = await api.get('/users/me');
@@ -29,5 +43,10 @@ export const removeSavedStory = async (storyId: string) => {
 
 export const getUserProfile = async (userId: string) => {
   const response = await api.get(`/users/${userId}`);
+  return response.data;
+};
+
+export const getAllUsers = async (params: GetUsersParams = {}): Promise<UsersResponse> => {
+  const response = await api.get(`/users/`, { params });
   return response.data;
 };
