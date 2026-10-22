@@ -17,10 +17,12 @@ import { useAuthStore } from '@/lib/store/authStore';
 import Link from 'next/link';
 import { Article } from '@/types/article';
 import toast from 'react-hot-toast';
+import { sendStatusCode } from 'next/dist/server/api-utils';
 
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [savedStoriesIds, setSavedStoriesIds] = useState([]);
   const { user, isAuthenticated } = useAuthStore();
 
   const {
@@ -85,6 +87,8 @@ function PopularStories() {
       // Отримуємо актуальний список збережених історій
       const getCurrentSavedStory = await getSavedStories();
       const savedStories = getCurrentSavedStory.data;
+      const isSavedStoriesIds = savedStories.map((story: Article) => story._id || [])
+      setSavedStoriesIds(isSavedStoriesIds);
 
       // Перевіряємо, чи вже є ця стаття в збережених
       const isSaved = savedStories.some(
@@ -152,7 +156,7 @@ function PopularStories() {
                 <StoryCard
                   stories={[story]}
                   owners={ownersData?.users}
-                  isSaved={isSaveStorySuccess}
+                  isSavedStoryIds={savedStoriesIds}
                   isLoading={isSaveStoryLoading}
                   onSaveStory={() => handleSaveStory(story._id)}
                 />
