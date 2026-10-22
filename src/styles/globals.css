@@ -7,7 +7,9 @@
   --color-heading: #1b391b;
   --color-text: #243b24;
   --color-white: #ffffff;
+  --color-black: #000000;
   --color-border: #d6e5d6;
+  --color-background-card: #DEF2DE;
 
   /* Typography */
   --font-primary: var(--font-montserrat);

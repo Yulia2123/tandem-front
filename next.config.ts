@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  reactCompiler: true,
   images: {
     remotePatterns: [
       {
@@ -10,13 +10,13 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'ftp.goit.study'
+        hostname: 'ftp.goit.study',
       },
       {
         protocol: 'http',
         hostname: 'localhost',
         port: '5000',
-      }
+      },
     ],
   },
 };
