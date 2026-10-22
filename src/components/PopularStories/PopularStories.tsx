@@ -1,46 +1,29 @@
-'use-client';
+'use client';
 
 import css from '@/components/PopularStories/PopularStories.module.css';
 import StoryCard from '@/components/StoryCard/StoryCard';
 import { getStories } from '@/lib/api/stories';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperInstance } from 'swiper';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import {
-  getAllUsers,
-  getSavedStories,
-} from '@/lib/api/users';
+import { getAllUsers, getSavedStories } from '@/lib/api/users';
 import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
 import { useSaveFavoriteStory } from '@/lib/hooks/useSaveFavoriteStory';
 import { useAuthStore } from '@/lib/store/authStore';
 import Link from 'next/link';
-import { Article } from '@/types/article';
 import toast from 'react-hot-toast';
-import { sendStatusCode } from 'next/dist/server/api-utils';
+import { Article } from '@/types/article';
 
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [savedStoriesIds, setSavedStoriesIds] = useState([]);
-  const { user, isAuthenticated } = useAuthStore();
+  const [savedStoriesIds, setSavedStoriesIds] = useState<string[]>([]);
+  const { isAuthenticated } = useAuthStore();
 
-  const {
-    saveStory,
-    isLoading: isSaveStoryLoading,
-    isSuccess: isSaveStorySuccess,
-    isError: saveError,
-    error: saveErrorMessage,
-  } = useSaveFavoriteStory();
-
-  const {
-    removeSavedStory,
-    isLoading: isRemoveStoryLoading,
-    isSuccess: isRemoveStorySuccess,
-    isError: removeError,
-    error: removeErrorMessage,
-  } = useDeleteFavoriteStory();
-  
+  const { saveStory, isLoading: isSaveStoryLoading } = useSaveFavoriteStory();
+  const { removeSavedStory, isLoading: isRemoveStoryLoading } =
+    useDeleteFavoriteStory();
 
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -51,22 +34,19 @@ function PopularStories() {
     setIsEnd(instance.isEnd);
   };
 
+  // Отримуємо список статей
   const {
     data: storiesData,
-    isSuccess,
     isLoading,
     isError,
   } = useQuery({
     queryKey: ['stories', currentPage],
     queryFn: () =>
-      getStories({
-        page: currentPage,
-        perPage: 10,
-        popular: 'desc',
-      }),
+      getStories({ page: currentPage, perPage: 10, popular: 'desc' }),
     placeholderData: keepPreviousData,
   });
 
+  // Отримуємо юзерів
   const {
     data: ownersData,
     isLoading: isUsersLoading,
@@ -77,6 +57,26 @@ function PopularStories() {
     placeholderData: keepPreviousData,
   });
 
+  // Завантажуємо список збережених історій при монтуванні або зміні авторизації
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setSavedStoriesIds([]);
+      return;
+    }
+
+    async function fetchSaved() {
+      try {
+        const res = await getSavedStories();
+        const ids = res.data.map((story: Article) => story._id);
+        setSavedStoriesIds(ids);
+      } catch (error) {
+        toast.error('Не вдалося завантажити збережені історії');
+      }
+    }
+
+    fetchSaved();
+  }, [isAuthenticated]);
+
   const handleSaveStory = async (storyId: string) => {
     if (!isAuthenticated) {
       setIsModalOpen(true);
@@ -84,37 +84,26 @@ function PopularStories() {
     }
 
     try {
-      // Отримуємо актуальний список збережених історій
-      const getCurrentSavedStory = await getSavedStories();
-      const savedStories = getCurrentSavedStory.data;
-      const isSavedStoriesIds = savedStories.map((story: Article) => story._id || [])
-      setSavedStoriesIds(isSavedStoriesIds);
-
-      // Перевіряємо, чи вже є ця стаття в збережених
-      const isSaved = savedStories.some(
-        (story: Article) => story._id === storyId,
-      );
+      const isSaved = savedStoriesIds.includes(storyId);
 
       if (isSaved) {
-        removeSavedStory(storyId);
-        toast.success('Історію видалено успішно')
+        await removeSavedStory(storyId);
+        setSavedStoriesIds((prev) => prev.filter((id) => id !== storyId));
+        toast.success('Історію видалено успішно');
       } else {
-        saveStory(storyId);
-        toast.success('Історію збережено успішно')
+        await saveStory(storyId);
+        setSavedStoriesIds((prev) => [...prev, storyId]);
+        toast.success('Історію збережено успішно');
       }
     } catch (error) {
-      toast.error('Помилка при зміні статусу збереження, спробуйте знову пізніше');
+      toast.error(
+        'Помилка при зміні статусу збереження, спробуйте знову пізніше',
+      );
     }
   };
 
   if (isLoading || isUsersLoading) return <p>Завантаження історій...</p>;
-  if (isError || isUsersError) return toast.error('Помилка при завантаженні історій, спробуйте знову пізніше');
-
-  if (saveError || removeError) {
-    return (
-      toast.error('Помилка при зміні статусу збереження, спробуйте знову пізніше')
-    );
-  }
+  if (isError || isUsersError) return <p>Помилка при завантаженні даних.</p>;
 
   const stories = storiesData?.stories ?? [];
 
@@ -127,6 +116,7 @@ function PopularStories() {
             Всі статті
           </Link>
         </div>
+
         <div className={css.containerStory}>
           <Swiper
             onSwiper={(instance) => {
@@ -135,20 +125,11 @@ function PopularStories() {
             }}
             onSlideChange={updateNavigation}
             slidesPerView={1}
-            slidesPerGroup={1}
             spaceBetween={12}
             watchOverflow
             breakpoints={{
-              768: {
-                slidesPerView: 2,
-                slidesPerGroup: 2,
-                spaceBetween: 24,
-              },
-              1440: {
-                slidesPerView: 3,
-                slidesPerGroup: 3,
-                spaceBetween: 24,
-              },
+              768: { slidesPerView: 2, slidesPerGroup: 2, spaceBetween: 24 },
+              1440: { slidesPerView: 3, slidesPerGroup: 3, spaceBetween: 24 },
             }}
           >
             {stories.map((story) => (
@@ -157,7 +138,7 @@ function PopularStories() {
                   stories={[story]}
                   owners={ownersData?.users}
                   isSavedStoryIds={savedStoriesIds}
-                  isLoading={isSaveStoryLoading}
+                  isLoading={isSaveStoryLoading || isRemoveStoryLoading}
                   onSaveStory={() => handleSaveStory(story._id)}
                 />
               </SwiperSlide>

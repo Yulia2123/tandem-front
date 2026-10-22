@@ -67,6 +67,19 @@
   padding: 6px 12px;
   background: rgba(0, 0, 0, 0.05);
   padding: 12px 33.5px;
+  transition: all 0.2s ease;
+}
+
+.detailsLink:hover,
+.detailsLink:focus {
+  background: #4a9849;
+  color: #fff;
+}
+
+.detailsLink:active {
+  border: 1px solid rgba(255, 255, 255, 0);
+  background: #254c24;
+  color: #fff;
 }
 
 .svg {
@@ -86,31 +99,42 @@
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.05);
   border-radius: 6px;
   padding: 6px;
   width: 48px;
   height: 48px;
 }
 
+.saveBtn:hover path,
+.saveBtn:focus path {
+  fill: #fff;
+}
+
 .saveBtn:hover,
-.saveBtn:focus{
+.saveBtn:focus {
   border: 1px solid rgba(255, 255, 255, 0);
   background: #4a9849;
 }
 
-.saveBtn.saved{
+.saveBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.saveBtn.saved {
   border: 1px solid rgba(255, 255, 255, 0);
   background: #254c24;
+}
+
+.saveBtn.saved path {
+  fill: #fff;
 }
 
 .svgButton {
   width: 15px;
   height: 17px;
-  align-self: center !important;
-}
-
-.svgButton.saved {
-  fill: #fff;
 }
 
 .actions {
@@ -121,15 +145,12 @@
 }
 
 @media screen and (min-width: 1440px) {
-
-
   .containerWrapper {
     max-width: 424px;
     max-height: 633px;
   }
 
   .image {
-    
   }
 
   .subtitle {

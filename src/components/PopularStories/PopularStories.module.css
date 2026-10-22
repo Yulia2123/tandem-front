@@ -40,8 +40,18 @@
   padding: 12px;
   width: 48px;
   height: 48px;
-  background: #def2de;
+  background: #f2f2f2;
   cursor: pointer;
+}
+
+.controllers:hover,
+.controllers:focus{
+  background: #def2de;
+}
+
+.controllers:active{
+  border: 1px solid #8dd18c;
+  background: #8dd18c;
 }
 
 .controllers:disabled {
@@ -55,6 +65,7 @@
   width: 16px;
   height: 16px;
 }
+
 
 .errorMessage {
   margin-top: 12px;
@@ -97,6 +108,12 @@
   line-height: 1.5;
   color: #fff;
   width: 100%;
+}
+
+.buttonAllStoriesTop:active,
+.buttonAllStoriesBot:active{
+  border: 1px solid rgba(255, 255, 255, 0);
+  background: #254c24;
 }
 
 @media screen and (min-width: 768px) {
