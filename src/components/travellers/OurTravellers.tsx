@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useTravellers } from '@/lib/hooks/useTravellers';
 import TravellerCard from './TravellerCard';
 import styles from './OurTravellers.module.css';
-import Image from 'next/image';
 
 export default function OurTravellers() {
   const { data, isPending, isError } = useTravellers(36);
@@ -90,12 +89,9 @@ export default function OurTravellers() {
               disabled={startIndex === 0}
               aria-label="Попередні мандрівники"
             >
-              <Image
-                src="/icons/arrow-back.svg"
-                alt=""
-                width={24}
-                height={24}
-              />
+              <svg width={24} height={24} aria-hidden="true">
+                <use href="/sprite.svg#arrow-left" />
+              </svg>
             </button>
 
             <button
@@ -105,12 +101,9 @@ export default function OurTravellers() {
               disabled={startIndex >= maxStartIndex}
               aria-label="Наступні мандрівники"
             >
-              <Image
-                src="/icons/arrow-right.svg"
-                alt=""
-                width={24}
-                height={24}
-              />
+              <svg width={24} height={24} aria-hidden="true">
+                <use href="/sprite.svg#arrow-right" />
+              </svg>
             </button>
           </div>
         </div>

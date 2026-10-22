@@ -8,7 +8,7 @@
 .loadMoreWrapper {
     display: flex;
     justify-content: center;
-    margin-top: 32px;
+    margin-top: 24px;
 }
 
 .list {
@@ -21,11 +21,12 @@
 }
 
 .title {
-    margin: 0 0 32px;
+    margin: 0 0 24px;
     text-align: center;
     font-size: 32px;
-    font-weight: 600;
-    line-height: 1.3;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #000;
 }
 
 .loadMoreButton {
@@ -41,38 +42,59 @@
     border-radius: 6px;
     background-color: transparent;
     color: #222222;
-    font-size: 16px;
+    background-color: #4a9849;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.loadMoreButton:hover:not(:disabled) {
-    background-color: #f0f8ef;
+.loadMoreButton:hover,
+.loadMoreButton:focus-visible {
+    background-color: #def2de;
+    border: 1px solid #4a9849;
 }
 
+.loadMoreButton:hover,
 .loadMoreButton:focus-visible {
-    outline: 2px solid #4a9849;
-    outline-offset: 3px;
+    color: #1b391b;
 }
 
 .loadMoreButton:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+    background-color: #4a9849;
+    opacity: 0.3;
+    border: 1px solid #4a9849;
+}
+
+.loadMoreButtonText {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.loadMoreButtonText:hover,
+.loadMoreButtonText:focus-visible {
+    color: #1b391b;
 }
 
 
-/* Планшет: 4 колонки */
 @media screen and (min-width: 768px) {
     .list {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 24px;
+    }
+
+    .title {
+        font-size: 44px;
     }
 }
 
-/* Десктоп: 3 колонки */
+
 @media screen and (min-width: 1440px) {
     .list {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 32px;
     }
+
 }

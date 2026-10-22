@@ -63,7 +63,11 @@ export default function TravellersList() {
               onClick={() => fetchNextPage()}
               disabled={isFetchingNextPage}
             >
-              {isFetchingNextPage ? 'Завантаження...' : 'Показати ще'}
+              {isFetchingNextPage ? (
+                'Завантаження...'
+              ) : (
+                <span className={styles.loadMoreButtonText}>Показати ще</span>
+              )}
             </button>
           </div>
         )}

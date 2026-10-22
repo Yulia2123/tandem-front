@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import Header from '@/components/layout/Header/Header';
+import Footer from '@/components/layout/Footer/Footer';
 import TravellersList from '@/components/travellers/TravellersList';
 
 export const metadata: Metadata = {
@@ -8,11 +10,14 @@ export const metadata: Metadata = {
 
 export default function TravellersPage() {
   return (
-    <main>
-      <div className="container section">
-        <h1>Мандрівники</h1>
-        <TravellersList />
-      </div>
-    </main>
+    <>
+      <Header />
+      <main>
+        <div className="container section">
+          <TravellersList />
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }
