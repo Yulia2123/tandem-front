@@ -9,6 +9,17 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: '**',
       },
+        hostname: 'example.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ftp.goit.study'
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '5000',
+      }
     ],
   },
 };
