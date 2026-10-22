@@ -101,9 +101,9 @@ export default function AuthNavigation() {
 
           <Link
             className={
-              pathname.startsWith('/travellers') ? css.active : css.link
+              pathname.startsWith('/users') ? css.active : css.link
             }
-            href="/travellers"
+            href="/users"
             onClick={() => setIsOpen(false)}
           >
             Еко-Мандрівники

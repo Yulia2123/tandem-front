@@ -3,7 +3,7 @@ import Link from 'next/link';
 import styles from './Join.module.css';
 export default function Join() {
   return (
-    <section className={styles.join}>
+    <section id="join" className={styles.join}>
       <div className={styles.joinContent}>
         <Image
           className={styles.background}
