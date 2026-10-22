@@ -35,6 +35,7 @@
 // }
 import Header from '@/components/layout/Header/Header';
 import Hero from '@/components/home/Hero/Hero';
+import OurTravellers from '@/components/home/OurTravellers/OurTravellers';
 import Footer from '@/components/layout/Footer/Footer';
 import Join from '@/components/home/Join/Join';
 export default function Home() {
@@ -45,6 +46,7 @@ export default function Home() {
       <main>
         <div className="section">
           <Hero />
+          <OurTravellers />
           <Join />
         </div>
       </main>
