@@ -27,7 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <main className={css.content}>{children}</main>
       <footer className={css.footer}>
         <p className={css.copyright}>
-          {'\u00A9'} {new Date().getFullYear()} Подорожники
+          {'\u00A9'} {new Date().getFullYear()} Природні мандри
         </p>
       </footer>
     </div>
