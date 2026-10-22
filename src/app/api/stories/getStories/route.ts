@@ -7,11 +7,13 @@ export async function GET(request: NextRequest) {
     const cookieStore = await cookies();
     const page = Number(request.nextUrl.searchParams.get('page') ?? 1);
     const perPage = Number(request.nextUrl.searchParams.get('perPage') ?? 10);
+    const popular = String(request.nextUrl.searchParams.get('popular') ?? 'desc')
 
     const res = await api('/stories', {
       params: {
         page,
         perPage,
+        popular,
       },
       headers: {
         Cookie: cookieStore.toString(),

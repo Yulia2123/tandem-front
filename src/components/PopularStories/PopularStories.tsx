@@ -33,7 +33,7 @@ function PopularStories() {
       getStories({
         page: currentPage,
         perPage: 10,
-        popular: 'asc',
+        popular: 'desc',
       }),
     placeholderData: keepPreviousData,
   });
