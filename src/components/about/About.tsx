@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from './About.module.css';
-import aboutImage from '../../../public/images/about-forest.jpg';
+import aboutImage from '../../../public/images/about-forest.webp'; // Перевір розширення (.webp/.png)
 
 export default function About() {
   return (
@@ -40,7 +40,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* Права колонка з адаптивною картинкою */}
+          {/* Права колонка з картинкою без додаткового програмного обрізання */}
           <div className={styles.imageWrapper}>
             <Image
               src={aboutImage}
