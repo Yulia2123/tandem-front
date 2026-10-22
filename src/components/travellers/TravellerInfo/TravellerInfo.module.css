@@ -48,23 +48,23 @@
 }
 
 .name {
-  width: 262px;
-  height: 39px;
+  width: 287px;
+  height: 27px;
   font-family: var(--font-primary);
   font-weight: var(--font-semibold);
-  font-size: 26px;
-  line-height: 150%;
+  font-size: 18px;
+  line-height: 1.5;
   color: var(--color-heading);
   overflow: hidden;
 }
 
 .meta {
-  width: 262px;
-  height: 30px;
+  width: 287px;
+  height: 24px;
   font-family: var(--font-primary);
   font-weight: var(--font-regular);
-  font-size: 20px;
-  line-height: 150%;
+  font-size: 16px;
+  line-height: 1.5;
   color: var(--color-heading);
 }
 
@@ -104,5 +104,29 @@
 
   .profile .actions a {
     width: auto;
+  }
+
+  .name {
+  width: 292px;
+  height: 27px;
+  }
+
+  .meta {
+  width: 292px;
+  height: 24px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .name {
+  width: 262px;
+  height: 39px;
+  font-size: 26px;
+  }
+
+  .meta {
+  width: 262px;
+  height: 30px;
+  font-size: 20px;
   }
 }
