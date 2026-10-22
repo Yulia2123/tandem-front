@@ -8,10 +8,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperInstance } from 'swiper';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { getAllUsers, saveStory, UsersResponse } from '@/lib/api/users';
+import { useSaveStory } from '@/lib/hooks/useSaveStory';
+import { useAuthStore } from '@/lib/store/authStore';
 import Link from 'next/link';
 
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const {saveStory, isLoading: isSaveStoryLoading} = useSaveStory();
+  const {user, isAuthenticated} = useAuthStore();
 
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -49,7 +54,12 @@ function PopularStories() {
   });
   
   const handleSaveStory = (storyId: string) => {
-    
+    if(!isAuthenticated){
+      setIsModalOpen(true);
+      return
+    }
+
+    saveStory(storyId);
   };
 
   if (isLoading || isUsersLoading) return <p>Завантаження історій...</p>;
@@ -95,7 +105,7 @@ function PopularStories() {
                 <StoryCard
                   stories={[story]}
                   owners={ownersData?.users}
-                  onSaveStory={handleSaveStory}
+                  onSaveStory={() => handleSaveStory(story._id)}
                 />
               </SwiperSlide>
             ))}
