@@ -3,20 +3,42 @@
 import css from '@/components/PopularStories/PopularStories.module.css';
 import StoryCard from '@/components/StoryCard/StoryCard';
 import { getStories } from '@/lib/api/stories';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperInstance } from 'swiper';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { getAllUsers, saveStory, UsersResponse } from '@/lib/api/users';
-import { useSaveStory } from '@/lib/hooks/useSaveStory';
+import {
+  getAllUsers,
+  getSavedStories,
+} from '@/lib/api/users';
+import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
+import { useSaveFavoriteStory } from '@/lib/hooks/useSaveFavoriteStory';
 import { useAuthStore } from '@/lib/store/authStore';
 import Link from 'next/link';
+import { Article } from '@/types/article';
+import toast from 'react-hot-toast';
 
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {saveStory, isLoading: isSaveStoryLoading} = useSaveStory();
-  const {user, isAuthenticated} = useAuthStore();
+  const { user, isAuthenticated } = useAuthStore();
+
+  const {
+    saveStory,
+    isLoading: isSaveStoryLoading,
+    isSuccess: isSaveStorySuccess,
+    isError: saveError,
+    error: saveErrorMessage,
+  } = useSaveFavoriteStory();
+
+  const {
+    removeSavedStory,
+    isLoading: isRemoveStoryLoading,
+    isSuccess: isRemoveStorySuccess,
+    isError: removeError,
+    error: removeErrorMessage,
+  } = useDeleteFavoriteStory();
+  
 
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
   const [isBeginning, setIsBeginning] = useState(true);
@@ -52,18 +74,43 @@ function PopularStories() {
     queryFn: () => getAllUsers(),
     placeholderData: keepPreviousData,
   });
-  
-  const handleSaveStory = (storyId: string) => {
-    if(!isAuthenticated){
+
+  const handleSaveStory = async (storyId: string) => {
+    if (!isAuthenticated) {
       setIsModalOpen(true);
-      return
+      return;
     }
 
-    saveStory(storyId);
+    try {
+      // Отримуємо актуальний список збережених історій
+      const getCurrentSavedStory = await getSavedStories();
+      const savedStories = getCurrentSavedStory.data;
+
+      // Перевіряємо, чи вже є ця стаття в збережених
+      const isSaved = savedStories.some(
+        (story: Article) => story._id === storyId,
+      );
+
+      if (isSaved) {
+        removeSavedStory(storyId);
+        toast.success('Історію видалено успішно')
+      } else {
+        saveStory(storyId);
+        toast.success('Історію збережено успішно')
+      }
+    } catch (error) {
+      toast.error('Помилка при зміні статусу збереження, спробуйте знову пізніше');
+    }
   };
 
   if (isLoading || isUsersLoading) return <p>Завантаження історій...</p>;
-  if (isError || isUsersError) return <p>Помилка завантаження.</p>;
+  if (isError || isUsersError) return toast.error('Помилка при завантаженні історій, спробуйте знову пізніше');
+
+  if (saveError || removeError) {
+    return (
+      toast.error('Помилка при зміні статусу збереження, спробуйте знову пізніше')
+    );
+  }
 
   const stories = storiesData?.stories ?? [];
 
@@ -105,6 +152,8 @@ function PopularStories() {
                 <StoryCard
                   stories={[story]}
                   owners={ownersData?.users}
+                  isSaved={isSaveStorySuccess}
+                  isLoading={isSaveStoryLoading}
                   onSaveStory={() => handleSaveStory(story._id)}
                 />
               </SwiperSlide>

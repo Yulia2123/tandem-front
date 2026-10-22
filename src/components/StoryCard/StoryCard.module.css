@@ -92,10 +92,25 @@
   height: 48px;
 }
 
+.saveBtn:hover,
+.saveBtn:focus{
+  border: 1px solid rgba(255, 255, 255, 0);
+  background: #4a9849;
+}
+
+.saveBtn.saved{
+  border: 1px solid rgba(255, 255, 255, 0);
+  background: #254c24;
+}
+
 .svgButton {
   width: 15px;
   height: 17px;
   align-self: center !important;
+}
+
+.svgButton.saved {
+  fill: #fff;
 }
 
 .actions {

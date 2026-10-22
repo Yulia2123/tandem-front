@@ -56,6 +56,17 @@
   height: 16px;
 }
 
+.errorMessage {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #fdecec;
+  border: 1px solid #e57373;
+  color: #b3261e;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+}
+
 .buttonAllStoriesTop {
   display: none;
   align-items: center;

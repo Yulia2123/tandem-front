@@ -9,10 +9,12 @@ import 'swiper/css';
 interface StoryListProps {
   owners?: User[];
   stories?: Article[];
+  isSaved: boolean;
+  isLoading: boolean
   onSaveStory: (storyId: string) => void;
 }
 
-function StoryCard({ owners = [], stories = [], onSaveStory }: StoryListProps) {
+function StoryCard({ owners = [], stories = [], isSaved = false, isLoading = false, onSaveStory }: StoryListProps) {
   function truncateText(text: string, maxLength: number) {
     if (text.length <= maxLength) {
       return text;
@@ -73,10 +75,11 @@ function StoryCard({ owners = [], stories = [], onSaveStory }: StoryListProps) {
                 <button
                   type="button"
                   onClick={() => onSaveStory(story._id)}
-                  className={css.saveBtn}
+                  disabled={isLoading}
+                  className={`${css.saveBtn} ${isSaved ? css.saved : ''}`}
                 >
                   <svg
-                    className={css.svgButton}
+                    className={`${css.svgButton} ${isSaved ? css.saved : ''}`}
                     width="15"
                     height="18"
                     viewBox="0 0 15 18"
