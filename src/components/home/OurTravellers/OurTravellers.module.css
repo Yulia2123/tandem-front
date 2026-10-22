@@ -21,7 +21,7 @@
 .subtitle{
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  font-size: 52px;
+  font-size: 28px;
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--color-black);
@@ -133,6 +133,10 @@
     max-width: 768px;
     padding: 0 32px;
   }
+
+  .subtitle{
+  font-size: 44px;
+  }
 }
 
 @media (min-width: 1440px) {
@@ -144,5 +148,9 @@
   .container {
     max-width: 1440px;
     padding: 0 64px;
+  }
+
+  .subtitle{
+  font-size: 52px;
   }
 }
