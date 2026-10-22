@@ -7,6 +7,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRouter } from 'next/navigation';
 import { registerUser, RegisterData } from '@/lib/api/auth';
 import { ApiError } from '@/lib/api/api';
+import { useAuthStore } from '@/lib/store/authStore';
 
 const INITIAL_VALUES: RegisterData = {
   name: '',
@@ -31,14 +32,17 @@ const CreateUserFormSchema = Yup.object({
 function RegistrationForm() {
   const fieldId = useId();
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
   const [serverError, setServerError] = useState('');
 
   const handleSubmit = async (values: RegisterData) => {
     try {
-      const res = await registerUser(values);
+      const user = await registerUser(values);
 
-      if (res) {
-        router.push('/profile');
+      if (user) {
+        setUser(user);
+        router.push('/');
+        router.refresh();
       } else {
         setServerError('Invalid email or password');
       }
@@ -76,7 +80,11 @@ function RegistrationForm() {
                   touched.name && errors.name ? css.inputError : ''
                 }`}
               />
-              <ErrorMessage name="name" component="span" className={css.error} />
+              <ErrorMessage
+                name="name"
+                component="span"
+                className={css.error}
+              />
             </div>
 
             <div className={css.formGroup}>
@@ -90,7 +98,11 @@ function RegistrationForm() {
                   touched.email && errors.email ? css.inputError : ''
                 }`}
               />
-              <ErrorMessage name="email" component="span" className={css.error} />
+              <ErrorMessage
+                name="email"
+                component="span"
+                className={css.error}
+              />
             </div>
 
             <div className={css.formGroup}>
@@ -111,7 +123,9 @@ function RegistrationForm() {
               />
             </div>
 
-            {serverError && <div className={css.serverError}>{serverError}</div>}
+            {serverError && (
+              <div className={css.serverError}>{serverError}</div>
+            )}
 
             <div className={css.actions}>
               <button type="submit" className={css.submitButton}>
