@@ -81,12 +81,12 @@ function PopularStories() {
               768: {
                 slidesPerView: 2,
                 slidesPerGroup: 2,
-                spaceBetween: 20,
+                spaceBetween: 24,
               },
               1440: {
                 slidesPerView: 3,
                 slidesPerGroup: 3,
-                spaceBetween: 20,
+                spaceBetween: 24,
               },
             }}
           >
