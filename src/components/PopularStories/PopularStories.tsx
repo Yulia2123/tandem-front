@@ -3,13 +3,14 @@
 import css from '@/components/PopularStories/PopularStories.module.css';
 import StoryCard from '@/components/StoryCard/StoryCard';
 import { getStories } from '@/lib/api/stories';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperInstance } from 'swiper';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { getAllUsers, getSavedStories } from '@/lib/api/users';
+import { getAllUsers } from '@/lib/api/users';
 import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
 import { useSaveFavoriteStory } from '@/lib/hooks/useSaveFavoriteStory';
+import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories'
 import { useAuthStore } from '@/lib/store/authStore';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
@@ -18,23 +19,15 @@ import { Article } from '@/types/article';
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [savedStoriesIds, setSavedStoriesIds] = useState<string[]>([]);
   const { isAuthenticated } = useAuthStore();
 
   const { saveStory, isLoading: isSaveStoryLoading } = useSaveFavoriteStory();
   const { removeSavedStory, isLoading: isRemoveStoryLoading } =
     useDeleteFavoriteStory();
+  const { savedStories } = useGetSavedStories();
 
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
 
-  const updateNavigation = (instance: SwiperInstance) => {
-    setIsBeginning(instance.isBeginning);
-    setIsEnd(instance.isEnd);
-  };
-
-  // Отримуємо список статей
   const {
     data: storiesData,
     isLoading,
@@ -46,7 +39,6 @@ function PopularStories() {
     placeholderData: keepPreviousData,
   });
 
-  // Отримуємо юзерів
   const {
     data: ownersData,
     isLoading: isUsersLoading,
@@ -57,25 +49,9 @@ function PopularStories() {
     placeholderData: keepPreviousData,
   });
 
-  // Завантажуємо список збережених історій при монтуванні або зміні авторизації
-  useEffect(() => {
-    if (!isAuthenticated) {
-      setSavedStoriesIds([]);
-      return;
-    }
-
-    async function fetchSaved() {
-      try {
-        const res = await getSavedStories();
-        const ids = res.data.map((story: Article) => story._id);
-        setSavedStoriesIds(ids);
-      } catch (error) {
-        toast.error('Не вдалося завантажити збережені історії');
-      }
-    }
-
-    fetchSaved();
-  }, [isAuthenticated]);
+  const savedStoriesIds = isAuthenticated
+    ? (savedStories?.data ?? []).map((story: Article) => story._id)
+    : [];
 
   const handleSaveStory = async (storyId: string) => {
     if (!isAuthenticated) {
@@ -88,11 +64,9 @@ function PopularStories() {
 
       if (isSaved) {
         await removeSavedStory(storyId);
-        setSavedStoriesIds((prev) => prev.filter((id) => id !== storyId));
         toast.success('Історію видалено успішно');
       } else {
         await saveStory(storyId);
-        setSavedStoriesIds((prev) => [...prev, storyId]);
         toast.success('Історію збережено успішно');
       }
     } catch (error) {
@@ -121,11 +95,10 @@ function PopularStories() {
           <Swiper
             onSwiper={(instance) => {
               setSwiper(instance);
-              updateNavigation(instance);
             }}
-            onSlideChange={updateNavigation}
             slidesPerView={1}
-            spaceBetween={12}
+            spaceBetween={undefined}
+            loop={true}
             watchOverflow
             breakpoints={{
               768: { slidesPerView: 2, slidesPerGroup: 2, spaceBetween: 24 },
@@ -149,7 +122,6 @@ function PopularStories() {
         <div className={css.controls}>
           <button
             type="button"
-            disabled={isBeginning}
             onClick={() => swiper?.slidePrev()}
             aria-label="Попередні історії"
             className={css.controllers}
@@ -171,7 +143,6 @@ function PopularStories() {
 
           <button
             type="button"
-            disabled={isEnd}
             onClick={() => swiper?.slideNext()}
             aria-label="Наступні історії"
             className={css.controllers}

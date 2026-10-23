@@ -52,6 +52,7 @@ function StoryCard({ owners = [], stories = [], isSavedStoryIds = [], isLoading 
                 </Link>
 
                 <button
+                  key={`${story._id}-${isSaved ? 'saved' : 'default'}`}
                   type="button"
                   onClick={() => onSaveStory(story._id)}
                   disabled={isLoading}

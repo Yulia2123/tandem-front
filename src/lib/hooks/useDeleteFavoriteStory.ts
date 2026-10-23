@@ -8,7 +8,7 @@ export function useDeleteFavoriteStory() {
   const { mutate, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: (storyId: string) => removeSavedStory(storyId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['stories'] });
+      queryClient.invalidateQueries({ queryKey: ['savedArticles'] });
     },
   });
 

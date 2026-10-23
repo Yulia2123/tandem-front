@@ -8,7 +8,7 @@ export function useSaveFavoriteStory() {
   const { mutate, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: (storyId: string) => saveStory(storyId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['stories'] });
+      queryClient.invalidateQueries({ queryKey: ['savedArticles'] });
     },
   });
 
