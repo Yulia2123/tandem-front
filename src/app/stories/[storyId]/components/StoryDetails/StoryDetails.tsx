@@ -13,14 +13,22 @@ export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
     <article className={styles.article}>
       {/* Зображення статті */}
       {story.img && (
-        <div className={styles.imageContainer}>
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            height: '223px',
+            borderRadius: '24px',
+            overflow: 'hidden',
+            marginBottom: '24px',
+          }}
+        >
           <Image
             src={story.img}
             alt={story.title}
             fill
-            sizes="(max-width: 768px) 100vw, 800px"
+            style={{ objectFit: 'cover' }}
             priority
-            className={styles.image}
           />
         </div>
       )}

@@ -3,7 +3,7 @@ import { Story } from '@/types/story';
 export type ApiError = AxiosError<{ error: string }>;
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
