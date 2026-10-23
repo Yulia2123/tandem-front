@@ -1,7 +1,12 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useAuthStore } from '@/lib/store/authStore';
 import styles from './Join.module.css';
 export default function Join() {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   return (
     <section id="join" className={styles.join}>
       <div className={styles.joinContent}>
@@ -9,7 +14,7 @@ export default function Join() {
           className={styles.background}
           src="/moonlit-coral-reef.webp"
           alt=""
-          sizes="(max-width: 768px) 100vw, 1312px"
+          sizes="(max-width: 767px) 335px, (max-width: 1439px) 704px, 1312px"
           fill
         />
         <div className={styles.content}>
@@ -21,9 +26,15 @@ export default function Join() {
             внеском у збереження природи. Тут ти знайдеш однодумців, поради для
             сталих мандрів та натхнення для нових маршрутів Україною.
           </p>
-          <Link className={styles.joinButton} href="/register">
-            Зареєструватися
-          </Link>
+          {isAuthenticated ? (
+            <Link className={styles.joinButton} href="/profile">
+              Збережені статті
+            </Link>
+          ) : (
+            <Link className={styles.joinButton} href="/register">
+              Зареєструватися
+            </Link>
+          )}
         </div>
       </div>
     </section>

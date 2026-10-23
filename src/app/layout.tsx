@@ -3,6 +3,7 @@ import { Montserrat } from 'next/font/google';
 import '../styles/globals.css';
 import Providers from './Providers';
 import AuthInitializer from '@/components/auth/AuthInitializer/AuthInitializer';
+import { Toaster } from 'react-hot-toast';
 
 const montserrat = Montserrat({
   variable: '--font-montserrat',
@@ -35,10 +36,7 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body className={`${montserrat.variable}`}>
-        <Providers>
-          <AuthInitializer />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
