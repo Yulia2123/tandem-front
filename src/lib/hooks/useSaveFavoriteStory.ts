@@ -2,19 +2,20 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { saveStory } from "../api/users";
 
 
-export function useSaveStory() {
+export function useSaveFavoriteStory() {
   const queryClient = useQueryClient();
 
-  const { mutate, isPending, isError, error } = useMutation({
+  const { mutate, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: (storyId: string) => saveStory(storyId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['stories'] });
+      queryClient.invalidateQueries({ queryKey: ['savedArticles'] });
     },
   });
 
   return {
     saveStory: mutate,
     isLoading: isPending,
+    isSuccess,
     isError,
     error,
   };

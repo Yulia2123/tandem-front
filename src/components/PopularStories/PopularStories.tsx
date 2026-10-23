@@ -1,45 +1,41 @@
-'use-client';
+'use client';
 
 import css from '@/components/PopularStories/PopularStories.module.css';
 import StoryCard from '@/components/StoryCard/StoryCard';
 import { getStories } from '@/lib/api/stories';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperInstance } from 'swiper';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { getAllUsers, saveStory, UsersResponse } from '@/lib/api/users';
-import { useSaveStory } from '@/lib/hooks/useSaveStory';
+import { getAllUsers } from '@/lib/api/users';
+import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
+import { useSaveFavoriteStory } from '@/lib/hooks/useSaveFavoriteStory';
+import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories'
 import { useAuthStore } from '@/lib/store/authStore';
 import Link from 'next/link';
+import toast from 'react-hot-toast';
+import { Article } from '@/types/article';
 
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {saveStory, isLoading: isSaveStoryLoading} = useSaveStory();
-  const {user, isAuthenticated} = useAuthStore();
+  const { isAuthenticated } = useAuthStore();
+
+  const { saveStory, isLoading: isSaveStoryLoading } = useSaveFavoriteStory();
+  const { removeSavedStory, isLoading: isRemoveStoryLoading } =
+    useDeleteFavoriteStory();
+  const { savedStories } = useGetSavedStories();
 
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
-
-  const updateNavigation = (instance: SwiperInstance) => {
-    setIsBeginning(instance.isBeginning);
-    setIsEnd(instance.isEnd);
-  };
 
   const {
     data: storiesData,
-    isSuccess,
     isLoading,
     isError,
   } = useQuery({
     queryKey: ['stories', currentPage],
     queryFn: () =>
-      getStories({
-        page: currentPage,
-        perPage: 10,
-        popular: 'desc',
-      }),
+      getStories({ page: currentPage, perPage: 10, popular: 'desc' }),
     placeholderData: keepPreviousData,
   });
 
@@ -52,18 +48,36 @@ function PopularStories() {
     queryFn: () => getAllUsers(),
     placeholderData: keepPreviousData,
   });
-  
-  const handleSaveStory = (storyId: string) => {
-    if(!isAuthenticated){
+
+  const savedStoriesIds = isAuthenticated
+    ? (savedStories?.data ?? []).map((story: Article) => story._id)
+    : [];
+
+  const handleSaveStory = async (storyId: string) => {
+    if (!isAuthenticated) {
       setIsModalOpen(true);
-      return
+      return;
     }
 
-    saveStory(storyId);
+    try {
+      const isSaved = savedStoriesIds.includes(storyId);
+
+      if (isSaved) {
+        await removeSavedStory(storyId);
+        toast.success('Історію видалено успішно');
+      } else {
+        await saveStory(storyId);
+        toast.success('Історію збережено успішно');
+      }
+    } catch (error) {
+      toast.error(
+        'Помилка при зміні статусу збереження, спробуйте знову пізніше',
+      );
+    }
   };
 
   if (isLoading || isUsersLoading) return <p>Завантаження історій...</p>;
-  if (isError || isUsersError) return <p>Помилка завантаження.</p>;
+  if (isError || isUsersError) return <p>Помилка при завантаженні даних.</p>;
 
   const stories = storiesData?.stories ?? [];
 
@@ -76,28 +90,19 @@ function PopularStories() {
             Всі статті
           </Link>
         </div>
+
         <div className={css.containerStory}>
           <Swiper
             onSwiper={(instance) => {
               setSwiper(instance);
-              updateNavigation(instance);
             }}
-            onSlideChange={updateNavigation}
             slidesPerView={1}
-            slidesPerGroup={1}
-            spaceBetween={12}
+            spaceBetween={undefined}
+            loop={true}
             watchOverflow
             breakpoints={{
-              768: {
-                slidesPerView: 2,
-                slidesPerGroup: 2,
-                spaceBetween: 24,
-              },
-              1440: {
-                slidesPerView: 3,
-                slidesPerGroup: 3,
-                spaceBetween: 24,
-              },
+              768: { slidesPerView: 2, slidesPerGroup: 2, spaceBetween: 24 },
+              1440: { slidesPerView: 3, slidesPerGroup: 3, spaceBetween: 24 },
             }}
           >
             {stories.map((story) => (
@@ -105,6 +110,8 @@ function PopularStories() {
                 <StoryCard
                   stories={[story]}
                   owners={ownersData?.users}
+                  isSavedStoryIds={savedStoriesIds}
+                  isLoading={isSaveStoryLoading || isRemoveStoryLoading}
                   onSaveStory={() => handleSaveStory(story._id)}
                 />
               </SwiperSlide>
@@ -115,7 +122,6 @@ function PopularStories() {
         <div className={css.controls}>
           <button
             type="button"
-            disabled={isBeginning}
             onClick={() => swiper?.slidePrev()}
             aria-label="Попередні історії"
             className={css.controllers}
@@ -137,7 +143,6 @@ function PopularStories() {
 
           <button
             type="button"
-            disabled={isEnd}
             onClick={() => swiper?.slideNext()}
             aria-label="Наступні історії"
             className={css.controllers}
