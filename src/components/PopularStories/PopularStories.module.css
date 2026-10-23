@@ -45,11 +45,11 @@
 }
 
 .controllers:hover,
-.controllers:focus{
+.controllers:focus {
   background: #def2de;
 }
 
-.controllers:active{
+.controllers:active {
   border: 1px solid #8dd18c;
   background: #8dd18c;
 }
@@ -66,7 +66,6 @@
   height: 16px;
 }
 
-
 .errorMessage {
   margin-top: 12px;
   padding: 10px 14px;
@@ -78,10 +77,11 @@
   font-size: 14px;
 }
 
-.buttonAllStoriesTop {
+.buttonAllStories {
   display: none;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   border: 1px solid #4a9849;
   border-radius: 6px;
   padding: 12px;
@@ -92,28 +92,28 @@
   line-height: 1.5;
   color: #fff;
   width: 100%;
+  opacity: 1;
+  text-decoration: none;
+  outline: none;
+  transition: all 0.2s ease;
 }
 
-.buttonAllStoriesBot {
+.buttonAllStories:hover,
+.buttonAllStories:focus {
+  border: 1px solid #4a9849;
+  background: #def2de;
+  color: #1b391b;
+}
+
+.buttonAllStories.bot {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #4a9849;
-  border-radius: 6px;
-  padding: 12px;
-  background: #4a9849;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.5;
-  color: #fff;
-  width: 100%;
 }
 
-.buttonAllStoriesTop:active,
-.buttonAllStoriesBot:active{
+.buttonAllStories:active {
+  opacity: 1;
   border: 1px solid rgba(255, 255, 255, 0);
-  background: #254c24;
+  background: var(--color-heading);
+  color: #fff;
 }
 
 @media screen and (min-width: 768px) {
@@ -125,13 +125,13 @@
     color: #000;
   }
 
-  .buttonAllStoriesTop {
+  .buttonAllStories.top {
     display: flex;
     padding: 9px 12px;
     width: auto;
   }
 
-  .buttonAllStoriesBot {
+  .buttonAllStories.bot {
     display: none;
   }
 }
@@ -141,7 +141,7 @@
     font-size: 52px;
   }
 
-  .buttonAllStoriesTop{
+  .buttonAllStories.top {
     font-size: 20px;
   }
 }

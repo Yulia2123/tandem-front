@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { registerUser, RegisterData } from '@/lib/api/auth';
 import { ApiError } from '@/lib/api/api';
 import { useAuthStore } from '@/lib/store/authStore';
+import toast from 'react-hot-toast';
 
 const INITIAL_VALUES: RegisterData = {
   name: '',
@@ -17,23 +18,22 @@ const INITIAL_VALUES: RegisterData = {
 
 const CreateUserFormSchema = Yup.object({
   name: Yup.string()
-    .max(32, "Ім'я та прізвище занадто довгі!")
-    .required("Ім'я та прізвище обов'язкові!"),
+    .max(32, "Ім'я та прізвище не повинні перевищувати 32 символи")
+    .required("Ім'я та прізвище обов'язкові"),
   email: Yup.string()
-    .max(64, 'Пошта занадто довга!')
-    .email('Такої пошти не існує!')
-    .required("Пошта обов'язкова!"),
+    .max(64, 'Пошта не повинна перевищувати 64 символи')
+    .email('Пошта введена не корректно, приклад: example@mail.com')
+    .required("Пошта обов'язкова"),
   password: Yup.string()
-    .min(8, 'Пароль занадто малий!')
-    .max(128, 'Пароль занадто довгий!')
-    .required("Пароль обов'язковий!"),
+    .min(8, 'Пароль повинен бути більше ніж 8 символів')
+    .max(128, 'Пароль не повинен перевищувати 128 символів')
+    .required("Пароль обов'язковий"),
 });
 
 function RegistrationForm() {
   const fieldId = useId();
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
-  const [serverError, setServerError] = useState('');
 
   const handleSubmit = async (values: RegisterData) => {
     try {
@@ -41,17 +41,14 @@ function RegistrationForm() {
 
       if (user) {
         setUser(user);
+        toast.success(`Ви успішно зареєструвались!`)
         router.push('/');
         router.refresh();
       } else {
-        setServerError('Invalid email or password');
+        toast.error('Помилка реєстрації: неправильно введені дані користувача');
       }
     } catch (error) {
-      setServerError(
-        (error as ApiError).response?.data?.error ??
-          (error as ApiError).message ??
-          'Oops... some error',
-      );
+      toast.error('Помилка сервера: спробуйте зареєструватись пізніше');
     }
   };
 
@@ -122,10 +119,6 @@ function RegistrationForm() {
                 className={css.error}
               />
             </div>
-
-            {serverError && (
-              <div className={css.serverError}>{serverError}</div>
-            )}
 
             <div className={css.actions}>
               <button type="submit" className={css.submitButton}>

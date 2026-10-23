@@ -86,7 +86,7 @@ function PopularStories() {
       <div className={`${css.container} container`}>
         <div className={css.headerWrapper}>
           <h2 className={css.subtitle}>Популярні статті</h2>
-          <Link href="/stories" className={css.buttonAllStoriesTop}>
+          <Link href="/stories" className={`${css.buttonAllStories} ${css.top}`}>
             Всі статті
           </Link>
         </div>
@@ -163,7 +163,7 @@ function PopularStories() {
           </button>
         </div>
 
-        <Link href="/stories" className={css.buttonAllStoriesBot}>
+        <Link href="/stories" className={`${css.buttonAllStories} ${css.bot}`}>
           Всі статті
         </Link>
       </div>
