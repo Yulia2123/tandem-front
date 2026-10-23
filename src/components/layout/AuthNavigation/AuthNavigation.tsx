@@ -40,7 +40,7 @@ export default function AuthNavigation() {
 
     clearAuth();
     setIsOpen(false);
-    router.push('/login');
+    router.replace('/');
     router.refresh();
   };
 
