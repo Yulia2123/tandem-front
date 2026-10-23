@@ -1,3 +1,3 @@
-export default function TravellerPage() {
-  return <div>Traveller page</div>;
+export default function TravellerProfilePage() {
+  return <main />;
 }
