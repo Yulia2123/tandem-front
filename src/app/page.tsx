@@ -16,9 +16,9 @@ export default function Home() {
       <main>
         <div className="section">
           <Hero />
+          <PopularStories />
           <About />
           <OurTravellers />
-          <PopularStories />
           <Join />
         </div>
       </main>

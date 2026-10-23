@@ -10,7 +10,7 @@ import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { getAllUsers } from '@/lib/api/users';
 import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
 import { useSaveFavoriteStory } from '@/lib/hooks/useSaveFavoriteStory';
-import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories'
+import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories';
 import { useAuthStore } from '@/lib/store/authStore';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
