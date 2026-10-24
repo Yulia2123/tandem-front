@@ -1,0 +1,39 @@
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px 20px 64px;
+}
+
+.content {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.title {
+  margin-bottom: 32px;
+}
+
+/* Планшет */
+@media screen and (min-width: 768px) {
+  .page {
+    padding: 64px 32px 80px;
+  }
+
+  .title {
+    margin-bottom: 40px;
+  }
+}
+
+/* Ноутбук */
+@media screen and (min-width: 1440px) {
+  .page {
+    padding: 80px 0 120px;
+  }
+
+  .title {
+    margin-bottom: 48px;
+  }
+}
+

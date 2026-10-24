@@ -1,0 +1,222 @@
+
+/* Обкладинка статті */
+
+.imagePlaceholder {
+  width: 100%;
+  height: 200px;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  background-color: #e5e5e5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Кнопка завантаження фото */
+
+.uploadButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+
+  min-height: 44px;
+  padding: 12px 24px;
+
+  border: 1px solid currentColor;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+.uploadButton:hover {
+  background-color: #e5e5e5;
+}
+
+/* Приховуємо стандартний input */
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Загальне розташування форми */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field label {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-heading);
+}
+
+/* Поля введення */
+
+.input,
+.select,
+.textarea {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #cbd5cb;
+  border-radius: 6px;
+  background-color: transparent;
+  font: inherit;
+  color: inherit;
+}
+
+.input,
+.select {
+  min-height: 44px;
+}
+
+.textarea {
+  min-height: 180px;
+  resize: vertical;
+}
+
+.input:focus-visible,
+.select:focus-visible,
+.textarea:focus-visible {
+  outline: 2px solid #4b9950;
+  outline-offset: 2px;
+}
+
+/* Кнопки форми */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.saveButton,
+.cancelButton {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease;
+}
+
+.saveButton {
+  background-color: #4b9950;
+  color: #ffffff;
+}
+
+.saveButton:hover:not(:disabled) {
+  background-color: #397d3e;
+}
+
+.saveButton:disabled {
+  background-color: #bedcc0;
+  color: #ffffff;
+  cursor: not-allowed;
+}
+
+.cancelButton {
+  background-color: #e5eee5;
+  color: #193b20;
+  border-color: #d0ddd0;
+}
+
+.cancelButton:hover {
+  background-color: #d2e3d2;
+}
+
+.saveButton:focus-visible,
+.cancelButton:focus-visible {
+  outline: 2px solid #193b20;
+  outline-offset: 3px;
+}
+
+/* Планшет */
+
+@media screen and (min-width: 768px) {
+  .imagePlaceholder {
+    height: 280px;
+  }
+
+  .textarea {
+    min-height: 240px;
+  }
+
+  .actions {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  .saveButton,
+  .cancelButton {
+    width: 160px;
+  }
+}
+
+/* Ноутбук */
+
+@media screen and (min-width: 1440px) {
+  .imagePlaceholder {
+    height: 360px;
+  }
+
+  .textarea {
+    min-height: 260px;
+  }
+}
+
+
+
+/* Попередній перегляд завантаженого фото */
+
+.previewImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+
+
+/* Повідомлення про помилки валідації */
+
+.error {
+  margin: 0;
+  color: #c62828;
+  font-size: 12px;
+  line-height: 1.5;
+}
