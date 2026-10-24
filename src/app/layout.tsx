@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import '../styles/globals.css';
 import Providers from './Providers';
+import AuthInitializer from '@/components/auth/AuthInitializer/AuthInitializer';
+import { Toaster } from 'react-hot-toast';
 
 const montserrat = Montserrat({
   variable: '--font-montserrat',
