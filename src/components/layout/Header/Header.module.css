@@ -1,9 +1,13 @@
 .header {
   position: relative;
-  z-index: 30;
   width: 100%;
   background: #def2de;
   border-bottom: 1px solid var(--color-border);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .inner {
