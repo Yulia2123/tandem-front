@@ -1,6 +1,8 @@
 'use client';
 
 import css from '@/components/PopularStories/PopularStories.module.css';
+import Link from 'next/link';
+import toast from 'react-hot-toast';
 import StoryCard from '@/components/StoryCard/StoryCard';
 import { getStories } from '@/lib/api/stories';
 import { useState } from 'react';
@@ -10,15 +12,17 @@ import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { getAllUsers } from '@/lib/api/users';
 import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
 import { useSaveFavoriteStory } from '@/lib/hooks/useSaveFavoriteStory';
-import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories'
+import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories';
 import { useAuthStore } from '@/lib/store/authStore';
-import Link from 'next/link';
-import toast from 'react-hot-toast';
 import { Article } from '@/types/article';
+import Modal from '@/components/Modal/Modal';
 
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   const { isAuthenticated } = useAuthStore();
 
   const { saveStory, isLoading: isSaveStoryLoading } = useSaveFavoriteStory();
@@ -55,7 +59,7 @@ function PopularStories() {
 
   const handleSaveStory = async (storyId: string) => {
     if (!isAuthenticated) {
-      setIsModalOpen(true);
+      openModal();
       return;
     }
 
@@ -86,7 +90,10 @@ function PopularStories() {
       <div className={`${css.container} container`}>
         <div className={css.headerWrapper}>
           <h2 className={css.subtitle}>Популярні статті</h2>
-          <Link href="/stories" className={`${css.buttonAllStories} ${css.top}`}>
+          <Link
+            href="/stories"
+            className={`${css.buttonAllStories} ${css.top}`}
+          >
             Всі статті
           </Link>
         </div>
@@ -166,6 +173,27 @@ function PopularStories() {
         <Link href="/stories" className={`${css.buttonAllStories} ${css.bot}`}>
           Всі статті
         </Link>
+        {isModalOpen && (
+          <Modal onClose={closeModal}>
+            <div className={css.containerWrapper}>
+              <div className={css.modalTextWrapper}>
+                <h2 className={css.modalTitle}>Помилка під час збереження</h2>
+                <p className={css.modalText}>
+                  Щоб зберегти статтю вам треба увійти, якщо ще немає облікового
+                  запису зареєструйтесь
+                </p>
+              </div>
+              <div className={css.modalNavWrapper}>
+                <Link className={`${css.modalLink} ${css.Login}`} href="/auth/login">
+                  Увійти
+                </Link>
+                <Link className={`${css.modalLink} ${css.Register}`} href="/auth/register">
+                  Зареєструватись
+                </Link>
+              </div>
+            </div>
+          </Modal>
+        )}
       </div>
     </section>
   );

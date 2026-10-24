@@ -116,6 +116,97 @@
   color: #fff;
 }
 
+.containerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.modalTextWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.modalTitle {
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #000;
+}
+
+.modalText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: #000;
+}
+
+.modalNavWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  gap: 24px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1b391b;
+}
+
+.modalLink {
+  opacity: 1 !important;
+  border-radius: 6px;
+  padding: 12px;
+  width: 100%;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.modalLink.Login {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.modalLink.Register {
+  border: 1px solid #4a9849;
+  background: #4a9849;
+  color: #fff;
+}
+
+.modalLink.Login:hover,
+.modalLink.Login:focus {
+  border: 1px solid rgba(255, 255, 255, 0);
+  background: #4a9849;
+  color: #fff;
+}
+
+.modalLink.Login:active {
+  background: #254c24;
+  color: #fff;
+}
+
+.modalLink.Register:hover,
+.modalLink.Register:focus {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.05);
+  color: #1b391b;
+}
+
+.modalLink.Register:active {
+  background: #254c24;
+  color: #fff;
+}
+
 @media screen and (min-width: 768px) {
   .subtitle {
     font-weight: 700;
@@ -134,6 +225,15 @@
   .buttonAllStories.bot {
     display: none;
   }
+
+  .modalTitle{
+    font-size: 32px;
+  }
+
+  .modalNavWrapper{
+    flex-direction: row;
+    max-width: 430px;
+  }
 }
 
 @media screen and (min-width: 1440px) {
@@ -143,5 +243,17 @@
 
   .buttonAllStories.top {
     font-size: 20px;
+  }
+
+  .modalTitle{
+    font-size: 48px;
+  }
+
+  .modalText{
+    font-size: 20px;
+  }
+
+  .modalLink{
+    padding: 9px 12px;
   }
 }
