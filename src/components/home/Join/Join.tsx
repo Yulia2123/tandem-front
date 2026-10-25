@@ -27,11 +27,11 @@ export default function Join() {
             сталих мандрів та натхнення для нових маршрутів Україною.
           </p>
           {isAuthenticated ? (
-            <Link className={styles.joinButton} href="/profile">
+            <Link className={styles.joinButton} href="/auth/profile">
               Збережені статті
             </Link>
           ) : (
-            <Link className={styles.joinButton} href="/register">
+            <Link className={styles.joinButton} href="/auth/register">
               Зареєструватися
             </Link>
           )}
