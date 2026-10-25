@@ -1,11 +1,14 @@
 
 'use client';
 
-import { useState, type ChangeEvent } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent } from 'react';
+import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import toast from 'react-hot-toast';
 
 import { useCategories } from '@/lib/hooks/useCategories';
+import api from '@/lib/api/api';
 import styles from './AddStoryForm.module.css';
 
 type Category = {
@@ -18,6 +21,12 @@ type FormValues = {
   title: string;
   category: string;
   article: string;
+};
+
+type CreateStoryResponse = {
+  data?: {
+    _id?: string;
+  };
 };
 
 const initialValues: FormValues = {
@@ -47,8 +56,7 @@ const validationSchema = Yup.object({
     .min(2, 'Заголовок має містити щонайменше 2 символи')
     .max(40, 'Заголовок не може перевищувати 40 символів'),
 
-  category: Yup.string()
-    .required('Оберіть категорію'),
+  category: Yup.string().required('Оберіть категорію'),
 
   article: Yup.string()
     .trim()
@@ -58,62 +66,103 @@ const validationSchema = Yup.object({
 });
 
 export default function AddStoryForm() {
-  const [imagePreview, setImagePreview] = useState<string | null>(
-    null
-  );
+  const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  const { data: categories, isLoading: categoriesLoading } =
-    useCategories();
+  const {
+    data,
+    isLoading: categoriesLoading,
+    isError: categoriesError,
+  } = useCategories();
+
+  const categories: Category[] = Array.isArray(data?.categories)
+    ? data.categories
+    : [];
 
   const formik = useFormik<FormValues>({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      // Підключення до Backend додамо пізніше.
-      console.log('Форма пройшла перевірку:', {
-        title: values.title,
-        category: values.category,
-        article: values.article,
-        imageName: values.image?.name,
-      });
+    validateOnMount: true,
+
+    onSubmit: async (values) => {
+      if (!values.image) return;
+
+      const formData = new FormData();
+
+      formData.append('img', values.image);
+      formData.append('title', values.title.trim());
+      formData.append('category', values.category);
+      formData.append('article', values.article.trim());
+      formData.append('date', new Date().toISOString());
+
+      try {
+        const response = await api.post<CreateStoryResponse>(
+          '/stories',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+
+        const storyId = response.data?.data?._id;
+
+        if (!storyId) {
+          throw new Error('Backend не повернув ID створеної історії');
+        }
+
+        router.push(`/stories/${storyId}`);
+      } catch (error) {
+        console.error('Не вдалося зберегти історію:', error);
+
+        toast.error(
+          'Не вдалося зберегти історію. Перевірте дані та спробуйте ще раз.'
+        );
+      }
     },
   });
 
-  const handleImageChange = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
 
-    formik.setFieldValue('image', file);
-    formik.setFieldTouched('image', true, false);
+    void formik.setFieldValue('image', file);
+    void formik.setFieldTouched('image', true, false);
 
     if (!file || !file.type.startsWith('image/')) {
       setImagePreview(null);
       return;
     }
 
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      if (typeof reader.result === 'string') {
-        setImagePreview(reader.result);
-      }
-    };
-
-    reader.readAsDataURL(file);
+    setImagePreview(URL.createObjectURL(file));
   };
 
   const handleCancel = () => {
     formik.resetForm();
     setImagePreview(null);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   const isSaveDisabled =
-    !formik.isValid ||
     !formik.dirty ||
+    !formik.isValid ||
     !formik.values.image ||
     !formik.values.image.type.startsWith('image/') ||
-    formik.isSubmitting;
+    formik.isSubmitting ||
+    categoriesLoading ||
+    categories.length === 0;
 
   return (
     <form
@@ -121,7 +170,6 @@ export default function AddStoryForm() {
       onSubmit={formik.handleSubmit}
       noValidate
     >
-      {/* Обкладинка статті */}
       <div className={styles.field}>
         <label htmlFor="story-image">
           Обкладинка статті
@@ -170,6 +218,7 @@ export default function AddStoryForm() {
         </label>
 
         <input
+          ref={fileInputRef}
           id="story-image"
           name="image"
           type="file"
@@ -185,7 +234,6 @@ export default function AddStoryForm() {
         )}
       </div>
 
-      {/* Заголовок */}
       <div className={styles.field}>
         <label htmlFor="story-title">
           Заголовок
@@ -209,7 +257,6 @@ export default function AddStoryForm() {
         )}
       </div>
 
-      {/* Категорія */}
       <div className={styles.field}>
         <label htmlFor="story-category">
           Категорія
@@ -222,21 +269,32 @@ export default function AddStoryForm() {
           value={formik.values.category}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          disabled={categoriesLoading}
+          disabled={
+            categoriesLoading ||
+            categories.length === 0 ||
+            formik.isSubmitting
+          }
         >
           <option value="" disabled>
             {categoriesLoading
               ? 'Завантаження категорій...'
-              : 'Категорія'}
+              : categories.length === 0
+                ? 'Категорії недоступні'
+                : 'Категорія'}
           </option>
 
-          {Array.isArray(categories) &&
-            (categories as Category[]).map((item) => (
-              <option key={item._id} value={item._id}>
-                {item.category}
-              </option>
-            ))}
+          {categories.map((item) => (
+            <option key={item._id} value={item._id}>
+              {item.category}
+            </option>
+          ))}
         </select>
+
+        {categoriesError && (
+          <p className={styles.error} role="alert">
+            Не вдалося завантажити категорії.
+          </p>
+        )}
 
         {formik.touched.category && formik.errors.category && (
           <p className={styles.error} role="alert">
@@ -245,7 +303,6 @@ export default function AddStoryForm() {
         )}
       </div>
 
-      {/* Текст історії */}
       <div className={styles.field}>
         <label htmlFor="story-article">
           Текст історії
@@ -268,20 +325,23 @@ export default function AddStoryForm() {
         )}
       </div>
 
-      {/* Кнопки */}
       <div className={styles.actions}>
         <button
           type="submit"
           className={styles.saveButton}
           disabled={isSaveDisabled}
+          aria-busy={formik.isSubmitting}
         >
-          Зберегти
+          {formik.isSubmitting
+            ? 'Зберігаємо...'
+            : 'Зберегти'}
         </button>
 
         <button
           type="button"
           className={styles.cancelButton}
           onClick={handleCancel}
+          disabled={formik.isSubmitting}
         >
           Відмінити
         </button>

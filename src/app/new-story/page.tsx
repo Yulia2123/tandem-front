@@ -32,7 +32,7 @@ export default function NewStoryPage() {
       } catch {
         if (cancelled) return;
 
-        router.replace('/login');
+        router.replace('/auth/login');
       } finally {
         if (!cancelled) {
           setIsCheckingAuth(false);
