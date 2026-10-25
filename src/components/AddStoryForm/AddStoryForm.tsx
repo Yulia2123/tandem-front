@@ -3,12 +3,14 @@
 
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
-import Image from 'next/image';
+
 import { useCategories } from '@/lib/hooks/useCategories';
 import api from '@/lib/api/api';
+
 import styles from './AddStoryForm.module.css';
 
 type Category = {
@@ -170,25 +172,24 @@ export default function AddStoryForm() {
       onSubmit={formik.handleSubmit}
       noValidate
     >
+      {/* Обкладинка історії */}
       <div className={styles.field}>
-        <label htmlFor="story-image">
-          Обкладинка статті
-        </label>
+        <label htmlFor="story-image">Обкладинка статті</label>
 
         <div className={styles.imagePlaceholder}>
           {imagePreview ? (
-           <Image
-  src={imagePreview}
-  alt="Попередній перегляд обкладинки"
-  width={400}
-  height={300}
-  unoptimized
-  className={styles.previewImage}
-/>
+            <Image
+              src={imagePreview}
+              alt="Попередній перегляд обкладинки"
+              width={800}
+              height={480}
+              unoptimized
+              className={styles.previewImage}
+            />
           ) : (
             <svg
-              width="80"
-              height="80"
+              width="168"
+              height="168"
               viewBox="0 0 80 80"
               fill="none"
               aria-hidden="true"
@@ -237,10 +238,9 @@ export default function AddStoryForm() {
         )}
       </div>
 
+      {/* Заголовок */}
       <div className={styles.field}>
-        <label htmlFor="story-title">
-          Заголовок
-        </label>
+        <label htmlFor="story-title">Заголовок</label>
 
         <input
           id="story-title"
@@ -260,10 +260,9 @@ export default function AddStoryForm() {
         )}
       </div>
 
+      {/* Категорія */}
       <div className={styles.field}>
-        <label htmlFor="story-category">
-          Категорія
-        </label>
+        <label htmlFor="story-category">Категорія</label>
 
         <select
           id="story-category"
@@ -306,10 +305,9 @@ export default function AddStoryForm() {
         )}
       </div>
 
+      {/* Текст історії */}
       <div className={styles.field}>
-        <label htmlFor="story-article">
-          Текст історії
-        </label>
+        <label htmlFor="story-article">Текст історії</label>
 
         <textarea
           id="story-article"
@@ -328,6 +326,7 @@ export default function AddStoryForm() {
         )}
       </div>
 
+      {/* Кнопки */}
       <div className={styles.actions}>
         <button
           type="submit"
@@ -335,9 +334,7 @@ export default function AddStoryForm() {
           disabled={isSaveDisabled}
           aria-busy={formik.isSubmitting}
         >
-          {formik.isSubmitting
-            ? 'Зберігаємо...'
-            : 'Зберегти'}
+          {formik.isSubmitting ? 'Зберігаємо...' : 'Зберегти'}
         </button>
 
         <button

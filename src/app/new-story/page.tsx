@@ -40,7 +40,7 @@ export default function NewStoryPage() {
       }
     };
 
-    checkAuth();
+    void checkAuth();
 
     return () => {
       cancelled = true;
@@ -65,7 +65,7 @@ export default function NewStoryPage() {
     <main className={styles.page}>
       <div className={styles.content}>
         <div className={styles.title}>
-          <PageTitle>Створи нову історію</PageTitle>
+          <PageTitle>Створити нову історію</PageTitle>
         </div>
 
         <AddStoryForm />
