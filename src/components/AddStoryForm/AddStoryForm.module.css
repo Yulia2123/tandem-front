@@ -6,18 +6,22 @@
   flex-direction: column;
   gap: 20px;
   width: 100%;
+  max-width: 1091px;
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 0;
 }
 
 .field label {
-  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
   font-weight: 400;
-  color: var(--color-heading);
+  line-height: 1.5;
+  color: #1b391b;
 }
 
 /* Обкладинка статті */
@@ -26,15 +30,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   width: 100%;
   height: 240px;
-  margin-top: 0;
-  margin-bottom: 8px;
-
+  margin: 0 0 8px;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 12px;
   background-color: #dedede;
+}
+
+.imagePlaceholder svg {
+  width: 120px;
+  height: 120px;
+  max-width: 40%;
 }
 
 /* Попередній перегляд фото */
@@ -53,27 +60,24 @@
   align-items: center;
   justify-content: center;
   align-self: flex-start;
-
-  min-height: 36px;
-  padding: 8px 12px;
-
-  border: 1px solid #d0ddd0;
+  min-height: 38px;
+  padding: 4px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 6px;
-  background-color: #e5eee5;
-
-  color: #193b20;
-  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #1b391b;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
   font-weight: 400;
+  line-height: 1.5;
   cursor: pointer;
-
   transition:
     background-color 200ms ease,
     border-color 200ms ease;
 }
 
 .uploadButton:hover {
-  background-color: #d2e3d2;
-  border-color: #a9c4aa;
+  background-color: rgba(0, 0, 0, 0.09);
 }
 
 .uploadButton:focus-visible {
@@ -102,24 +106,32 @@
 .textarea {
   display: block;
   width: 100%;
-  padding: 10px 12px;
-
-  border: 1px solid #cbd5cb;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 6px;
   background-color: transparent;
-
-  font: inherit;
-  color: inherit;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1b391b;
 }
 
 .input,
 .select {
-  min-height: 40px;
+  height: 43px;
 }
 
 .textarea {
+  height: 180px;
   min-height: 180px;
   resize: vertical;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #737b73;
+  opacity: 1;
 }
 
 .input:focus-visible,
@@ -134,30 +146,29 @@
 .actions {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   margin-top: 16px;
 }
 
 .saveButton,
 .cancelButton {
   width: 100%;
-  min-height: 44px;
-  padding: 10px 20px;
-
+  min-height: 48px;
+  padding: 6px 12px;
   border: 1px solid transparent;
   border-radius: 6px;
-
-  font: inherit;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
   font-weight: 500;
+  line-height: 1.5;
   cursor: pointer;
-
   transition:
     background-color 200ms ease,
     border-color 200ms ease;
 }
 
 .saveButton {
-  background-color: #4b9950;
+  background-color: #4a9849;
   color: #ffffff;
 }
 
@@ -166,19 +177,19 @@
 }
 
 .saveButton:disabled {
-  background-color: #bedcc0;
+  background-color: rgba(74, 152, 73, 0.3);
   color: #ffffff;
   cursor: not-allowed;
 }
 
 .cancelButton {
-  background-color: #e5eee5;
-  color: #193b20;
-  border-color: #d0ddd0;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #1b391b;
+  border-color: rgba(0, 0, 0, 0.15);
 }
 
 .cancelButton:hover:not(:disabled) {
-  background-color: #d2e3d2;
+  background-color: rgba(0, 0, 0, 0.09);
 }
 
 .saveButton:focus-visible,
@@ -200,32 +211,28 @@
 
 @media screen and (min-width: 768px) {
   .imagePlaceholder {
-    height: 380px;
+    height: 480px;
   }
 
-  .textarea {
-    min-height: 200px;
+  .imagePlaceholder svg {
+    width: 168px;
+    height: 168px;
   }
 
   .actions {
     flex-direction: row;
-    gap: 12px;
   }
 
   .saveButton,
   .cancelButton {
-    width: 150px;
+    width: 203px;
   }
 }
 
-/* Ноутбук і десктоп */
+/* Десктоп */
 
 @media screen and (min-width: 1440px) {
   .imagePlaceholder {
-    height: 480px;
-  }
-
-  .textarea {
-    min-height: 220px;
+    height: 726px;
   }
 }

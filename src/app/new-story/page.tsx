@@ -4,8 +4,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+import Header from '@/components/layout/Header/Header';
+import Footer from '@/components/layout/Footer/Footer';
 import PageTitle from '@/components/common/PageTitle/PageTitle';
 import AddStoryForm from '@/components/AddStoryForm/AddStoryForm';
+
 import { getCurrentUser } from '@/lib/api/users';
 import { useAuthStore } from '@/lib/store/authStore';
 
@@ -62,14 +65,20 @@ export default function NewStoryPage() {
   }
 
   return (
-    <main className={styles.page}>
-      <div className={styles.content}>
-        <div className={styles.title}>
-          <PageTitle>Створити нову історію</PageTitle>
-        </div>
+    <>
+      <Header />
 
-        <AddStoryForm />
-      </div>
-    </main>
+      <main className={styles.page}>
+        <div className={styles.content}>
+          <div className={styles.title}>
+            <PageTitle>Створити нову історію</PageTitle>
+          </div>
+
+          <AddStoryForm />
+        </div>
+      </main>
+
+      <Footer />
+    </>
   );
 }
