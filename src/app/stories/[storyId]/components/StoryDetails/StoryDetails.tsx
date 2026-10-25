@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import Image from 'next/image';
-import styles from './StoryDetails.module.css';
+import Link from 'next/link';
 import { Story } from '@/types/story';
+import styles from './StoryDetails.module.css';
 
 interface StoryDetailsProps {
   story: Story;
@@ -10,52 +10,46 @@ interface StoryDetailsProps {
 
 export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
   return (
-    <article className={styles.article}>
-      {/* Зображення статті */}
-      {story.img && (
-        <div
-          style={{
-            position: 'relative',
-            width: '100%',
-            height: '223px',
-            borderRadius: '24px',
-            overflow: 'hidden',
-            marginBottom: '24px',
-          }}
-        >
+    <article className={styles.wrapper}>
+      {/* Десктопний флекс-ряд для верхньої частини */}
+      <div className={styles.topRow}>
+        <div className={styles.imageWrapper}>
           <Image
             src={story.img}
             alt={story.title}
             fill
-            style={{ objectFit: 'cover' }}
+            className={styles.image}
             priority
           />
         </div>
-      )}
 
-      {/* Кнопка назад зі стрілочкою */}
-      <Link href="/stories" className={styles.backLink}>
-        <span className={styles.backArrow}>‹</span> Всі статті
-      </Link>
+        <div className={styles.textContent}>
+          <Link href="/stories" className={styles.backLink}>
+            &lt; Всі статті
+          </Link>
 
-      <h1 className={styles.title}>{story.title}</h1>
+          <h2 className={styles.title}>{story.title}</h2>
 
-      {/* Блок метаданих */}
-      <div className={styles.metaInfo}>
-        <p>
-          <strong>Автор статті:</strong> {authorName}
-        </p>
-        <p>
-          <strong>Опубліковано:</strong> {story.date}
-        </p>
-
-        <div className={styles.categoryWrapper}>
-          <span className={styles.categoryTag}>Маршрути</span>
+          <div className={styles.metaContainer}>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Автор статті</span>{' '}
+              <span className={styles.metaValue}>{authorName}</span>
+            </div>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Опубліковано</span>{' '}
+              <span className={styles.metaValue}>
+                {story.date || '23.07.2025'}
+              </span>
+            </div>
+            <div className={styles.routeBadge}>Маршрути</div>
+          </div>
         </div>
       </div>
 
-      {/* Основний текст */}
-      <div className={styles.articleText}>{story.article}</div>
+      {/* Основний текст статті йде знизу */}
+      <div className={styles.articleContent}>
+        <p>{story.article}</p>
+      </div>
     </article>
   );
 }
