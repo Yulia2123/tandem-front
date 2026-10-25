@@ -32,8 +32,8 @@ function PopularStories() {
   const useStoriesParams: GetStoriesParams = {
     page: currentPage,
     perPage: 10,
-    popular: 'desc'
-  }
+    popular: 'desc',
+  };
 
   const {
     data: storiesData,
@@ -48,7 +48,6 @@ function PopularStories() {
   } = useAllUsers();
 
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
-
 
   const savedStoriesIds = isAuthenticated
     ? (savedStories?.data ?? []).map((story: Article) => story._id)
@@ -172,7 +171,7 @@ function PopularStories() {
         </Link>
         {isModalOpen && (
           <Modal onClose={closeModal}>
-            <div className={css.containerWrapper}>
+            <div className={css.modalContainerWrapper}>
               <div className={css.modalTextWrapper}>
                 <h2 className={css.modalTitle}>Помилка під час збереження</h2>
                 <p className={css.modalText}>
@@ -181,10 +180,16 @@ function PopularStories() {
                 </p>
               </div>
               <div className={css.modalNavWrapper}>
-                <Link className={`${css.modalLink} ${css.Login}`} href="/auth/login">
+                <Link
+                  className={`${css.modalLink} ${css.Login}`}
+                  href="/auth/login"
+                >
                   Увійти
                 </Link>
-                <Link className={`${css.modalLink} ${css.Register}`} href="/auth/register">
+                <Link
+                  className={`${css.modalLink} ${css.Register}`}
+                  href="/auth/register"
+                >
                   Зареєструватись
                 </Link>
               </div>
