@@ -13,6 +13,7 @@
   border-radius: 24px;
   overflow: hidden;
   margin-bottom: 24px;
+  order: 1;
 }
 
 .image {
@@ -94,6 +95,7 @@
 .textContent {
   display: flex;
   flex-direction: column;
+  order: 2;
 }
 
 @media screen and (min-width: 768px) {
@@ -130,25 +132,23 @@
   }
 
   .topRow {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     gap: 24px;
-    width: 100%;
-  }
+    }
 
   .textContent {
+    flex: 0 0 533px;
     order: 1;
-    display: flex;
-    flex-direction: column;
   }
 
   .imageWrapper {
+    flex: 0 0 755px;
     order: 2;
-    width: 100%;
+    width: 755px;
     height: auto;
     aspect-ratio: 755 / 502;
-    margin-bottom: 0; /* przy gridzie margines dolny nie jest potrzebny */
   }
 
   .backLink {

@@ -11,8 +11,8 @@ interface StoryDetailsProps {
 export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
   return (
     <article className={styles.wrapper}>
-      {/* Десктопний флекс-ряд для верхньої частини */}
       <div className={styles.topRow}>
+        {/* Картинка (на мобільному зверху завдяки порядку, на десктопі стає праворуч) */}
         <div className={styles.imageWrapper}>
           <Image
             src={story.img}
@@ -23,6 +23,7 @@ export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
           />
         </div>
 
+        {/* Текстовий блок (на мобільному знизу, на десктопі стає ліворуч) */}
         <div className={styles.textContent}>
           <Link href="/stories" className={styles.backLink}>
             &lt; Всі статті
@@ -46,7 +47,6 @@ export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
         </div>
       </div>
 
-      {/* Основний текст статті йде знизу */}
       <div className={styles.articleContent}>
         <p>{story.article}</p>
       </div>
