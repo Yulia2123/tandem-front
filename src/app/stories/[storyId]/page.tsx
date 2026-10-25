@@ -40,12 +40,8 @@ export default async function StoryPage({ params }: StoryPageProps) {
       <>
         <Header />
         <main
-          className="main"
-          style={{
-            padding: '80px 24px',
-            textAlign: 'center',
-            minHeight: '60vh',
-          }}
+          className="main section container"
+          style={{ minHeight: '60vh', textAlign: 'center' }}
         >
           <p style={{ fontSize: '20px', color: '#4b5563' }}>
             Така історія відсутня
@@ -59,15 +55,8 @@ export default async function StoryPage({ params }: StoryPageProps) {
   return (
     <>
       <Header />
-      <main
-        className="main"
-        style={{
-          padding: '40px 24px',
-          maxWidth: '800px',
-          margin: '0 auto',
-          minHeight: '60vh',
-        }}
-      >
+      {/* Використовуємо глобальні класи container та section для правильної сітки */}
+      <main className="main section container">
         {/* Компонент детальної інформації про історію */}
         <StoryDetails story={story} authorName={authorName} />
 

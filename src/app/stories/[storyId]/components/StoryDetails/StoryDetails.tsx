@@ -8,11 +8,21 @@ interface StoryDetailsProps {
   authorName: string;
 }
 
+const categoryMap: Record<string, string> = {
+  '6966a5cdbc1b90f344c2e0bd': 'Карпати',
+  '6966a5cdbc1b90f344c2e0c1': 'Полісся',
+  '6966a5cdbc1b90f344c2e0be': 'Національні парки',
+  '6966a5cdbc1b90f344c2e0c0': 'Озера та річки',
+  '6966a5cdbc1b90f344c2e0bf': 'Поділля',
+  '6966a5cdbc1b90f344c2e0bb': 'Еко-ферми та гастротури',
+  '6966a5cdbc1b90f344c2e0bc': 'Традиції та культура',
+};
+
 export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
   return (
-    <article className={styles.wrapper}>
+    <article className={`${styles.wrapper} container `}>
       <div className={styles.topRow}>
-        {/* Картинка (на мобільному зверху завдяки порядку, на десктопі стає праворуч) */}
+        {/* Картинка як звичайний елемент потоку без абсолютного позиціонування */}
         <div className={styles.imageWrapper}>
           <Image
             src={story.img}
@@ -23,7 +33,6 @@ export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
           />
         </div>
 
-        {/* Текстовий блок (на мобільному знизу, на десктопі стає ліворуч) */}
         <div className={styles.textContent}>
           <Link href="/stories" className={styles.backLink}>
             &lt; Всі статті
@@ -42,7 +51,9 @@ export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
                 {story.date || '23.07.2025'}
               </span>
             </div>
-            <div className={styles.routeBadge}>Маршрути</div>
+            <div className={styles.routeBadge}>
+              {categoryMap[story.category] || story.category}
+            </div>
           </div>
         </div>
       </div>

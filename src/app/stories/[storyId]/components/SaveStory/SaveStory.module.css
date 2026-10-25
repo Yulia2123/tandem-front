@@ -125,6 +125,27 @@
 
   .saveButton {
     width: auto;
-    min-width: 103px;
+    max-width: 103px;
+  }
+}
+
+/* Десктопна версія від 1440px */
+@media screen and (min-width: 1440px) {
+  .saveContainer {
+    max-width: 866px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .saveTitle {
+    font-size: 26px;
+  }
+  .saveDescription {
+    font-size: 18px;
+  }
+
+  .saveButton {
+    font-size: 20px;
+    max-width: 123px;
   }
 }

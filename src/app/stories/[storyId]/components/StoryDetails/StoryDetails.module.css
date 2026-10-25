@@ -2,14 +2,18 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 335px;
-  margin: 0 auto;
+}
+
+.topRow {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .imageWrapper {
   position: relative;
   width: 100%;
-  height: 223px;
+  aspect-ratio: 327 / 223;
   border-radius: 24px;
   overflow: hidden;
   margin-bottom: 24px;
@@ -17,7 +21,15 @@
 }
 
 .image {
+  width: 100%;
+  height: auto;
   object-fit: cover;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  order: 2;
 }
 
 .backLink {
@@ -82,30 +94,12 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
-.topRow {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-}
-
-.textContent {
-  display: flex;
-  flex-direction: column;
-  order: 2;
-}
-
+/* Планшетна версія */
 @media screen and (min-width: 768px) {
-  .wrapper {
-    max-width: 704px;
-  }
-
   .imageWrapper {
-    width: 100%;
-    max-width: 704px;
     height: auto;
     aspect-ratio: 704 / 468;
   }
@@ -117,38 +111,41 @@
   .metaContainer {
     gap: 16px;
   }
+
   .articleContent {
     margin-bottom: 24px;
   }
 }
 
+/* Десктопна версія від 1440px */
 @media screen and (min-width: 1440px) {
-  .wrapper {
-    max-width: 1440px;
-    padding: 48px 64px;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-  }
-
   .topRow {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     gap: 24px;
-    }
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 48px;
+  }
 
   .textContent {
     flex: 0 0 533px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
     order: 1;
+    margin-right: 24px;
   }
 
   .imageWrapper {
+    position: relative;
     flex: 0 0 755px;
-    order: 2;
-    width: 755px;
-    height: auto;
     aspect-ratio: 755 / 502;
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 0;
+    order: 2;
   }
 
   .backLink {
@@ -169,5 +166,9 @@
 
   .articleContent {
     font-size: 18px;
+    max-width: 865px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
