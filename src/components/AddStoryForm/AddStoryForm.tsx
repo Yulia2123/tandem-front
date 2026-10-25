@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
-
+import Image from 'next/image';
 import { useCategories } from '@/lib/hooks/useCategories';
 import api from '@/lib/api/api';
 import styles from './AddStoryForm.module.css';
@@ -177,11 +177,14 @@ export default function AddStoryForm() {
 
         <div className={styles.imagePlaceholder}>
           {imagePreview ? (
-            <img
-              src={imagePreview}
-              alt="Попередній перегляд обкладинки"
-              className={styles.previewImage}
-            />
+           <Image
+  src={imagePreview}
+  alt="Попередній перегляд обкладинки"
+  width={400}
+  height={300}
+  unoptimized
+  className={styles.previewImage}
+/>
           ) : (
             <svg
               width="80"
