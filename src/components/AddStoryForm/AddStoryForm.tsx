@@ -48,8 +48,8 @@ const validationSchema = Yup.object({
     )
     .test(
       'fileSize',
-      'Розмір зображення не повинен перевищувати 1 МБ',
-      (file) => !file || file.size <= 1024 * 1024
+      'Розмір зображення не повинен перевищувати 5 МБ',
+      (file) => !file || file.size <= 5 * 1024 * 1024
     ),
 
   title: Yup.string()
