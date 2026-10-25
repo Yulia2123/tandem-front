@@ -2,36 +2,48 @@
 
 // import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-// import { useAuthStore } from '@/lib/store/authStore';
-// import EditProfileModal from '@/components/EditProfileModal/EditProfileModal';
+import { useAuthStore } from '@/lib/store/authStore';
+import { logoutUser } from '@/lib/api/auth';
 
 import css from './AuthNavigation.module.css';
 
 export default function AuthNavigation() {
   const pathname = usePathname();
-  // false
-  // true
-  const isAuthenticated = true;
+  const router = useRouter();
+  const clearAuth = useAuthStore((state) => state.clearAuth);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  const user = {
-    _id: 'demo-user',
-    name: 'Ibrahim',
-    avatar: '',
-  };
-  // const isAuthenticated = useAuthStore(
-  //   (state) => state.isAuthenticated
-  // );
-  // const user = useAuthStore((state) => state.user);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const user = useAuthStore((state) => state.user);
 
   const profileHref = user?._id ? `/profile/${user._id}` : '/profile';
 
   const isLocationsCatalog =
-    pathname === '/locations' || /^\/stories\/[^/]+$/.test(pathname);
+    pathname === '/cataloges' || /^\/stories\/[^/]+$/.test(pathname);
 
   const [isOpen, setIsOpen] = useState(false);
-  // const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+
+    setIsLoggingOut(true);
+
+    try {
+      await logoutUser();
+    } catch {
+      return;
+    } finally {
+      setIsLoggingOut(false);
+    }
+
+    clearAuth();
+    setIsOpen(false);
+    router.replace('/');
+    router.refresh();
+  };
+
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
@@ -88,10 +100,8 @@ export default function AuthNavigation() {
           </Link>
 
           <Link
-            className={
-              pathname.startsWith('/travellers') ? css.active : css.link
-            }
-            href="/travellers"
+            className={pathname.startsWith('/users') ? css.active : css.link}
+            href="/users"
             onClick={() => setIsOpen(false)}
           >
             Еко-Мандрівники
@@ -127,7 +137,7 @@ export default function AuthNavigation() {
             <>
               <Link
                 className={`${css.button} ${css.buttonPrimary}`}
-                href="/auth/login"
+                href="/login"
                 onClick={() => setIsOpen(false)}
               >
                 Вхід
@@ -135,7 +145,7 @@ export default function AuthNavigation() {
 
               <Link
                 className={`${css.button} ${css.buttonSecondary}`}
-                href="/auth/register"
+                href="/register"
                 onClick={() => setIsOpen(false)}
               >
                 Реєстрація
@@ -182,7 +192,8 @@ export default function AuthNavigation() {
               type="button"
               className={css.iconButton}
               aria-label="Вийти"
-              disabled
+              onClick={handleLogout}
+              disabled={isLoggingOut}
             >
               <svg width="24" height="24" aria-hidden="true">
                 <use href="/sprite.svg#logout" />

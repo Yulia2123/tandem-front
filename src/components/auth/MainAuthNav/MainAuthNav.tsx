@@ -12,16 +12,16 @@ function MainAuthNav() {
       <nav aria-label="Main Navigation">
         <ul className={css.navigationList}>
           <li
-            className={`${css.navigationItems} ${pathname === '/register' ? css.accent : ''}`}
+            className={`${css.navigationItems} ${pathname === '/auth/register' ? css.accent : ''}`}
           >
-            <Link href="/register" className={css.link}>
+            <Link href="/auth/register" className={css.link}>
               Реєстрація
             </Link>
           </li>
           <li
-            className={`${css.navigationItems} ${pathname === '/login' ? css.accent : ''}`}
+            className={`${css.navigationItems} ${pathname === '/auth/login' ? css.accent : ''}`}
           >
-            <Link href="/login" className={css.link}>
+            <Link href="/auth/login" className={css.link}>
               Вхід
             </Link>
           </li>

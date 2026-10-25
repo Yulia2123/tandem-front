@@ -103,6 +103,35 @@
   height: 44px;
 }
 
+/* .submitButton:hover,
+.submitButton:focus{
+  background-color: #def2de;
+  color: #1b391b;
+}
+
+.submitButton:active{
+  background-color: #4a9849;
+  color: #fff; */
+
+.submitButton {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.submitButton:hover,
+.submitButton:focus-visible {
+  opacity: 1;
+  background-color: #def2de;
+  border-color: var(--color-primary);
+  color: var(--color-heading);
+}
+
+.submitButton:focus-visible {
+  outline: 2px solid var(--color-heading);
+  outline-offset: 2px;
+}
+
 @media screen and (min-width: 768px) {
   .subtitle {
     font-family: 'Montserrat', sans-serif;

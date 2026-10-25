@@ -2,11 +2,13 @@
 
 import * as Yup from 'yup';
 import css from '@/components/auth/LoginPage/LoginForm/LoginForm.module.css';
+import toast from 'react-hot-toast';
 import { useId, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRouter } from 'next/navigation';
 import { loginUser, LoginData } from '@/lib/api/auth';
 import { ApiError } from '@/lib/api/api';
+import { useAuthStore } from '@/lib/store/authStore';
 
 const INITIAL_VALUES: LoginData = {
   email: '',
@@ -15,35 +17,34 @@ const INITIAL_VALUES: LoginData = {
 
 const LoginUserFormSchema = Yup.object({
   email: Yup.string()
-    .max(64, 'Пошта занадто довга!')
-    .email('Такої пошти не існує!')
-    .required("Пошта обов'язкова!"),
+    .max(64, 'Пошта не повинна перевищувати 64 символи')
+    .email('Пошта введена не корректно, приклад: example@mail.com')
+    .required("Пошта обов'язкова"),
   password: Yup.string()
-    .min(8, 'Пароль занадто малий!')
-    .max(128, 'Пароль занадто довгий!')
-    .required("Пароль обов'язковий!"),
+    .min(8, 'Пароль повинен бути більше ніж 8 символів')
+    .max(128, 'Пароль не повинен перевищувати 128 символів')
+    .required("Пароль обов'язковий"),
 });
 
 function LoginForm() {
   const fieldId = useId();
   const router = useRouter();
-  const [serverError, setServerError] = useState('');
+  const setUser = useAuthStore((state) => state.setUser);
 
   const handleSubmit = async (values: LoginData) => {
     try {
-      const res = await loginUser(values);
+      const user = await loginUser(values);
 
-      if (res) {
-        router.push('/profile');
+      if (user) {
+        setUser(user);
+        toast.success(`Ви успішно увійшли!`)
+        router.push('/');
+        router.refresh();
       } else {
-        setServerError('Invalid email or password');
+        toast.error('Помилка логіну: неправильно введені дані користувача');
       }
     } catch (error) {
-      setServerError(
-        (error as ApiError).response?.data?.error ??
-          (error as ApiError).message ??
-          'Oops... some error',
-      );
+      toast.error('Помилка сервера: спробуйте залогінитись пізніше');
     }
   };
 
@@ -72,7 +73,11 @@ function LoginForm() {
                   touched.email && errors.email ? css.inputError : ''
                 }`}
               />
-              <ErrorMessage name="email" component="span" className={css.error} />
+              <ErrorMessage
+                name="email"
+                component="span"
+                className={css.error}
+              />
             </div>
 
             <div className={css.formGroup}>
@@ -92,8 +97,6 @@ function LoginForm() {
                 className={css.error}
               />
             </div>
-
-            {serverError && <div className={css.serverError}>{serverError}</div>}
 
             <div className={css.actions}>
               <button type="submit" className={css.submitButton}>

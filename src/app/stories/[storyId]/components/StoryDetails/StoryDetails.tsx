@@ -47,9 +47,7 @@ export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
             </div>
             <div className={styles.metaItem}>
               <span className={styles.metaLabel}>Опубліковано</span>{' '}
-              <span className={styles.metaValue}>
-                {story.date || '23.07.2025'}
-              </span>
+              <span className={styles.metaValue}>{story.date}</span>
             </div>
             <div className={styles.routeBadge}>
               {categoryMap[story.category] || story.category}

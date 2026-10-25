@@ -1,0 +1,259 @@
+.section {
+  padding: 64px 0;
+}
+
+.subtitle {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: #000;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.headerWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.containerStory {
+}
+
+.controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.controllers {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 12px;
+  width: 48px;
+  height: 48px;
+  background: #f2f2f2;
+  cursor: pointer;
+}
+
+.controllers:hover,
+.controllers:focus {
+  background: #def2de;
+}
+
+.controllers:active {
+  border: 1px solid #8dd18c;
+  background: #8dd18c;
+}
+
+.controllers:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: rgba(0, 0, 0, 0.1);
+  background: #e7ece8;
+}
+
+.controllerArrows {
+  width: 16px;
+  height: 16px;
+}
+
+.errorMessage {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #fdecec;
+  border: 1px solid #e57373;
+  color: #b3261e;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+}
+
+.buttonAllStories {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid #4a9849;
+  border-radius: 6px;
+  padding: 12px;
+  background: #4a9849;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #fff;
+  width: 100%;
+  opacity: 1;
+  text-decoration: none;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.buttonAllStories:hover,
+.buttonAllStories:focus {
+  border: 1px solid #4a9849;
+  background: #def2de;
+  color: #1b391b;
+}
+
+.buttonAllStories.bot {
+  display: flex;
+}
+
+.buttonAllStories:active {
+  opacity: 1;
+  border: 1px solid rgba(255, 255, 255, 0);
+  background: var(--color-heading);
+  color: #fff;
+}
+
+.containerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.modalTextWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.modalTitle {
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #000;
+}
+
+.modalText {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  color: #000;
+}
+
+.modalNavWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  gap: 24px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1b391b;
+}
+
+.modalLink {
+  opacity: 1 !important;
+  border-radius: 6px;
+  padding: 12px;
+  width: 100%;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.modalLink.Login {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.modalLink.Register {
+  border: 1px solid #4a9849;
+  background: #4a9849;
+  color: #fff;
+}
+
+.modalLink.Login:hover,
+.modalLink.Login:focus {
+  border: 1px solid rgba(255, 255, 255, 0);
+  background: #4a9849;
+  color: #fff;
+}
+
+.modalLink.Login:active {
+  background: #254c24;
+  color: #fff;
+}
+
+.modalLink.Register:hover,
+.modalLink.Register:focus {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.05);
+  color: #1b391b;
+}
+
+.modalLink.Register:active {
+  background: #254c24;
+  color: #fff;
+}
+
+@media screen and (min-width: 768px) {
+  .subtitle {
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #000;
+  }
+
+  .buttonAllStories.top {
+    display: flex;
+    padding: 9px 12px;
+    width: auto;
+  }
+
+  .buttonAllStories.bot {
+    display: none;
+  }
+
+  .modalTitle{
+    font-size: 32px;
+  }
+
+  .modalNavWrapper{
+    flex-direction: row;
+    max-width: 430px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .subtitle {
+    font-size: 52px;
+  }
+
+  .buttonAllStories.top {
+    font-size: 20px;
+  }
+
+  .modalTitle{
+    font-size: 48px;
+  }
+
+  .modalText{
+    font-size: 20px;
+  }
+
+  .modalLink{
+    padding: 9px 12px;
+  }
+}
