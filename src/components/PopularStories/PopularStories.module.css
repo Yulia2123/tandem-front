@@ -116,7 +116,7 @@
   color: #fff;
 }
 
-.containerWrapper {
+.modalContainerWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
