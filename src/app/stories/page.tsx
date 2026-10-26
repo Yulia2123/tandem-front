@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useStories } from '@/lib/hooks/useStories';
 import { useCategories } from '@/lib/hooks/useCategories';
+import Loader from '@/components/common/Loader/Loader';
 
 export default function StoriesPage() {
   const [page, setPage] = useState(1);
@@ -11,7 +12,7 @@ export default function StoriesPage() {
   const { data: categoriesData, isPending: categoriesPending } =
     useCategories();
 
-  const { data, isPending, isError } = useStories({
+  const { data, isPending, isFetching, isError } = useStories({
     page,
     perPage: 10,
     ...(category ? { category } : {}),
@@ -43,7 +44,9 @@ export default function StoriesPage() {
         ))}
       </select>
 
-      {isPending && <p>Завантаження історій...</p>}
+      {isFetching && !isPending && <Loader size="medium" />}
+
+      {isPending && <Loader size="large" />}
 
       {isError && <p>Не вдалося завантажити історії.</p>}
 

@@ -153,6 +153,9 @@
   justify-content: space-between;
   gap: 16px;
 }
+.inlineLoader {
+  padding: 0;
+}
 
 @media screen and (min-width: 1440px) {
   .containerWrapper {
