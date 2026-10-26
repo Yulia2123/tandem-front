@@ -16,10 +16,12 @@ import { useAuthStore } from '@/lib/store/authStore';
 import { Article } from '@/types/article';
 import Modal from '@/components/Modal/Modal';
 import { GetStoriesParams } from '@/lib/api/stories';
+import Loader from '@/components/common/Loader/Loader';
 
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loadingStoryId, setLoadingStoryId] = useState<string | null>(null);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -58,10 +60,9 @@ function PopularStories() {
       openModal();
       return;
     }
-
+    setLoadingStoryId(storyId);
     try {
       const isSaved = savedStoriesIds.includes(storyId);
-
       if (isSaved) {
         await removeSavedStory(storyId);
         toast.success('Історію видалено успішно');
@@ -73,10 +74,14 @@ function PopularStories() {
       toast.error(
         'Помилка при зміні статусу збереження, спробуйте знову пізніше',
       );
+    } finally {
+      setLoadingStoryId(null);
     }
   };
 
-  if (isLoading || isUsersLoading) return <p>Завантаження історій...</p>;
+  if (isLoading || isUsersLoading) {
+    return <Loader size="large" />;
+  }
   if (isError || isUsersError) return <p>Помилка при завантаженні даних.</p>;
 
   const stories = storiesData?.stories ?? [];
@@ -114,7 +119,8 @@ function PopularStories() {
                   stories={[story]}
                   owners={ownersData?.users}
                   isSavedStoryIds={savedStoriesIds}
-                  isLoading={isSaveStoryLoading || isRemoveStoryLoading}
+                  // isLoading={isSaveStoryLoading || isRemoveStoryLoading}
+                  isLoading={loadingStoryId === story._id}
                   onSaveStory={() => handleSaveStory(story._id)}
                 />
               </SwiperSlide>

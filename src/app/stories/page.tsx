@@ -21,6 +21,7 @@ import css from './page.module.css';
 
 import Header from '@/components/layout/Header/Header';
 import Footer from '@/components/layout/Footer/Footer';
+import Loader from '@/components/common/Loader/Loader';
 
 export default function StoriesPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -64,6 +65,10 @@ export default function StoriesPage() {
     perPage: isDesktop ? 9 : 8,
     category: selectedCategory || undefined,
     popular: 'desc',
+    // const { data, isPending, isFetching, isError } = useStories({
+    //   page,
+    //   perPage: 10,
+    //   ...(category ? { category } : {}),
   });
 
   const {
@@ -121,9 +126,13 @@ export default function StoriesPage() {
           <div className={`container ${css.container}`}>
             <h1 className={css.title}>Статті</h1>
 
-            {isCategoriesLoading && (
+            {/* {isCategoriesLoading && (
               <p role="status">Завантаження категорій...</p>
-            )}
+            )} */}
+
+            {/* {isFetching && !isPending && <Loader size="medium" />}
+
+      {isPending && <Loader size="large" />} */}
 
             {isCategoriesError && (
               <p role="alert">

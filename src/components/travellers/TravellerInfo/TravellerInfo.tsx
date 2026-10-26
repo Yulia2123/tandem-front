@@ -9,6 +9,7 @@ type Props = {
   children?: ReactNode;
   variant?: 'card' | 'profile';
   isPriority?: boolean;
+  className?: string;
 };
 
 export default function TravellerInfo({
@@ -18,9 +19,10 @@ export default function TravellerInfo({
   children,
   variant = 'profile',
   isPriority = false,
+  className = '',
 }: Props) {
   return (
-    <div className={`${styles.wrapper} ${styles[variant]}`}>
+    <div className={`${styles.wrapper} ${styles[variant]} ${className}`}>
       <div className={styles.avatarWrapper}>
         <Avatar
           src={avatar}
@@ -33,7 +35,7 @@ export default function TravellerInfo({
 
       <div className={styles.content}>
         <div className={styles.title}>
-            <h3 className={styles.name}>{name}</h3>
+          <h3 className={styles.name}>{name}</h3>
         </div>
         <p className={styles.meta}>Статей: {storiesCount}</p>
       </div>

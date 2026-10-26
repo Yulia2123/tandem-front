@@ -19,6 +19,8 @@
 }
 
 .image {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   width: 100%;
   height: 100%;
   border-top-left-radius: 12px;
@@ -153,6 +155,9 @@
   justify-content: space-between;
   gap: 16px;
 }
+.inlineLoader {
+  padding: 0;
+}
 
 @media screen and (min-width: 768px) {
   .item {
@@ -170,9 +175,6 @@
   .containerWrapper {
     max-width: 424px;
     max-height: 633px;
-  }
-
-  .image {
   }
 
   .subtitle {
