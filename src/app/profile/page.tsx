@@ -1,7 +1,5 @@
+import { redirect } from 'next/navigation';
+
 export default function ProfilePage() {
-  return (
-    <main>
-      <h1>Мій профіль</h1>
-    </main>
-  );
+  redirect('/profile/saved');
 }
