@@ -4,18 +4,18 @@ import css from '@/components/PopularStories/PopularStories.module.css';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import StoryCard from '@/components/StoryCard/StoryCard';
-import { getStories } from '@/lib/api/stories';
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { Swiper as SwiperInstance } from 'swiper';
-import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { getAllUsers } from '@/lib/api/users';
+import { useStories } from '@/lib/hooks/useStories';
+import { useAllUsers } from '@/lib/hooks/useAllUsers';
 import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
 import { useSaveFavoriteStory } from '@/lib/hooks/useSaveFavoriteStory';
 import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories';
 import { useAuthStore } from '@/lib/store/authStore';
 import { Article } from '@/types/article';
 import Modal from '@/components/Modal/Modal';
+import { GetStoriesParams } from '@/lib/api/stories';
 
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,29 +29,26 @@ function PopularStories() {
   const { removeSavedStory, isLoading: isRemoveStoryLoading } =
     useDeleteFavoriteStory();
   const { savedStories } = useGetSavedStories();
-
-  const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
+  const useStoriesParams: GetStoriesParams = {
+    page: currentPage,
+    perPage: 10,
+    popular: 'desc'
+  }
 
   const {
     data: storiesData,
     isLoading,
     isError,
-  } = useQuery({
-    queryKey: ['stories', currentPage],
-    queryFn: () =>
-      getStories({ page: currentPage, perPage: 10, popular: 'desc' }),
-    placeholderData: keepPreviousData,
-  });
+  } = useStories(useStoriesParams);
 
   const {
     data: ownersData,
     isLoading: isUsersLoading,
     isError: isUsersError,
-  } = useQuery({
-    queryKey: ['users'],
-    queryFn: () => getAllUsers(),
-    placeholderData: keepPreviousData,
-  });
+  } = useAllUsers();
+
+  const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
+
 
   const savedStoriesIds = isAuthenticated
     ? (savedStories?.data ?? []).map((story: Article) => story._id)

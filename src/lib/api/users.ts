@@ -16,7 +16,7 @@ export interface UsersResponse {
 
 export const getCurrentUser = async () => {
   const response = await api.get('/users/me');
-  return response.data;
+  return response.data.user;
 };
 
 export const getCurrentUserStories = async (
@@ -46,7 +46,9 @@ export const getUserProfile = async (userId: string) => {
   return response.data;
 };
 
-export const getAllUsers = async (params: GetUsersParams = {}): Promise<UsersResponse> => {
+export const getAllUsers = async (
+  params: GetUsersParams = {},
+): Promise<UsersResponse> => {
   const response = await api.get(`/users/`, { params });
   return response.data;
 };

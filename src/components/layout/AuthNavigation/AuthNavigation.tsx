@@ -140,7 +140,7 @@ export default function AuthNavigation() {
             <>
               <Link
                 className={`${css.button} ${css.buttonPrimary}`}
-                href="/login"
+                href="auth/login"
                 onClick={() => setIsOpen(false)}
               >
                 Вхід
@@ -148,7 +148,7 @@ export default function AuthNavigation() {
 
               <Link
                 className={`${css.button} ${css.buttonSecondary}`}
-                href="/register"
+                href="auth/register"
                 onClick={() => setIsOpen(false)}
               >
                 Реєстрація
@@ -160,37 +160,30 @@ export default function AuthNavigation() {
         {/*Block for un-authuser*/}
         {isAuthenticated && (
           <div className={css.profile}>
-            {/*
-            {user?.avatar ? (
-              <Image
-                className={css.avatar}
-                src={user.avatar}
-                width={32}
-                height={32}
-                alt=""
-              />
-            ) : (
-              <span className={css.avatarFallback}>
-                {user?.name?.charAt(0) || 'U'}
-              </span>
-            )}
-            */}
-
-            {/* sometimes user avatar (A) */}
             <button
               type="button"
               className={css.profileButton}
               aria-label="Профіль користувача"
-              // onClick={() => setIsProfileModalOpen(true)}
             >
-              <span className={css.avatarFallback}>
-                {user?.name?.charAt(0) || 'U'}
-              </span>
+              {user?.avatar ? (
+                <img
+                  className={css.avatar}
+                  src={user.avatar}
+                  alt=""
+                  width={32}
+                  height={32}
+                />
+              ) : (
+                <span className={css.avatarFallback}>
+                  {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                </span>
+              )}
 
               <span className={css.name}>{user?.name}</span>
             </button>
 
             <span className={css.divider} aria-hidden="true" />
+
             <button
               type="button"
               className={css.iconButton}
@@ -202,14 +195,6 @@ export default function AuthNavigation() {
                 <use href="/sprite.svg#logout" />
               </svg>
             </button>
-
-            {/*
-            {isProfileModalOpen && (
-              <EditProfileModal
-                onClose={() => setIsProfileModalOpen(false)}
-              />
-            )}
-            */}
           </div>
         )}
       </nav>

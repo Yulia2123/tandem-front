@@ -22,7 +22,13 @@
 }
 
 .link {
+  display: flex;
   border: none;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
 }
 
 .accent {
