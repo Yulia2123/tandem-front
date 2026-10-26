@@ -1,0 +1,218 @@
+
+/* Збережені історії */
+
+.section {
+  width: 100%;
+  min-width: 0;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  width: 100%;
+  min-width: 0;
+}
+
+.card {
+    display: flex;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Кнопка «Показати ще» */
+.loadMoreWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 32px;
+}
+
+.loadMoreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 6px 12px;
+  border: 1px solid #4a9849;
+  border-radius: 6px;
+  background-color: #4a9849;
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.loadMoreButton:hover {
+  background-color: var(--color-background-card);
+  color: var(--color-heading);
+}
+
+.loadMoreButton:focus-visible {
+  outline: 2px solid var(--color-heading);
+  outline-offset: 3px;
+}
+
+.loadMoreButton:active {
+  background-color: var(--color-primary-hover);
+  color: var(--color-white);
+}
+
+.loadMoreButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loadMoreButtonText {
+  color: inherit;
+  font-size: 16px;
+  font-weight: var(--font-medium);
+  line-height: 24px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Повідомлення */
+.message {
+  width: 100%;
+  padding: 32px 16px;
+  color: var(--color-heading);
+  text-align: center;
+}
+
+/* Модальне вікно */
+.containerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+}
+
+.modalTextWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.modalTitle {
+  color: var(--color-black);
+  font-size: 26px;
+  font-weight: var(--font-bold);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+.modalText {
+  color: var(--color-black);
+  font-size: 16px;
+  font-weight: var(--font-regular);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.modalNavWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  font-size: 16px;
+  font-weight: var(--font-medium);
+  line-height: 1.5;
+}
+
+.modalLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.Login {
+  border-color: var(--color-border);
+  background-color: var(--color-background-card);
+  color: var(--color-heading);
+}
+
+.Register {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.Login:hover,
+.Login:focus-visible {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.Register:hover,
+.Register:focus-visible {
+  background-color: var(--color-background-card);
+  color: var(--color-heading);
+}
+
+.Login:focus-visible,
+.Register:focus-visible {
+  outline: 2px solid var(--color-heading);
+  outline-offset: 3px;
+}
+
+@media screen and (min-width: 768px) {
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+    row-gap: 32px;
+  }
+
+  .loadMoreButton {
+    width: 335px;
+  }
+
+  .modalNavWrapper {
+    flex-direction: row;
+    max-width: 430px;
+  }
+
+  .modalTitle {
+    font-size: 32px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .modalTitle {
+    font-size: 48px;
+  }
+
+  .modalText {
+    font-size: 20px;
+  }
+
+  .modalLink {
+    padding: 9px 12px;
+  }
+}

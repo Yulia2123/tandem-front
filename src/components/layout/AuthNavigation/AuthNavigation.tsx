@@ -18,7 +18,7 @@ export default function AuthNavigation() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const user = useAuthStore((state) => state.user);
 
-  const profileHref = user?._id ? `/profile/${user._id}` : '/profile';
+  const profileHref = '/profile';
 
   const isLocationsCatalog =
     pathname === '/cataloges' || /^\/stories\/[^/]+$/.test(pathname);
