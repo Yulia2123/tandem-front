@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/lib/store/authStore';
 import { logoutUser } from '@/lib/api/auth';
+import ActionModal from '@/components/Modal/ActionModal';
 
 import css from './AuthNavigation.module.css';
 
@@ -14,6 +15,7 @@ export default function AuthNavigation() {
   const router = useRouter();
   const clearAuth = useAuthStore((state) => state.clearAuth);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const user = useAuthStore((state) => state.user);
@@ -39,6 +41,7 @@ export default function AuthNavigation() {
     }
 
     clearAuth();
+    setIsLogoutModalOpen(false);
     setIsOpen(false);
     router.replace('/');
     router.refresh();
@@ -185,7 +188,7 @@ export default function AuthNavigation() {
               type="button"
               className={css.iconButton}
               aria-label="Вийти"
-              onClick={handleLogout}
+              onClick={() => setIsLogoutModalOpen(true)}
               disabled={isLoggingOut}
             >
               <svg width="24" height="24" aria-hidden="true">
@@ -195,6 +198,13 @@ export default function AuthNavigation() {
           </div>
         )}
       </nav>
+      {isLogoutModalOpen && (
+        <ActionModal
+          onClose={() => setIsLogoutModalOpen(false)}
+          onConfirm={handleLogout}
+          isSubmitting={isLoggingOut}
+        />
+      )}
     </div>
   );
 }

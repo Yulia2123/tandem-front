@@ -1,100 +1,101 @@
 .container {
-    width: 100%;
-    max-width: 1312px;
-    margin: 0 auto;
-    padding: 0 20px;
+  width: 100%;
+  max-width: 1312px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .loadMoreWrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
 }
 
 .list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 .title {
-    margin: 0 0 24px;
-    text-align: center;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 1.1;
-    color: #000;
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #000;
 }
 
 .loadMoreButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    padding-block: 6px;
-    padding-inline: 12px;
-    width: 133px;
-    height: 48px;
-    border: 1px solid #4a9849;
-    border-radius: 6px;
-    background-color: transparent;
-    color: #222222;
-    background-color: #4a9849;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-block: 6px;
+  padding-inline: 12px;
+  width: 133px;
+  height: 48px;
+  border: 1px solid #4a9849;
+  border-radius: 6px;
+  background-color: transparent;
+  color: #222222;
+  background-color: #4a9849;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .loadMoreButton:hover,
 .loadMoreButton:focus-visible {
-    background-color: #def2de;
-    border: 1px solid #4a9849;
+  background-color: #def2de;
+  border: 1px solid #4a9849;
 }
 
 .loadMoreButton:hover,
 .loadMoreButton:focus-visible {
-    color: #1b391b;
+  color: #1b391b;
 }
 
 .loadMoreButton:disabled {
-    background-color: #4a9849;
-    opacity: 0.3;
-    border: 1px solid #4a9849;
+  background-color: #4a9849;
+  opacity: 0.3;
+  border: 1px solid #4a9849;
 }
 
 .loadMoreButtonText {
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .loadMoreButtonText:hover,
 .loadMoreButtonText:focus-visible {
-    color: #1b391b;
+  color: #1b391b;
 }
 
+.inlineLoader {
+  padding: 0;
+}
 
 @media screen and (min-width: 768px) {
-    .list {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 24px;
-    }
+  .list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
 
-    .title {
-        font-size: 44px;
-    }
+  .title {
+    font-size: 44px;
+  }
 }
 
-
 @media screen and (min-width: 1440px) {
-    .list {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 32px;
-    }
-
+  .list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 32px;
+  }
 }

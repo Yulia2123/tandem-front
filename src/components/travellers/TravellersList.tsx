@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useTravellers } from '@/lib/hooks/useTravellers';
 import TravellerCard from './TravellerCard';
 import styles from './TravellersList.module.css';
-
+import Loader from '@/components/common/Loader/Loader';
 export default function TravellersList() {
   const {
     data,
@@ -23,7 +23,7 @@ export default function TravellersList() {
   }, [isError]);
 
   if (isPending) {
-    return <p role="status">Завантаження мандрівників...</p>;
+    return <Loader size="large" />;
   }
 
   if (isError && !data) {
@@ -64,7 +64,7 @@ export default function TravellersList() {
               disabled={isFetchingNextPage}
             >
               {isFetchingNextPage ? (
-                'Завантаження...'
+                <Loader size="small" className={styles.inlineLoader} />
               ) : (
                 <span className={styles.loadMoreButtonText}>Показати ще</span>
               )}

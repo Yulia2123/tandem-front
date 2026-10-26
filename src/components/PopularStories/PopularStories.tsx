@@ -16,10 +16,12 @@ import { useAuthStore } from '@/lib/store/authStore';
 import { Article } from '@/types/article';
 import Modal from '@/components/Modal/Modal';
 import { GetStoriesParams } from '@/lib/api/stories';
+import Loader from '@/components/common/Loader/Loader';
 
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loadingStoryId, setLoadingStoryId] = useState<string | null>(null);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -32,8 +34,8 @@ function PopularStories() {
   const useStoriesParams: GetStoriesParams = {
     page: currentPage,
     perPage: 10,
-    popular: 'desc'
-  }
+    popular: 'desc',
+  };
 
   const {
     data: storiesData,
@@ -49,7 +51,6 @@ function PopularStories() {
 
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
 
-
   const savedStoriesIds = isAuthenticated
     ? (savedStories?.data ?? []).map((story: Article) => story._id)
     : [];
@@ -59,10 +60,9 @@ function PopularStories() {
       openModal();
       return;
     }
-
+    setLoadingStoryId(storyId);
     try {
       const isSaved = savedStoriesIds.includes(storyId);
-
       if (isSaved) {
         await removeSavedStory(storyId);
         toast.success('Історію видалено успішно');
@@ -74,10 +74,14 @@ function PopularStories() {
       toast.error(
         'Помилка при зміні статусу збереження, спробуйте знову пізніше',
       );
+    } finally {
+      setLoadingStoryId(null);
     }
   };
 
-  if (isLoading || isUsersLoading) return <p>Завантаження історій...</p>;
+  if (isLoading || isUsersLoading) {
+    return <Loader size="large" />;
+  }
   if (isError || isUsersError) return <p>Помилка при завантаженні даних.</p>;
 
   const stories = storiesData?.stories ?? [];
@@ -115,7 +119,8 @@ function PopularStories() {
                   stories={[story]}
                   owners={ownersData?.users}
                   isSavedStoryIds={savedStoriesIds}
-                  isLoading={isSaveStoryLoading || isRemoveStoryLoading}
+                  // isLoading={isSaveStoryLoading || isRemoveStoryLoading}
+                  isLoading={loadingStoryId === story._id}
                   onSaveStory={() => handleSaveStory(story._id)}
                 />
               </SwiperSlide>
@@ -181,10 +186,16 @@ function PopularStories() {
                 </p>
               </div>
               <div className={css.modalNavWrapper}>
-                <Link className={`${css.modalLink} ${css.Login}`} href="/auth/login">
+                <Link
+                  className={`${css.modalLink} ${css.Login}`}
+                  href="/auth/login"
+                >
                   Увійти
                 </Link>
-                <Link className={`${css.modalLink} ${css.Register}`} href="/auth/register">
+                <Link
+                  className={`${css.modalLink} ${css.Register}`}
+                  href="/auth/register"
+                >
                   Зареєструватись
                 </Link>
               </div>

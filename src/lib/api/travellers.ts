@@ -1,5 +1,4 @@
-
-import travellersData from '@/data/travellers.json';
+import api from '@/lib/api/api';
 
 export interface Traveller {
   _id: string;
@@ -16,41 +15,35 @@ export interface TravellersResponse {
   travellers: Traveller[];
 }
 
-interface JsonTraveller {
-  _id: string | { $oid: string };
-  name: string;
-  avatarUrl: string;
-  articlesAmount: number;
-}
-
 export interface GetTravellersParams {
   page?: number;
   perPage?: number;
 }
 
-const travellers: Traveller[] = (
-  travellersData as JsonTraveller[]
-).map((traveller) => ({
-  ...traveller,
-  _id:
-    typeof traveller._id === 'string'
-      ? traveller._id
-      : traveller._id.$oid,
-}));
+interface ApiTravellersResponse {
+  page: number;
+  perPage: number;
+  totalItems: number;
+  totalPages: number;
+  users: Traveller[];
+}
 
 export async function getTravellers({
   page = 1,
-  perPage = 10,
+  perPage = 12,
 }: GetTravellersParams = {}): Promise<TravellersResponse> {
-  const totalItems = travellers.length;
-  const totalPages = Math.ceil(totalItems / perPage);
-  const startIndex = (page - 1) * perPage;
+  const response = await api.get<ApiTravellersResponse>('/users', {
+    params: {
+      page,
+      perPage,
+    },
+  });
 
   return {
-    page,
-    perPage,
-    totalItems,
-    totalPages,
-    travellers: travellers.slice(startIndex, startIndex + perPage),
+    page: response.data.page,
+    perPage: response.data.perPage,
+    totalItems: response.data.totalItems,
+    totalPages: response.data.totalPages,
+    travellers: response.data.users,
   };
 }
