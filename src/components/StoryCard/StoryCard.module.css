@@ -23,6 +23,8 @@
   border-top-right-radius: 12px;
   width: 100%;
   height: 100%;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 .containerWrapper {
@@ -157,7 +159,19 @@
   padding: 0;
 }
 
+@media screen and (min-width: 768px) {
+  .item {
+    width: calc((100% - 24px) / 2);
+    width: 340px;
+  }
+}
+
 @media screen and (min-width: 1440px) {
+  .item {
+    width: calc((100% - 24px) / 3);
+    width: 421px;
+  }
+
   .containerWrapper {
     max-width: 424px;
     max-height: 633px;
