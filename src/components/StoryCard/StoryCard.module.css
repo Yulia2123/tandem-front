@@ -61,7 +61,7 @@
   color: #1b391b;
 }
 
-.svgRate{
+.svgRate {
   width: 10px;
   height: 12px;
   fill: #000;
@@ -158,9 +158,6 @@
   .containerWrapper {
     max-width: 424px;
     max-height: 633px;
-  }
-
-  .image {
   }
 
   .subtitle {
