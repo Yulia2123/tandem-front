@@ -12,6 +12,7 @@ interface StoryListProps {
   isSavedStoryIds?: string[];
   isLoading: boolean;
   onSaveStory: (storyId: string) => void;
+  className?: string;
 }
 
 function StoryCard({
@@ -20,6 +21,7 @@ function StoryCard({
   isSavedStoryIds = [],
   isLoading = false,
   onSaveStory,
+  className,
 }: StoryListProps) {
   function truncateText(text: string, maxLength: number) {
     if (text.length <= maxLength) return text;
@@ -27,7 +29,7 @@ function StoryCard({
   }
 
   return (
-    <ul className={css.list}>
+    <ul className={`${css.list} ${className ?? ''}`}>
       {stories.map((story) => {
         const owner = owners.find(
           (owner) => String(owner._id) === String(story.ownerId),
@@ -52,7 +54,7 @@ function StoryCard({
                 </p>
                 <span className={css.rate}>{story.rate}</span>
                 <svg
-                className={css.svgRate}
+                  className={css.svgRate}
                   width="10"
                   height="12"
                   viewBox="0 0 10 12"

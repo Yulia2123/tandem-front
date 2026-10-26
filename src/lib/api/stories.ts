@@ -23,6 +23,7 @@ export interface GetStoriesParams {
   perPage?: number;
   category?: string;
   popular?: 'asc' | 'desc';
+  ownerId?: string;
 }
 
 export async function getStories(
