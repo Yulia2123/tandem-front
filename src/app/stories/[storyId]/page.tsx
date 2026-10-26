@@ -4,7 +4,8 @@ import { getStoryById, getUserById } from '@/lib/api/api';
 import { Story } from '@/types/story';
 import StoryDetails from './components/StoryDetails/StoryDetails';
 import SaveStory from './components/SaveStory/SaveStory';
-//import RecomendedStories from './components/RecomendedStories/RecomendedStories';
+import RecomendedStories from './components/RecomendedStories/RecomendedStories';
+import styles from './StoryPage.module.css'; // Імпортуємо наш модуль
 
 interface StoryPageProps {
   params: Promise<{
@@ -34,13 +35,12 @@ export default async function StoryPage({ params }: StoryPageProps) {
     console.error('Помилка завантаження історії:', error);
   }
 
-  // Якщо дані відсутні в БД — виводимо текст згідно з ТЗ
   if (!story) {
     return (
       <>
         <Header />
         <main
-          className="main section container"
+          className={styles.pageContainer}
           style={{ minHeight: '60vh', textAlign: 'center' }}
         >
           <p style={{ fontSize: '20px', color: '#4b5563' }}>
@@ -55,16 +55,11 @@ export default async function StoryPage({ params }: StoryPageProps) {
   return (
     <>
       <Header />
-      {/* Використовуємо глобальні класи container та section для правильної сітки */}
-      <main className="main section container">
-        {/* Компонент детальної інформації про історію */}
+      {/* Використовуємо наш власний ідеальний контейнер без сторонніх конфліктів */}
+      <main className={styles.pageContainer}>
         <StoryDetails story={story} authorName={authorName} />
-
-        {/* Блок збереження історії */}
         <SaveStory storyId={storyId} />
-
-        {/* Блок рекомендованих історій */}
-        {/* <RecomendedStories /> */}
+        <RecomendedStories storyId={story._id} />
       </main>
       <Footer />
     </>

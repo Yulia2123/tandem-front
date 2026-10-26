@@ -12,7 +12,7 @@ const api = axios.create({
 
 export const getStoryById = async (storyId: string): Promise<Story> => {
   const response = await api.get<{ story: Story }>(`/stories/${storyId}`);
-  return response.data.story; // Додали .story на кінці!
+  return response.data.story;
 };
 
 export const getUserById = async (userId: string) => {

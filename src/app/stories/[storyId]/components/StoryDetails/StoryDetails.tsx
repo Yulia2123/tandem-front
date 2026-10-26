@@ -1,6 +1,10 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Story } from '@/types/story';
+import { getCategories, Category } from '@/lib/api/categories';
 import styles from './StoryDetails.module.css';
 
 interface StoryDetailsProps {
@@ -9,20 +13,65 @@ interface StoryDetailsProps {
 }
 
 export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
-  // 1-й Варіант: Динамічно отримуємо назву з об'єкта категорії або використовуємо рядок
-  const categoryName =
-    typeof story.category === 'object' && story.category !== null
-      ? story.category.name
-      : story.category;
+  const getInitialCategoryName = () => {
+    if (typeof story.category === 'object' && story.category !== null) {
+      return (story.category as unknown as Category).name || '';
+    }
+    // Якщо маємо тільки ID, спершу показуємо статус завантаження замість сирого айдішника
+    return 'Завантаження...';
+  };
+
+  const [categoryName, setCategoryName] = useState<string>(
+    getInitialCategoryName(),
+  );
+
+  useEffect(() => {
+    const fetchCategoryName = async () => {
+      if (typeof story.category === 'object' && story.category !== null) return;
+      if (!story.category) {
+        setCategoryName('');
+        return;
+      }
+
+      try {
+        const response = await getCategories();
+
+        const categoriesList = Array.isArray(response)
+          ? response
+          : response.categories || response.data || [];
+
+        const found = categoriesList.find(
+          (cat: Category) => cat._id === story.category,
+        );
+
+        if (found) {
+          const realCategoryName = found.name || found.title || found.category;
+          if (realCategoryName) {
+            setCategoryName(realCategoryName);
+            return;
+          }
+        }
+
+        // Якщо раптом не знайшли в списку, залишаємо ID як запасний варіант
+        setCategoryName(story.category as string);
+      } catch (error) {
+        console.error('Помилка завантаження категорій:', error);
+        setCategoryName(story.category as string);
+      }
+    };
+
+    fetchCategoryName();
+  }, [story.category]);
 
   return (
-    <article className={`${styles.wrapper} container `}>
+    <article className={`${styles.wrapper}`}>
       <div className={styles.topRow}>
         <div className={styles.imageWrapper}>
           <Image
             src={story.img}
             alt={story.title}
             fill
+            sizes="100vw"
             className={styles.image}
             priority
           />
