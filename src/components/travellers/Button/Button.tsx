@@ -1,31 +1,63 @@
 'use client';
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+
+import Link from 'next/link';
+import type {
+  ButtonHTMLAttributes,
+  ComponentPropsWithoutRef,
+  ReactNode,
+} from 'react';
+
 import styles from './Button.module.css';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+
+type ButtonProps = {
   children: ReactNode;
-  variant?: 'primary' | 'secondary' | 'tertiary';
-  isLoading?: boolean;
-}
+  variant?: ButtonVariant;
+  className?: string;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
+
+type ButtonLinkProps = {
+  children: ReactNode;
+  href: string;
+  variant?: ButtonVariant;
+  className?: string;
+} & Omit<ComponentPropsWithoutRef<typeof Link>, 'href'>;
 
 export const Button = ({
   children,
   variant = 'primary',
-  isLoading,
   className = '',
+  type = 'button',
   disabled,
   ...props
 }: ButtonProps) => {
-  const buttonClass = `${styles.button} ${styles[variant]} ${className}`;
-
   return (
     <button
-      className={buttonClass}
-      disabled={isLoading || disabled}
-      aria-busy={isLoading || undefined}
+      type={type}
+      className={`${styles.button} ${styles[variant]} ${className}`}
+      disabled={disabled}
       {...props}
     >
-      {isLoading ? 'Завантаження...' : children}
+      {children}
     </button>
+  );
+};
+
+export const ButtonLink = ({
+  children,
+  href,
+  variant = 'primary',
+  className = '',
+  ...props
+}: ButtonLinkProps) => {
+  return (
+    <Link
+      href={href}
+      className={`${styles.button} ${styles[variant]} ${className}`}
+      {...props}
+    >
+      {children}
+    </Link>
   );
 };

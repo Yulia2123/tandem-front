@@ -1,0 +1,179 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 20px;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: min(100%, 335px);
+  padding: 64px 16px 16px;
+  border-radius: 24px;
+  background: var(--color-background);
+  color: var(--color-black);
+}
+
+.closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  border-radius: 6px;
+  color: var(--color-black);
+}
+
+.closeButton:hover:not(:disabled),
+.closeButton:focus-visible:not(:disabled) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.closeButton:disabled {
+  cursor: wait;
+  opacity: 0.5;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  text-align: center;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: var(--font-bold);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.description {
+  max-width: 640px;
+  font-size: 16px;
+  font-weight: var(--font-regular);
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.secondaryButton,
+.primaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: var(--font-medium);
+  line-height: 1.5;
+  text-align: center;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.secondaryButton {
+  border-color: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-heading);
+}
+
+.primaryButton {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.secondaryButton:hover:not(:disabled),
+.secondaryButton:focus-visible:not(:disabled) {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.primaryButton:hover:not(:disabled),
+.primaryButton:focus-visible:not(:disabled) {
+  border-color: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-heading);
+}
+
+.secondaryButton:active:not(:disabled),
+.primaryButton:active:not(:disabled) {
+  border-color: #254c24;
+  background: #254c24;
+  color: var(--color-white);
+}
+
+.secondaryButton:disabled,
+.primaryButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (min-width: 768px) {
+  .backdrop {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  .modal {
+    width: min(100%, 704px);
+    padding: 64px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .actions {
+    flex-direction: row;
+    width: 430px;
+  }
+
+  .secondaryButton,
+  .primaryButton {
+    flex: 1;
+  }
+}
+
+@media (min-width: 1440px) {
+  .modal {
+    width: min(100%, 768px);
+  }
+
+  .title {
+    font-size: 48px;
+    letter-spacing: -0.02em;
+  }
+
+  .description,
+  .secondaryButton,
+  .primaryButton {
+    font-size: 20px;
+  }
+}

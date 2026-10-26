@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/lib/store/authStore';
 import { logoutUser } from '@/lib/api/auth';
+import ActionModal from '@/components/Modal/ActionModal';
 
 import css from './AuthNavigation.module.css';
 
@@ -14,11 +15,12 @@ export default function AuthNavigation() {
   const router = useRouter();
   const clearAuth = useAuthStore((state) => state.clearAuth);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const user = useAuthStore((state) => state.user);
 
-  const profileHref = user?._id ? `/profile/${user._id}` : '/profile';
+  const profileHref = '/profile';
 
   const isLocationsCatalog =
     pathname === '/cataloges' || /^\/stories\/[^/]+$/.test(pathname);
@@ -39,6 +41,7 @@ export default function AuthNavigation() {
     }
 
     clearAuth();
+    setIsLogoutModalOpen(false);
     setIsOpen(false);
     router.replace('/');
     router.refresh();
@@ -137,7 +140,7 @@ export default function AuthNavigation() {
             <>
               <Link
                 className={`${css.button} ${css.buttonPrimary}`}
-                href="/login"
+                href="auth/login"
                 onClick={() => setIsOpen(false)}
               >
                 Вхід
@@ -145,7 +148,7 @@ export default function AuthNavigation() {
 
               <Link
                 className={`${css.button} ${css.buttonSecondary}`}
-                href="/register"
+                href="auth/register"
                 onClick={() => setIsOpen(false)}
               >
                 Реєстрація
@@ -157,59 +160,51 @@ export default function AuthNavigation() {
         {/*Block for un-authuser*/}
         {isAuthenticated && (
           <div className={css.profile}>
-            {/*
-            {user?.avatar ? (
-              <Image
-                className={css.avatar}
-                src={user.avatar}
-                width={32}
-                height={32}
-                alt=""
-              />
-            ) : (
-              <span className={css.avatarFallback}>
-                {user?.name?.charAt(0) || 'U'}
-              </span>
-            )}
-            */}
-
-            {/* sometimes user avatar (A) */}
             <button
               type="button"
               className={css.profileButton}
               aria-label="Профіль користувача"
-              // onClick={() => setIsProfileModalOpen(true)}
             >
-              <span className={css.avatarFallback}>
-                {user?.name?.charAt(0) || 'U'}
-              </span>
+              {user?.avatar ? (
+                <img
+                  className={css.avatar}
+                  src={user.avatar}
+                  alt=""
+                  width={32}
+                  height={32}
+                />
+              ) : (
+                <span className={css.avatarFallback}>
+                  {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                </span>
+              )}
 
               <span className={css.name}>{user?.name}</span>
             </button>
 
             <span className={css.divider} aria-hidden="true" />
+
             <button
               type="button"
               className={css.iconButton}
               aria-label="Вийти"
-              onClick={handleLogout}
+              onClick={() => setIsLogoutModalOpen(true)}
               disabled={isLoggingOut}
             >
               <svg width="24" height="24" aria-hidden="true">
                 <use href="/sprite.svg#logout" />
               </svg>
             </button>
-
-            {/*
-            {isProfileModalOpen && (
-              <EditProfileModal
-                onClose={() => setIsProfileModalOpen(false)}
-              />
-            )}
-            */}
           </div>
         )}
       </nav>
+      {isLogoutModalOpen && (
+        <ActionModal
+          onClose={() => setIsLogoutModalOpen(false)}
+          onConfirm={handleLogout}
+          isSubmitting={isLoggingOut}
+        />
+      )}
     </div>
   );
 }

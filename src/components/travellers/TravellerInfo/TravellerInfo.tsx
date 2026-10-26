@@ -1,44 +1,47 @@
-import type { ReactNode } from 'react';
+import Image from 'next/image';
+import type { User } from '@/types/user';
 import styles from './TravellerInfo.module.css';
-import { Avatar } from '@/components/travellers/Avatar/Avatar';
 
-type Props = {
-  name: string;
-  avatar: string;
-  storiesCount: number;
-  children?: ReactNode;
+interface TravellerInfoProps {
+  user: User;
   variant?: 'card' | 'profile';
   isPriority?: boolean;
-};
+  className?: string;
+}
 
 export default function TravellerInfo({
-  name,
-  avatar,
-  storiesCount,
-  children,
+  user,
   variant = 'profile',
   isPriority = false,
-}: Props) {
+  className = '',
+}: TravellerInfoProps) {
   return (
-    <div className={`${styles.wrapper} ${styles[variant]}`}>
+    <div className={`${styles.wrapper} ${styles[variant]} ${className}`}>
       <div className={styles.avatarWrapper}>
-        <Avatar
-          src={avatar}
-          alt={name}
-          size={130}
-          className={styles.avatar}
-          isPriority={isPriority}
-        />
+        {user.avatar ? (
+          <Image
+            className={styles.avatar}
+            src={user.avatar}
+            alt={`Аватар ${user.name}`}
+            width={96}
+            height={96}
+            priority={isPriority}
+          />
+        ) : (
+          <div className={styles.avatarPlaceholder} aria-hidden="true">
+            {user.name.charAt(0).toUpperCase()}
+          </div>
+        )}
       </div>
 
       <div className={styles.content}>
         <div className={styles.title}>
-            <h3 className={styles.name}>{name}</h3>
+          <h1 className={styles.name}>{user.name}</h1>
         </div>
-        <p className={styles.meta}>Статей: {storiesCount}</p>
+        <p className={styles.meta}>
+          Мої історії: {user.articlesAmount ?? 0}
+        </p>
       </div>
-
-      <div className={styles.actions}>{children}</div>
     </div>
   );
 }
