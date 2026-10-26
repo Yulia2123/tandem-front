@@ -31,6 +31,8 @@ type CreateStoryResponse = {
   };
 };
 
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+
 const initialValues: FormValues = {
   image: null,
   title: '',
@@ -49,7 +51,7 @@ const validationSchema = Yup.object({
     .test(
       'fileSize',
       'Розмір зображення не повинен перевищувати 5 МБ',
-      (file) => !file || file.size <= 5 * 1024 * 1024
+      (file) => !file || file.size <= MAX_IMAGE_SIZE
     ),
 
   title: Yup.string()
@@ -137,13 +139,36 @@ export default function AddStoryForm() {
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
 
-    void formik.setFieldValue('image', file);
-    void formik.setFieldTouched('image', true, false);
+    setImagePreview(null);
 
-    if (!file || !file.type.startsWith('image/')) {
-      setImagePreview(null);
+    if (!file) {
+      void formik.setFieldValue('image', null);
+      void formik.setFieldTouched('image', true, false);
       return;
     }
+
+    const isValidType = file.type.startsWith('image/');
+    const isValidSize = file.size <= MAX_IMAGE_SIZE;
+
+    if (!isValidType || !isValidSize) {
+      void formik.setFieldValue('image', null);
+      void formik.setFieldTouched('image', true, false);
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+
+      toast.error(
+        !isValidType
+          ? 'Оберіть файл зображення'
+          : 'Розмір зображення не повинен перевищувати 5 МБ'
+      );
+
+      return;
+    }
+
+    void formik.setFieldValue('image', file);
+    void formik.setFieldTouched('image', true, false);
 
     setImagePreview(URL.createObjectURL(file));
   };
