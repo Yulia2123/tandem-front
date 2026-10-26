@@ -8,21 +8,16 @@ interface StoryDetailsProps {
   authorName: string;
 }
 
-const categoryMap: Record<string, string> = {
-  '6966a5cdbc1b90f344c2e0bd': 'Карпати',
-  '6966a5cdbc1b90f344c2e0c1': 'Полісся',
-  '6966a5cdbc1b90f344c2e0be': 'Національні парки',
-  '6966a5cdbc1b90f344c2e0c0': 'Озера та річки',
-  '6966a5cdbc1b90f344c2e0bf': 'Поділля',
-  '6966a5cdbc1b90f344c2e0bb': 'Еко-ферми та гастротури',
-  '6966a5cdbc1b90f344c2e0bc': 'Традиції та культура',
-};
-
 export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
+  // 1-й Варіант: Динамічно отримуємо назву з об'єкта категорії або використовуємо рядок
+  const categoryName =
+    typeof story.category === 'object' && story.category !== null
+      ? story.category.name
+      : story.category;
+
   return (
     <article className={`${styles.wrapper} container `}>
       <div className={styles.topRow}>
-        {/* Картинка як звичайний елемент потоку без абсолютного позиціонування */}
         <div className={styles.imageWrapper}>
           <Image
             src={story.img}
@@ -49,9 +44,7 @@ export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
               <span className={styles.metaLabel}>Опубліковано</span>{' '}
               <span className={styles.metaValue}>{story.date}</span>
             </div>
-            <div className={styles.routeBadge}>
-              {categoryMap[story.category] || story.category}
-            </div>
+            <div className={styles.routeBadge}>{categoryName}</div>
           </div>
         </div>
       </div>
