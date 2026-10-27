@@ -7,7 +7,6 @@ import Header from '@/components/layout/Header/Header';
 import Footer from '@/components/layout/Footer/Footer';
 import TravellerInfo from '@/components/travellers/TravellerInfo/TravellerInfo';
 import PageTitle from '@/components/common/PageTitle/PageTitle';
-import MessageNoStories from '@/components/travellers/MessageNoStories/MessageNoStories';
 import TravellerStories from '@/components/story/TravellersStories/TravellerStories';
 import { getUserProfile } from '@/lib/api/users';
 import styles from './page.module.css';

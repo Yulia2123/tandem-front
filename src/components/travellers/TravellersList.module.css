@@ -20,15 +20,6 @@
   list-style: none;
 }
 
-.title {
-  margin: 0 0 24px;
-  text-align: center;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.1;
-  color: #000;
-}
-
 .loadMoreButton {
   display: flex;
   align-items: center;
@@ -86,10 +77,6 @@
   .list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
-  }
-
-  .title {
-    font-size: 44px;
   }
 }
 
