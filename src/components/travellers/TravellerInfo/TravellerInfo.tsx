@@ -1,12 +1,29 @@
 import Image from 'next/image';
-import type { User } from '@/types/user';
+import type { ReactNode } from 'react';
+// import type { User } from '@/types/user';
 import styles from './TravellerInfo.module.css';
 
+// interface TravellerInfoProps {
+//   user: User;
+//   variant?: 'card' | 'profile';
+//   isPriority?: boolean;
+//   className?: string;
+//   children?: ReactNode;
+// }
+
+interface TravellerInfoUser {
+  _id?: string;
+  name: string;
+  avatar?: string;
+  articlesAmount?: number;
+}
+
 interface TravellerInfoProps {
-  user: User;
+  user: TravellerInfoUser;
   variant?: 'card' | 'profile';
   isPriority?: boolean;
   className?: string;
+  children?: ReactNode;
 }
 
 export default function TravellerInfo({
@@ -14,6 +31,7 @@ export default function TravellerInfo({
   variant = 'profile',
   isPriority = false,
   className = '',
+  children,
 }: TravellerInfoProps) {
   return (
     <div className={`${styles.wrapper} ${styles[variant]} ${className}`}>
@@ -38,9 +56,10 @@ export default function TravellerInfo({
         <div className={styles.title}>
           <h1 className={styles.name}>{user.name}</h1>
         </div>
-        <p className={styles.meta}>
-          Мої історії: {user.articlesAmount ?? 0}
-        </p>
+
+        <p className={styles.meta}>Мої історії: {user.articlesAmount ?? 0}</p>
+
+        {children}
       </div>
     </div>
   );

@@ -18,9 +18,12 @@ export default function TravellerCard({ traveller, compact }: Props) {
   return (
     <div className={styles.card}>
       <TravellerInfo
-        name={traveller.name}
-        avatar={traveller.avatarUrl}
-        storiesCount={traveller.articlesAmount}
+        user={{
+          _id: traveller._id,
+          name: traveller.name,
+          avatar: traveller.avatarUrl,
+          articlesAmount: traveller.articlesAmount,
+        }}
         variant="card"
       >
         <CustomLink
