@@ -62,6 +62,11 @@
   gap: 40px;
 }
 
+.storiesGrid {
+  width: 100%;
+  min-width: 0;
+}
+
 /* Tablet */
 @media screen and (min-width: 768px) {
   .profileInfo > div:first-child {
@@ -73,6 +78,10 @@
   .profileInfo > div:first-child img {
     width: 145px;
     height: 145px;
+  }
+
+  .storiesGrid > div > ul {
+    row-gap: 40px;
   }
 }
 

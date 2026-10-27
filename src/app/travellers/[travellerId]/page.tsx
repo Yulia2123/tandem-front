@@ -40,9 +40,10 @@ export default function TravellerProfilePage() {
             {traveller && (
               <>
                 <TravellerInfo
-                  name={traveller.name}
-                  avatar={traveller.avatarUrl}
-                  storiesCount={traveller.articlesAmount}
+                  user={{
+                    ...traveller,
+                    avatar: traveller.avatar ?? traveller.avatarUrl,
+                  }}
                   variant="profile"
                   isPriority
                   className={styles.profileInfo}
@@ -50,8 +51,9 @@ export default function TravellerProfilePage() {
 
                 <div className={styles.stories}>
                   <PageTitle>Історії Мандрівника</PageTitle>
-
-                  <TravellerStories travellerId={travellerId} />
+                  <div className={styles.storiesGrid}>
+                    <TravellerStories travellerId={travellerId} />
+                  </div>
                 </div>
               </>
             )}
