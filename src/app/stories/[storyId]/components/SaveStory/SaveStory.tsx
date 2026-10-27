@@ -1,48 +1,64 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Loader from '@/components/common/Loader/Loader';
+import Modal from '@/components/Modal/Modal';
+import { useSaveFavoriteStory } from '@/lib/hooks/useSaveFavoriteStory';
+import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
+import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories';
 import styles from './SaveStory.module.css';
 
 interface SaveStoryProps {
   storyId: string;
-  initialIsSaved?: boolean;
-  isLoggedIn?: boolean; // Статус авторизації
+  isLoggedIn?: boolean;
 }
 
 export default function SaveStory({
   storyId,
-  initialIsSaved = false,
   isLoggedIn = false,
 }: SaveStoryProps) {
-  const [isSaved, setIsSaved] = useState<boolean>(initialIsSaved);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const { savedStories } = useGetSavedStories();
+
+  const isAlreadySaved = Array.isArray(savedStories)
+    ? savedStories.some(
+        (story: { _id?: string; id?: string }) =>
+          story._id === storyId || story.id === storyId,
+      )
+    : false;
+
+  const [isSaved, setIsSaved] = useState<boolean>(isAlreadySaved);
+
+  useEffect(() => {
+    setIsSaved(isAlreadySaved);
+  }, [isAlreadySaved]);
+
+  const { saveStory, isLoading: isSaving } = useSaveFavoriteStory();
+  const { removeSavedStory, isLoading: isDeleting } = useDeleteFavoriteStory();
+
+  const isLoading = isSaving || isDeleting;
+
   const handleSaveClick = async () => {
-    // Очищаємо попередню помилку перед новим кліком
     setErrorMessage(null);
 
-    // 1. Якщо користувач не авторизований — відкриваємо локальну модалку
     if (!isLoggedIn) {
       setIsModalOpen(true);
       return;
     }
 
-    setIsLoading(true);
     try {
-      console.log(`Обробка історії з ID: ${storyId}`);
-
-      // Імітація запиту до сервера (тут буде твій реальний API-запит)
-      await new Promise((resolve) => setTimeout(resolve, 600));
-
+      if (isSaved) {
+        await removeSavedStory(storyId);
+      } else {
+        await saveStory(storyId);
+      }
       setIsSaved((prev) => !prev);
-    } catch (error) {
-      console.error('Помилка збереження історії:', error);
-      // 2. Виводимо помилку локально під кнопкою замість глобальних тостів
-      setErrorMessage('Не вдалося зберегти історію. Спробуйте пізніше.');
-    } finally {
-      setIsLoading(false);
+    } catch {
+      setErrorMessage(
+        'Не вдалося оновити статус збереження. Спробуйте пізніше.',
+      );
     }
   };
 
@@ -58,26 +74,21 @@ export default function SaveStory({
         disabled={isLoading}
         className={styles.saveButton}
       >
-        {isLoading
-          ? 'Завантаження...'
-          : isSaved
-            ? 'Видалити зі збережених'
-            : 'Зберегти'}
+        {isLoading ? (
+          <Loader size="small" />
+        ) : isSaved ? (
+          'Видалити зі збережених'
+        ) : (
+          'Зберегти'
+        )}
       </button>
 
-      {/* Локальне виведення тексту помилки, якщо запит впав */}
       {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
 
-      {/* Тимчасова локальна модалка для неавторизованих */}
+      {/* Використовуємо глобальний компонент Modal */}
       {isModalOpen && (
-        <div
-          className={styles.modalBackdrop}
-          onClick={() => setIsModalOpen(false)}
-        >
-          <div
-            className={styles.modalContent}
-            onClick={(e) => e.stopPropagation()}
-          >
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <div className={styles.modalContentInner}>
             <p className={styles.modalText}>
               Будь ласка, увійдіть у свій профіль, щоб зберігати цікаві історії.
             </p>
@@ -88,7 +99,7 @@ export default function SaveStory({
               Зрозуміло
             </button>
           </div>
-        </div>
+        </Modal>
       )}
     </div>
   );

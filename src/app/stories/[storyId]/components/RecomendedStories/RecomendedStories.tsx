@@ -43,8 +43,7 @@ export default function RecommendedStories({
           try {
             const userData = await getUserById(id as string);
             return userData.user || userData;
-          } catch (e) {
-            console.error(`Не вдалося завантажити автора з id ${id}:`, e);
+          } catch {
             return null;
           }
         });
@@ -54,11 +53,11 @@ export default function RecommendedStories({
           (owner): owner is User => owner !== null,
         );
 
-        // 4. Оновлюємо обидва стейти ОСЬ ТУТ — одночасно вкінці!
+        // 4. Оновлюємо обидва стейти
         setRecommended(storiesList);
         setOwners(validOwners);
-      } catch (error) {
-        console.error('Помилка завантаження даних:', error);
+      } catch {
+        // Тихо обробляємо помилку без виведення в консоль
       } finally {
         setIsLoading(false);
       }
@@ -82,9 +81,7 @@ export default function RecommendedStories({
             owners={owners}
             stories={recommended}
             isLoading={isLoading}
-            onSaveStory={(id) => {
-              console.log('Зберегти історію:', id);
-            }}
+            onSaveStory={() => {}}
           />
         </div>
       </div>

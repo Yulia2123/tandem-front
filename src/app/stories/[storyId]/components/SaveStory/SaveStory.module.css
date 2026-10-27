@@ -10,6 +10,8 @@
   gap: 16px;
   box-sizing: border-box;
   position: relative;
+  margin-left: auto; /* Центруємо блок по горизонталі на мобільних */
+  margin-right: auto; /* Центруємо блок по горизонталі на мобільних */
   margin-bottom: 32px;
 }
 
@@ -122,6 +124,8 @@
     border-radius: 24px;
     padding: 32px;
     gap: 16px;
+    margin-left: auto; /* Зберігаємо центрування на планшеті */
+    margin-right: auto; /* Зберігаємо центрування на планшеті */
   }
 
   .saveButton {

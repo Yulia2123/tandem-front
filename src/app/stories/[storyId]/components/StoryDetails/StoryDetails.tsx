@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Story } from '@/types/story';
-import { getCategories, Category } from '@/lib/api/categories';
+import { getCategories } from '@/lib/api/categories';
 import styles from './StoryDetails.module.css';
 
 interface StoryDetailsProps {
@@ -12,12 +12,18 @@ interface StoryDetailsProps {
   authorName: string;
 }
 
+interface CategoryItem {
+  _id?: string;
+  name?: string;
+  title?: string;
+  category?: string;
+}
+
 export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
   const getInitialCategoryName = () => {
     if (typeof story.category === 'object' && story.category !== null) {
-      return (story.category as unknown as Category).name || '';
+      return (story.category as CategoryItem).name || '';
     }
-    // Якщо маємо тільки ID, спершу показуємо статус завантаження замість сирого айдішника
     return 'Завантаження...';
   };
 
@@ -38,10 +44,10 @@ export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
 
         const categoriesList = Array.isArray(response)
           ? response
-          : response.categories || response.data || [];
+          : response.categories || [];
 
         const found = categoriesList.find(
-          (cat: Category) => cat._id === story.category,
+          (cat: CategoryItem) => cat._id === story.category,
         );
 
         if (found) {
@@ -52,10 +58,8 @@ export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
           }
         }
 
-        // Якщо раптом не знайшли в списку, залишаємо ID як запасний варіант
         setCategoryName(story.category as string);
-      } catch (error) {
-        console.error('Помилка завантаження категорій:', error);
+      } catch {
         setCategoryName(story.category as string);
       }
     };
