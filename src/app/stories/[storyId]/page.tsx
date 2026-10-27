@@ -16,16 +16,17 @@ interface StoryPageProps {
 export default async function StoryPage({ params }: StoryPageProps) {
   const { storyId } = await params;
   let story: Story | null = null;
-  let authorName: string = 'Анастасія Олійник';
+  let authorName = '';
 
   try {
     story = await getStoryById(storyId);
 
     if (story?.ownerId) {
       try {
-        const user = await getUserById(story.ownerId);
-        if (user && user.name) {
-          authorName = user.name;
+        const userData = await getUserById(story.ownerId);
+
+        if (userData?.user?.name) {
+          authorName = userData.user.name;
         }
       } catch (userError) {
         console.error('Не вдалося завантажити автора:', userError);
