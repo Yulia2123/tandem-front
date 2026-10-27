@@ -149,6 +149,10 @@
   height: 17px;
 }
 
+.svgHidden {
+  visibility: hidden;
+}
+
 .actions {
   display: flex;
   flex-direction: row;
