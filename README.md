@@ -37,7 +37,7 @@
 | Ганна Анікєєва | [annaanikeeva2020-tech](https://github.com/annaanikeeva2020-tech) | Сторінка "Мандрівники", Our Travellers |
 | Дарина Бігос | [darina-bigos](https://github.com/darina-bigos) | About, сторінка перегляд істроії |
 | Марія Попелянець | [mariia-popelianets](https://github.com/mariia-popelianets) | Loader, Join |
-| Максим Шкубяк | [maksym-skubiak](https://github.com/maksym-skubiak) | Сесія: підтвердження виходу |
+| Максим Скуб'як | [maksym-skubiak](https://github.com/maksym-skubiak) | Сесія: підтвердження виходу |
 | Владислава Довбиш | [vlada-dovbysh](https://github.com/vlada-dovbysh) | Сторінка-профіль "Збережені / Мої історії" |
 | Савелій Положенцев | [Zeven221](https://github.com/Zeven221) | Сторінка профіль, «Показати ще» |
 | Аміна Стаднік | [aminastadnik718-ctrl](https://github.com/aminastadnik718-ctrl) | Сторінка "Створення історії" |

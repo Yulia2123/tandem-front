@@ -1,6 +1,5 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { removeSavedStory } from "../api/users";
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { removeSavedStory } from '../api/users';
 
 export function useDeleteFavoriteStory() {
   const queryClient = useQueryClient();

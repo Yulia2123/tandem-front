@@ -1,6 +1,5 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { saveStory } from "../api/users";
-
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { saveStory } from '../api/users';
 
 export function useSaveFavoriteStory() {
   const queryClient = useQueryClient();

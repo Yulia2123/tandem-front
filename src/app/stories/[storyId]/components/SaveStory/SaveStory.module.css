@@ -1,0 +1,157 @@
+.saveContainer {
+  background-color: #def2de;
+  border-radius: 24px;
+  border: 0px solid rgba(0, 0, 0, 0.15);
+  padding: 32px 16px;
+  width: 100%;
+  max-width: 335px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+  position: relative;
+  margin-left: auto; /* Центруємо блок по горизонталі на мобільних */
+  margin-right: auto; /* Центруємо блок по горизонталі на мобільних */
+  margin-bottom: 32px;
+}
+
+.saveTitle {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--color-heading, #000);
+}
+
+.saveDescription {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text, #000);
+}
+
+.saveButton {
+  background-color: var(--color-primary, #4a9849);
+  color: var(--color-white, #fff);
+  border: 1px solid var(--color-primary, #4a9849);
+  border-radius: 6px;
+  padding: 12px 12px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition:
+    background-color var(--transition-base, 0.2s ease),
+    color var(--transition-base, 0.2s ease),
+    border var(--transition-base, 0.2s ease);
+}
+
+.saveButton:hover,
+.saveButton:focus {
+  background-color: #def2de;
+  color: var(--color-heading, #1b391b);
+  border: 1px solid #1b391b;
+}
+
+.saveButton:active {
+  background: #254c24;
+  border: 1px solid rgba(255, 255, 255, 0);
+  color: var(--color-white, #fff);
+}
+
+.saveButton:disabled {
+  border: 1px solid #4a9849;
+  background: #4a9849;
+  opacity: 0.3;
+  color: var(--color-white, #fff);
+  cursor: not-allowed;
+}
+
+.errorMessage {
+  font-size: 13px;
+  color: #d32f2f;
+  margin-top: -8px;
+}
+
+/* Стилі для тимчасової локальної модалки */
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  max-width: 300px;
+  width: 90%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modalText {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text, #374151);
+}
+
+.modalCloseButton {
+  background: var(--color-primary, #4a9849);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+@media screen and (min-width: 768px) {
+  .saveContainer {
+    max-width: 704px;
+    border-radius: 24px;
+    padding: 32px;
+    gap: 16px;
+    margin-left: auto; /* Зберігаємо центрування на планшеті */
+    margin-right: auto; /* Зберігаємо центрування на планшеті */
+  }
+
+  .saveButton {
+    width: auto;
+    max-width: 103px;
+  }
+}
+
+/* Десктопна версія від 1440px */
+@media screen and (min-width: 1440px) {
+  .saveContainer {
+    max-width: 866px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 48px;
+  }
+  .saveTitle {
+    font-size: 26px;
+  }
+  .saveDescription {
+    font-size: 18px;
+  }
+
+  .saveButton {
+    font-size: 20px;
+    max-width: 123px;
+  }
+}
