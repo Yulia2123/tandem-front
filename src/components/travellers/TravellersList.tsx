@@ -41,8 +41,6 @@ export default function TravellersList() {
   return (
     <section>
       <div className={styles.container}>
-        <h1 className={styles.title}>Мандрівники</h1>
-
         <ul className={styles.list}>
           {travellers.map((traveller) => (
             <TravellerCard key={traveller._id} traveller={traveller} />

@@ -18,19 +18,24 @@ export default function TravellerCard({ traveller, compact }: Props) {
   return (
     <div className={styles.card}>
       <TravellerInfo
-        name={traveller.name}
-        avatar={traveller.avatarUrl}
-        storiesCount={traveller.articlesAmount}
+        user={{
+          _id: traveller._id,
+          name: traveller.name,
+          email: '',
+          avatar: traveller.avatarUrl,
+          articlesAmount: traveller.articlesAmount,
+          savedArticles: [],
+        }}
         variant="card"
+      />
+
+      <CustomLink
+        href={`/travellers/${traveller._id}`}
+        variant="secondary"
+        className={`${styles.profileLink} ${compact ? styles.compact : ''}`}
       >
-        <CustomLink
-          href={`/travellers/${traveller._id}`}
-          variant="secondary"
-          className={`${styles.profileLink} ${compact ? styles.compact : ''}`}
-        >
-          Переглянути профіль
-        </CustomLink>
-      </TravellerInfo>
+        Переглянути профіль
+      </CustomLink>
     </div>
   );
 }
