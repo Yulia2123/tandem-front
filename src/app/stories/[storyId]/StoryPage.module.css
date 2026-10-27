@@ -5,7 +5,7 @@
   box-sizing: border-box;
   padding-left: 20px;
   padding-right: 20px;
-  padding-top: 120px; /* Збільшуємо для мобілок */
+  padding-top: 32px;
   padding-bottom: 64px;
 }
 
@@ -13,7 +13,7 @@
   .pageContainer {
     padding-left: 32px;
     padding-right: 32px;
-    padding-top: 104px; /* Збільшуємо для планшетів */
+    padding-top: 32px; /* Збільшуємо для планшетів */
   }
 }
 
@@ -21,7 +21,7 @@
   .pageContainer {
     padding-left: 64px;
     padding-right: 64px;
-    padding-top: 120px; /* Збільшуємо для десктопа, щоб нічого не ховалося під хедер */
+    padding-top: 48px; /* Збільшуємо для десктопа, щоб нічого не ховалося під хедер */
     padding-bottom: 72px;
   }
 }

@@ -104,7 +104,7 @@ export default function AuthNavigation() {
 
           <Link
             className={pathname.startsWith('/users') ? css.active : css.link}
-            href="/users"
+            href="/travellers"
             onClick={() => setIsOpen(false)}
           >
             Еко-Мандрівники
@@ -131,7 +131,7 @@ export default function AuthNavigation() {
           {isAuthenticated ? (
             <Link
               className={`${css.button} ${css.buttonSecondary} ${css.publishButton}`}
-              href="/new-story/add"
+              href="/new-story"
               onClick={() => setIsOpen(false)}
             >
               Опублікувати статтю
