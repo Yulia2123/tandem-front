@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import { Article } from '@/types/article';
+>>>>>>> origin/dev
 import api from './api';
 
 export interface Story {
@@ -14,7 +18,11 @@ export interface StoriesResponse {
   perPage: number;
   totalItems: number;
   totalPages: number;
+<<<<<<< HEAD
   stories: Story[];
+=======
+  stories: Article[];
+>>>>>>> origin/dev
 }
 
 export interface GetStoriesParams {
@@ -22,10 +30,16 @@ export interface GetStoriesParams {
   perPage?: number;
   category?: string;
   popular?: 'asc' | 'desc';
+<<<<<<< HEAD
 }
 export interface profileTabs {
   tab: 'saved-history' | 'my-posted-history'
 }
+=======
+  ownerId?: string;
+}
+
+>>>>>>> origin/dev
 export async function getStories(
   params: GetStoriesParams = {},
 ): Promise<StoriesResponse> {
@@ -47,6 +61,7 @@ export async function createStory(payload: Record<string, unknown>) {
   const { data } = await api.post('/stories', payload);
   return data;
 }
+<<<<<<< HEAD
 export async function getMySavedHistory(config: {
   perPage: number,
   page: number
@@ -65,3 +80,5 @@ export async function getMyPostedHistory(config: {
     }});
     return data;
 }
+=======
+>>>>>>> origin/dev
