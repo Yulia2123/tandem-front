@@ -1,0 +1,81 @@
+.containerRecomended {
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: var(--font-bold);
+  color: var(--color-heading);
+  margin-bottom: 40px;
+}
+
+/* Контейнер списку через flex */
+.cardContainer ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+/* Мобільна версія: показуємо лише 1 картку по центру з шириною 335px */
+.cardContainer li {
+  display: none;
+  width: 100%;
+  max-width: 335px;
+}
+
+.cardContainer li:first-child {
+  display: block;
+}
+
+/* Планшетна версія (від 768px): робимо рядок з 2 карток через flex */
+@media screen and (min-width: 768px) {
+  .title {
+    font-size: 44px;
+  }
+  .cardContainer ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cardContainer li {
+    display: block;
+    width: calc((100% - 24px) / 2);
+    max-width: 340px;
+    height: auto;
+  }
+
+  .cardContainer li:nth-child(n + 3) {
+    display: none;
+  }
+}
+
+/* Десктопна версія (від 1440px): робимо рядок з 3 карток через flex */
+@media screen and (min-width: 1440px) {
+  .containerRecomended {
+    margin-top: 72px;
+    margin-bottom: 72px;
+  }
+  .title {
+    font-size: 52px;
+  }
+  .cardContainer li {
+    display: block;
+    width: calc((100% - 48px) / 3);
+    max-width: 421px;
+  }
+
+  .cardContainer li:nth-child(n + 3) {
+    display: block;
+  }
+
+  .cardContainer li:nth-child(n + 4) {
+    display: none;
+  }
+}

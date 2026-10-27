@@ -1,0 +1,101 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-top: 32px;
+  padding-bottom: 64px;
+}
+
+/* Traveller profile */
+.profileInfo {
+  flex-wrap: nowrap;
+  gap: 24px;
+  width: 100%;
+  min-height: 113px;
+}
+
+/* Hide empty actions */
+.profileInfo > div:nth-child(3):empty {
+  display: none;
+}
+
+/* Profile text */
+.profileInfo > div:nth-child(2) {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.profileInfo h3 {
+  width: auto;
+  height: auto;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  overflow: visible;
+}
+
+.profileInfo p {
+  width: auto;
+  height: auto;
+}
+
+/* Avatar */
+.profileInfo > div:first-child {
+  width: 113px;
+  height: 113px;
+  flex: 0 0 113px;
+  margin-bottom: 0;
+}
+
+.profileInfo > div:first-child img {
+  display: block;
+  width: 113px;
+  height: 113px;
+}
+
+/* Stories */
+.stories {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.storiesGrid {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Tablet */
+@media screen and (min-width: 768px) {
+  .profileInfo > div:first-child {
+    width: 145px;
+    height: 145px;
+    flex-basis: 145px;
+  }
+
+  .profileInfo > div:first-child img {
+    width: 145px;
+    height: 145px;
+  }
+
+  .storiesGrid > div > ul {
+    row-gap: 40px;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 1440px) {
+  .content {
+    gap: 48px;
+  }
+
+  .profileInfo h3 {
+    font-size: 32px;
+  }
+
+  .profileInfo p {
+    font-size: 20px;
+  }
+}

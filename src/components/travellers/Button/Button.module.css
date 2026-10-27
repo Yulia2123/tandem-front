@@ -1,0 +1,104 @@
+
+.button {
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 6px 12px;
+  gap: 8px;
+
+  border: 1px solid transparent;
+  border-radius: 6px;
+
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+
+  cursor: pointer;
+  transition:
+    color var(--transition-base),
+    background-color var(--transition-base),
+    border-color var(--transition-base);
+}
+
+/* Основна зелена кнопка */
+.primary {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.primary:hover:not(:disabled),
+.primary:focus-visible:not(:disabled) {
+  color: var(--color-heading);
+  background-color: var(--color-background);
+  border-color: var(--color-primary);
+}
+
+.primary:active:not(:disabled) {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Світла кнопка з обведенням */
+.secondary {
+  color: var(--color-text);
+  background-color: var(--color-border);
+  border-color: var(--color-border);
+}
+
+.secondary:hover:not(:disabled),
+.secondary:focus-visible:not(:disabled) {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.secondary:active:not(:disabled) {
+  color: var(--color-white);
+  background-color: var(--color-primary-hover);
+  border-color: transparent;
+}
+
+/* Додаткова кнопка */
+.tertiary {
+  color: var(--color-heading);
+  background-color: var(--color-border);
+  border-color: var(--color-border);
+}
+
+.tertiary:hover:not(:disabled),
+.tertiary:focus-visible:not(:disabled) {
+  background-color: var(--color-background);
+  border-color: var(--color-primary);
+}
+
+.tertiary:active:not(:disabled) {
+  background-color: var(--color-primary-hover);
+  transform: translateY(1px);
+}
+
+/* Неактивний стан */
+.button:disabled,
+.button[aria-disabled='true'] {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media screen and (max-width: 375px) {
+  .button {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .button {
+    font-size: 20px;
+  }
+}

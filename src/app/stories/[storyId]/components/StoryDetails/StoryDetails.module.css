@@ -1,0 +1,173 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.topRow {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 327 / 223;
+  border-radius: 24px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  order: 1;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  order: 2;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+  text-decoration: none;
+  margin-bottom: 24px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--color-heading, #1b391b);
+  margin-bottom: 24px;
+}
+
+.metaContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.metaItem {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-heading, #1b391b);
+}
+
+.metaLabel {
+  font-weight: 700;
+}
+
+.metaValue {
+  font-weight: 400;
+}
+
+.routeBadge {
+  display: inline-block;
+  padding: 4px 12px;
+  background-color: #e5e7eb;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #000;
+  width: fit-content;
+}
+
+.articleContent {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text, #1b391b);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Планшетна версія */
+@media screen and (min-width: 768px) {
+  .imageWrapper {
+    height: auto;
+    aspect-ratio: 704 / 468;
+  }
+
+  .title {
+    font-size: 48px;
+  }
+
+  .metaContainer {
+    gap: 16px;
+  }
+
+  .articleContent {
+    margin-bottom: 24px;
+  }
+}
+
+/* Десктопна версія від 1440px */
+@media screen and (min-width: 1440px) {
+  .topRow {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 24px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 48px;
+  }
+
+  .textContent {
+    flex: 0 0 533px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    order: 1;
+  }
+
+  .imageWrapper {
+    position: relative;
+    flex: 0 0 755px;
+    aspect-ratio: 755 / 502;
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 0;
+    order: 2;
+  }
+
+  .backLink {
+    font-size: 20px;
+  }
+
+  .title {
+    font-size: 56px;
+  }
+
+  .metaContainer {
+    gap: 8px;
+  }
+
+  .metaItem {
+    font-size: 18px;
+  }
+
+  .articleContent {
+    font-size: 18px;
+    max-width: 865px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

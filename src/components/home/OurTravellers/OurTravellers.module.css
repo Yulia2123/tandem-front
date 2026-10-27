@@ -1,0 +1,156 @@
+@import 'swiper/css';
+@import 'swiper/css/grid';
+
+.section {
+  padding: 64px 0;
+}
+
+.container {
+  max-width: 375px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+.subtitle{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-black);
+}
+
+.controllers {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 12px;
+  width: 48px;
+  height: 48px;
+  background: #def2de;
+  cursor: pointer;
+}
+
+.controllers:hover:not(:disabled),
+.controllers:focus:not(:disabled) {
+  background: var(--color-background);
+  border: 1px solid var(--color-primary);
+}
+
+.controllers:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: rgba(0, 0, 0, 0.1);
+  background: #e7ece8;
+}
+
+.controllerArrows {
+  width: 16px;
+  height: 16px;
+}
+
+.allLink {
+  display: none;
+  padding: 6px 12px;
+}
+
+.sliderWrapper {
+  position: relative;
+}
+
+.controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 48px;
+}
+
+.prevBtn,
+.nextBtn {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 12px;
+  width: 48px;
+  height: 48px;
+  background: #def2de;
+  cursor: pointer;
+}
+
+.navButton:hover:not(:disabled),
+.navButton:focus:not(:disabled) {
+  background: var(--color-background);
+  border: 1px solid var(--color-primary);
+}
+
+.navButton:active:not(:disabled) {
+  border: 1px solid var(--color-primary);
+  background: var(--color-primary-hover);
+}
+
+.navButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: rgba(0, 0, 0, 0.1);
+  background: #e7ece8;
+}
+
+.mobileAllLink {
+  display: flex;
+  margin-top: 48px;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+}
+
+.swiperSlide {
+  height: auto;
+}
+
+@media (min-width: 768px) {
+
+  .allLink {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+  }
+
+  .mobileAllLink {
+    display: none;
+    min-width: 166px;
+    letter-spacing: -1px;
+    padding: 6px 12px;
+  }
+
+  .container {
+    max-width: 768px;
+    padding: 0 32px;
+  }
+
+  .subtitle{
+  font-size: 44px;
+  }
+}
+
+@media (min-width: 1440px) {
+
+  .section {
+    padding: 72px 0;
+  }
+
+  .container {
+    max-width: 1440px;
+    padding: 0 64px;
+  }
+
+  .subtitle{
+  font-size: 52px;
+  }
+}
