@@ -40,9 +40,10 @@ export default function TravellerProfilePage() {
             {traveller && (
               <>
                 <TravellerInfo
-                  name={traveller.name}
-                  avatar={traveller.avatarUrl}
-                  storiesCount={traveller.articlesAmount}
+                  user={{
+                    ...traveller,
+                    avatar: traveller.avatarUrl,
+                  }}
                   variant="profile"
                   isPriority
                   className={styles.profileInfo}
