@@ -51,8 +51,9 @@ export default function TravellerProfilePage() {
 
                 <div className={styles.stories}>
                   <PageTitle>Історії Мандрівника</PageTitle>
-
-                  <TravellerStories travellerId={travellerId} />
+                  <div className={styles.storiesGrid}>
+                    <TravellerStories travellerId={travellerId} />
+                  </div>
                 </div>
               </>
             )}
