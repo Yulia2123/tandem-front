@@ -42,7 +42,7 @@ export default function TravellerProfilePage() {
                 <TravellerInfo
                   user={{
                     ...traveller,
-                    avatar: traveller.avatar ?? traveller.avatarUrl,
+                    avatar: traveller.avatarUrl,
                   }}
                   variant="profile"
                   isPriority

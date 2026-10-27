@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState, useSyncExternalStore } from 'react';
@@ -49,9 +48,7 @@ function useIsDesktop() {
   );
 }
 
-export default function TravellersStories({
-  type,
-}: TravellersStoriesProps) {
+export default function TravellersStories({ type }: TravellersStoriesProps) {
   const isDesktop = useIsDesktop();
   const initialLimit = isDesktop ? 6 : 4;
 
@@ -60,8 +57,7 @@ export default function TravellersStories({
 
   const { isAuthenticated } = useAuthStore();
 
-  const { saveStory, isLoading: isSaveStoryLoading } =
-    useSaveFavoriteStory();
+  const { saveStory, isLoading: isSaveStoryLoading } = useSaveFavoriteStory();
 
   const { removeSavedStory, isLoading: isRemoveStoryLoading } =
     useDeleteFavoriteStory();
@@ -81,9 +77,7 @@ export default function TravellersStories({
   } = useQuery({
     queryKey: ['profile-stories', type],
     queryFn: () =>
-      type === 'saved'
-        ? getSavedStories()
-        : getCurrentUserStories(),
+      type === 'saved' ? getSavedStories() : getCurrentUserStories(),
   });
 
   useEffect(() => {
@@ -154,7 +148,7 @@ export default function TravellersStories({
             : 'Ти ще не опублікував(-ла) жодної історії. Поділися своєю першою мандрівкою!'
         }
         buttonText={type === 'saved' ? 'До історій' : 'Створити історію'}
-        linkTo={type === 'saved' ? '/stories' : '/stories/new'}
+        linkTo={type === 'saved' ? '/stories' : '/new-story'}
       />
     );
   }
@@ -180,9 +174,7 @@ export default function TravellersStories({
           <button
             type="button"
             className={styles.loadMoreButton}
-            onClick={() =>
-              setVisibleCount((count) => count + initialLimit)
-            }
+            onClick={() => setVisibleCount((count) => count + initialLimit)}
           >
             <span className={styles.loadMoreButtonText}>Показати ще</span>
           </button>
@@ -193,13 +185,11 @@ export default function TravellersStories({
         <Modal onClose={() => setIsModalOpen(false)}>
           <div className={styles.containerWrapper}>
             <div className={styles.modalTextWrapper}>
-              <h2 className={styles.modalTitle}>
-                Помилка під час збереження
-              </h2>
+              <h2 className={styles.modalTitle}>Помилка під час збереження</h2>
 
               <p className={styles.modalText}>
-                Щоб зберегти статтю, вам треба увійти. Якщо ще немає
-                облікового запису, зареєструйтесь.
+                Щоб зберегти статтю, вам треба увійти. Якщо ще немає облікового
+                запису, зареєструйтесь.
               </p>
             </div>
 

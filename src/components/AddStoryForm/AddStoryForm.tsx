@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
@@ -46,12 +45,12 @@ const validationSchema = Yup.object({
     .test(
       'fileType',
       'Оберіть файл зображення',
-      (file) => !file || file.type.startsWith('image/')
+      (file) => !file || file.type.startsWith('image/'),
     )
     .test(
       'fileSize',
       'Розмір зображення не повинен перевищувати 5 МБ',
-      (file) => !file || file.size <= MAX_IMAGE_SIZE
+      (file) => !file || file.size <= MAX_IMAGE_SIZE,
     ),
 
   title: Yup.string()
@@ -104,11 +103,11 @@ export default function AddStoryForm() {
         const response = await api.post<CreateStoryResponse>(
           '/stories',
           formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }
+          // {
+          //   headers: {
+          //     'Content-Type': 'multipart/form-data',
+          //   },
+          // },
         );
 
         const storyId = response.data?.data?._id;
@@ -122,7 +121,7 @@ export default function AddStoryForm() {
         console.error('Не вдалося зберегти історію:', error);
 
         toast.error(
-          'Не вдалося зберегти історію. Перевірте дані та спробуйте ще раз.'
+          'Не вдалося зберегти історію. Перевірте дані та спробуйте ще раз.',
         );
       }
     },
@@ -161,7 +160,7 @@ export default function AddStoryForm() {
       toast.error(
         !isValidType
           ? 'Оберіть файл зображення'
-          : 'Розмір зображення не повинен перевищувати 5 МБ'
+          : 'Розмір зображення не повинен перевищувати 5 МБ',
       );
 
       return;
@@ -192,11 +191,7 @@ export default function AddStoryForm() {
     categories.length === 0;
 
   return (
-    <form
-      className={styles.form}
-      onSubmit={formik.handleSubmit}
-      noValidate
-    >
+    <form className={styles.form} onSubmit={formik.handleSubmit} noValidate>
       {/* Обкладинка історії */}
       <div className={styles.field}>
         <label htmlFor="story-image">Обкладинка статті</label>
@@ -219,30 +214,14 @@ export default function AddStoryForm() {
               fill="none"
               aria-hidden="true"
             >
-              <rect
-                width="80"
-                height="80"
-                rx="10"
-                fill="#BDBDBD"
-              />
-              <circle
-                cx="29"
-                cy="25"
-                r="7"
-                fill="#E0E0E0"
-              />
-              <path
-                d="M13 61L30 42L41 51L53 35L68 61H13Z"
-                fill="#E0E0E0"
-              />
+              <rect width="80" height="80" rx="10" fill="#BDBDBD" />
+              <circle cx="29" cy="25" r="7" fill="#E0E0E0" />
+              <path d="M13 61L30 42L41 51L53 35L68 61H13Z" fill="#E0E0E0" />
             </svg>
           )}
         </div>
 
-        <label
-          htmlFor="story-image"
-          className={styles.uploadButton}
-        >
+        <label htmlFor="story-image" className={styles.uploadButton}>
           Завантажити фото
         </label>
 
@@ -297,9 +276,7 @@ export default function AddStoryForm() {
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           disabled={
-            categoriesLoading ||
-            categories.length === 0 ||
-            formik.isSubmitting
+            categoriesLoading || categories.length === 0 || formik.isSubmitting
           }
         >
           <option value="" disabled>
