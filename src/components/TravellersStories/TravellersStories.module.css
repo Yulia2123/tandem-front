@@ -106,7 +106,12 @@
     align-items: center;
     justify-content: center;
 }
-
+.ProfileHistorySaveHistory:disabled{
+  opacity: 0.7;
+}
+.saved {
+  fill: #FFFF00;
+}
 .profileToHistory {
     background-color: #4A9849;
     color: #FFFFFF;
