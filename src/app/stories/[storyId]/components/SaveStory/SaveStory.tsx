@@ -6,19 +6,19 @@ import Modal from '@/components/Modal/Modal';
 import { useSaveFavoriteStory } from '@/lib/hooks/useSaveFavoriteStory';
 import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
 import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories';
+import { useAuthStore } from '@/lib/store/authStore'; // Zustand стор авторизації
 import styles from './SaveStory.module.css';
 
 interface SaveStoryProps {
   storyId: string;
-  isLoggedIn?: boolean;
 }
 
-export default function SaveStory({
-  storyId,
-  isLoggedIn = false,
-}: SaveStoryProps) {
+export default function SaveStory({ storyId }: SaveStoryProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Отримуємо стан авторизації
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   const { savedStories } = useGetSavedStories();
 
@@ -43,7 +43,8 @@ export default function SaveStory({
   const handleSaveClick = async () => {
     setErrorMessage(null);
 
-    if (!isLoggedIn) {
+    // Перевірка авторизації: якщо не авторизований — показуємо модалку
+    if (!isAuthenticated) {
       setIsModalOpen(true);
       return;
     }
@@ -85,22 +86,8 @@ export default function SaveStory({
 
       {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
 
-      {/* Використовуємо глобальний компонент Modal */}
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <div className={styles.modalContentInner}>
-            <p className={styles.modalText}>
-              Будь ласка, увійдіть у свій профіль, щоб зберігати цікаві історії.
-            </p>
-            <button
-              className={styles.modalCloseButton}
-              onClick={() => setIsModalOpen(false)}
-            >
-              Зрозуміло
-            </button>
-          </div>
-        </Modal>
-      )}
+      {/* Рендеримо нашу оновлену модалку, яка тепер містить весь необхідний контент всередині */}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 }
