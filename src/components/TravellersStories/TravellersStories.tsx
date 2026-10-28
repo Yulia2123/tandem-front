@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import css from './TravellersStories.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -80,7 +79,7 @@ export default function TravellersStories({ stories }: TravellersStoriesProps) {
         </div>
       )}
     </div>
-=======
+{/* 
 'use client';
 
 import { useEffect, useState, useSyncExternalStore } from 'react';
@@ -295,6 +294,6 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
         </Modal>
       )}
     </section>
->>>>>>> origin/dev
+
   );
-}
+} */}
