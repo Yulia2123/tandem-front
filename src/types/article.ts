@@ -4,6 +4,9 @@ export interface Article {
   title: string;
   article: string;
   rate: number;
-  ownerId: string;
+  ownerId: {
+    _id: string,
+    name: string
+  };
   date: string;
 }

@@ -22,6 +22,7 @@ import { useAuthStore } from '@/lib/store/authStore';
 
 import type { Article } from '@/types/article';
 import css from './page.module.css';
+import { GetUsersParams } from '@/lib/api/users';
 
 export default function StoriesPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -66,11 +67,11 @@ export default function StoriesPage() {
     popular: 'desc',
   });
 
-  const {
-    data: ownersData,
-    isLoading: isUsersLoading,
-    isError: isUsersError,
-  } = useAllUsers();
+  // const {
+  //   data: ownersData,
+  //   isLoading: isUsersLoading,
+  //   isError: isUsersError,
+  // } = useAllUsers();
 
   const { saveStory, isLoading: isSaveStoryLoading } = useSaveFavoriteStory();
 
@@ -82,7 +83,7 @@ export default function StoriesPage() {
 
   const categories = categoriesData?.categories ?? [];
   const stories = storiesData?.stories ?? [];
-  const owners = ownersData?.users ?? [];
+  // const owners = ownersData?.users ?? [];
 
   const savedStoriesIds = isAuthenticated
     ? (savedStories?.data ?? []).map((story: Article) => story._id)
@@ -113,7 +114,7 @@ export default function StoriesPage() {
     isSaveStoryLoading || isRemoveStoryLoading || isSavedStoriesLoading;
 
   const isInitialLoading =
-    isCategoriesLoading || isStoriesLoading || isUsersLoading;
+    isCategoriesLoading || isStoriesLoading;
 
   return (
     <>
@@ -144,7 +145,7 @@ export default function StoriesPage() {
                 )}
 
                 <section aria-label="Список статей">
-                  {isStoriesError || isUsersError ? (
+                  {isStoriesError ? (
                     <p role="alert">
                       Не вдалося завантажити статті. Спробуйте пізніше.
                     </p>
@@ -155,7 +156,7 @@ export default function StoriesPage() {
                   ) : (
                     <StoryCard
                       stories={stories}
-                      owners={owners}
+                      // owners={owners}
                       isSavedStoryIds={savedStoriesIds}
                       isLoading={isFavoriteLoading}
                       onSaveStory={handleSaveStory}

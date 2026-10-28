@@ -10,6 +10,9 @@ export interface Story {
   article: string;
   category: string | Category;
   rate: number;
-  ownerId: string;
+  ownerId: {
+    _id: string,
+    name: string
+  };
   date: string;
 }

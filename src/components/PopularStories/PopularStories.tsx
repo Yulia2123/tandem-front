@@ -17,6 +17,7 @@ import { Article } from '@/types/article';
 import Modal from '@/components/Modal/Modal';
 import { GetStoriesParams } from '@/lib/api/stories';
 import Loader from '@/components/common/Loader/Loader';
+import { GetUsersParams } from '@/lib/api/users';
 
 function PopularStories() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,11 +44,16 @@ function PopularStories() {
     isError,
   } = useStories(useStoriesParams);
 
-  const {
-    data: ownersData,
-    isLoading: isUsersLoading,
-    isError: isUsersError,
-  } = useAllUsers();
+  // const useAllUsersParams: GetUsersParams = {
+  //   page: currentPage,
+  //   perPage: 100,
+  // }
+
+  // const {
+  //   data: ownersData,
+  //   isLoading: isUsersLoading,
+  //   isError: isUsersError,
+  // } = useAllUsers(useAllUsersParams);
 
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
 
@@ -79,10 +85,10 @@ function PopularStories() {
     }
   };
 
-  if (isLoading || isUsersLoading) {
+  if (isLoading) {
     return <Loader size="large" />;
   }
-  if (isError || isUsersError) return <p>Помилка при завантаженні даних.</p>;
+  if (isError) return <p>Помилка при завантаженні даних.</p>;
 
   const stories = storiesData?.stories ?? [];
 
@@ -117,7 +123,7 @@ function PopularStories() {
               <SwiperSlide key={story._id}>
                 <StoryCard
                   stories={[story]}
-                  owners={ownersData?.users}
+                  // owners={ownersData?.users}
                   isSavedStoryIds={savedStoriesIds}
                   // isLoading={isSaveStoryLoading || isRemoveStoryLoading}
                   isLoading={loadingStoryId === story._id}
