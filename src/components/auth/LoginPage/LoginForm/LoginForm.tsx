@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { loginUser, LoginData } from '@/lib/api/auth';
 import { ApiError } from '@/lib/api/api';
 import { useAuthStore } from '@/lib/store/authStore';
+import Loader from '@/components/common/Loader/Loader';
 
 const INITIAL_VALUES: LoginData = {
   email: '',
@@ -37,7 +38,7 @@ function LoginForm() {
 
       if (user) {
         setUser(user);
-        toast.success(`Ви успішно увійшли!`)
+        toast.success(`Ви успішно увійшли!`);
         router.push('/');
         router.refresh();
       } else {
@@ -60,7 +61,7 @@ function LoginForm() {
         validationSchema={LoginUserFormSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting }) => (
           <Form className={css.form}>
             <div className={css.formGroup}>
               <label htmlFor={`${fieldId}-email`}>Пошта*</label>
@@ -99,8 +100,13 @@ function LoginForm() {
             </div>
 
             <div className={css.actions}>
-              <button type="submit" className={css.submitButton}>
-                Увійти
+              <button
+                type="submit"
+                className={css.submitButton}
+                disabled={isSubmitting}
+                aria-busy={isSubmitting}
+              >
+                {isSubmitting ? <Loader size="small" /> : 'Увійти'}
               </button>
             </div>
           </Form>

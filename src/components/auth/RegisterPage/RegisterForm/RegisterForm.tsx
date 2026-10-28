@@ -9,6 +9,7 @@ import { registerUser, RegisterData } from '@/lib/api/auth';
 import { ApiError } from '@/lib/api/api';
 import { useAuthStore } from '@/lib/store/authStore';
 import toast from 'react-hot-toast';
+import Loader from '@/components/common/Loader/Loader';
 
 const INITIAL_VALUES: RegisterData = {
   name: '',
@@ -41,7 +42,7 @@ function RegistrationForm() {
 
       if (user) {
         setUser(user);
-        toast.success(`Ви успішно зареєструвались!`)
+        toast.success(`Ви успішно зареєструвались!`);
         router.push('/');
         router.refresh();
       } else {
@@ -64,7 +65,7 @@ function RegistrationForm() {
         validationSchema={CreateUserFormSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting }) => (
           <Form className={css.form}>
             <div className={css.formGroup}>
               <label htmlFor={`${fieldId}-name`}>Ім&lsquo;я та прізвище*</label>
@@ -121,8 +122,13 @@ function RegistrationForm() {
             </div>
 
             <div className={css.actions}>
-              <button type="submit" className={css.submitButton}>
-                Зареєструватись
+              <button
+                type="submit"
+                className={css.submitButton}
+                disabled={isSubmitting}
+                aria-busy={isSubmitting}
+              >
+                {isSubmitting ? <Loader size="small" /> : 'Зареєструватись'}
               </button>
             </div>
           </Form>
