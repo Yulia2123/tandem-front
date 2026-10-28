@@ -26,6 +26,7 @@ export default function StoriesPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [loadingStoryId, setLoadingStoryId] = useState<string | null>(null);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -71,13 +72,11 @@ export default function StoriesPage() {
   //   isError: isUsersError,
   // } = useAllUsers();
 
-  const { saveStory, isLoading: isSaveStoryLoading } = useSaveFavoriteStory();
+  const { saveStory } = useSaveFavoriteStory();
 
-  const { removeSavedStory, isLoading: isRemoveStoryLoading } =
-    useDeleteFavoriteStory();
+  const { removeSavedStory } = useDeleteFavoriteStory();
 
-  const { savedStories, isLoading: isSavedStoriesLoading } =
-    useGetSavedStories();
+  const { savedStories } = useGetSavedStories();
 
   const categories = categoriesData?.categories ?? [];
   const stories = storiesData?.stories ?? [];
@@ -93,6 +92,8 @@ export default function StoriesPage() {
       return;
     }
 
+    setLoadingStoryId(storyId);
+
     try {
       const isSaved = savedStoriesIds.includes(storyId);
 
@@ -105,11 +106,12 @@ export default function StoriesPage() {
       }
     } catch {
       toast.error('Не вдалося змінити статус збереження. Спробуйте ще раз.');
+    } finally {
+      setLoadingStoryId(null);
     }
   };
 
-  const isFavoriteLoading =
-    isSaveStoryLoading || isRemoveStoryLoading || isSavedStoriesLoading;
+  const isFavoriteLoading = loadingStoryId !== null;
 
   const isInitialLoading = isCategoriesLoading || isStoriesLoading;
 
@@ -155,7 +157,7 @@ export default function StoriesPage() {
                       stories={stories}
                       // owners={owners}
                       isSavedStoryIds={savedStoriesIds}
-                      isLoading={isFavoriteLoading}
+                      loadingStoryId={loadingStoryId}
                       onSaveStory={handleSaveStory}
                     />
                   )}

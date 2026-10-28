@@ -27,7 +27,7 @@ export default function Join() {
             сталих мандрів та натхнення для нових маршрутів Україною.
           </p>
           {isAuthenticated ? (
-            <Link className={styles.joinButton} href="/auth/profile">
+            <Link className={styles.joinButton} href="/profile">
               Збережені статті
             </Link>
           ) : (

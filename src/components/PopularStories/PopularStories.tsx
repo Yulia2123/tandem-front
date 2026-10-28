@@ -124,8 +124,7 @@ function PopularStories() {
                   stories={[story]}
                   // owners={ownersData?.users}
                   isSavedStoryIds={savedStoriesIds}
-                  // isLoading={isSaveStoryLoading || isRemoveStoryLoading}
-                  isLoading={loadingStoryId === story._id}
+                  loadingStoryId={loadingStoryId}
                   onSaveStory={() => handleSaveStory(story._id)}
                 />
               </SwiperSlide>
