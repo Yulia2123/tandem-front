@@ -1,15 +1,14 @@
 import css from '@/components/Modal/Modal.module.css';
 import { createPortal } from 'react-dom';
-import { useEffect, ReactNode } from 'react'; // Додали ReactNode до імпорту
+import { useEffect } from 'react';
+import Link from 'next/link';
 
 interface ModalProps {
   onClose: () => void;
   isOpen: boolean;
-  children?: ReactNode; // Зробили опціональним, якщо десь викликається без дітей, або обов'язковим
 }
 
-function Modal({ onClose, isOpen, children }: ModalProps) {
-  // Додали children у параметри
+function Modal({ onClose, isOpen }: ModalProps) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -55,11 +54,30 @@ function Modal({ onClose, isOpen, children }: ModalProps) {
             </svg>
           </button>
 
-          {/* Якщо ти передаєш контент через children */}
-          {children}
-
-          {/* Або якщо цей вміст поки зашит напряму, можна вивести його так: */}
-          {/* <div className={css.modalContent}>...</div> */}
+          {/* Вміст модалки згідно з твоїм макетом */}
+          <div className={css.modalContent}>
+            <h3 className={css.title}>Помилка під час збереження</h3>
+            <p className={css.description}>
+              Щоб зберегти статтю вам треба увійти, якщо ще немає облікового
+              запису зареєструйтесь
+            </p>
+            <div className={css.buttonsWrapper}>
+              <Link
+                href="/auth/login"
+                className={css.loginButton}
+                onClick={onClose}
+              >
+                Увійти
+              </Link>
+              <Link
+                href="/auth/register"
+                className={css.registerButton}
+                onClick={onClose}
+              >
+                Зареєструватись
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </div>,

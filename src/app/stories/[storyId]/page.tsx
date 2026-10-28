@@ -23,10 +23,18 @@ export default async function StoryPage({ params }: StoryPageProps) {
 
     if (story?.ownerId) {
       try {
-        const userData = await getUserById(story.ownerId._id);
+        // Визначаємо ID незалежно від того, що прийшло (рядок чи об'єкт)
+        const ownerIdString =
+          typeof story.ownerId === 'object' && story.ownerId !== null
+            ? (story.ownerId as { _id?: string })._id
+            : story.ownerId;
 
-        if (userData?.user?.name) {
-          authorName = userData.user.name;
+        if (ownerIdString) {
+          const userData = await getUserById(ownerIdString as string);
+
+          if (userData?.user?.name) {
+            authorName = userData.user.name;
+          }
         }
       } catch (userError) {
         console.error('Не вдалося завантажити автора:', userError);
