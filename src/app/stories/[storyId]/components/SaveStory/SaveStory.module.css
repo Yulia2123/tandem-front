@@ -10,8 +10,8 @@
   gap: 16px;
   box-sizing: border-box;
   position: relative;
-  margin-left: auto; /* Центруємо блок по горизонталі на мобільних */
-  margin-right: auto; /* Центруємо блок по горизонталі на мобільних */
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 32px;
 }
 
@@ -31,42 +31,45 @@
 }
 
 .saveButton {
-  background-color: var(--color-primary, #4a9849);
-  color: var(--color-white, #fff);
-  border: 1px solid var(--color-primary, #4a9849);
+  background-color: #4a9849;
+  color: #fff;
+  border: 1px solid #4a9849;
   border-radius: 6px;
-  padding: 12px 12px;
+  padding: 12px 20px;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
   cursor: pointer;
   width: 100%;
   text-align: center;
+  white-space: nowrap; /* Забороняємо перенос слів */
+  overflow: hidden;
+  text-overflow: ellipsis;
   transition:
-    background-color var(--transition-base, 0.2s ease),
-    color var(--transition-base, 0.2s ease),
-    border var(--transition-base, 0.2s ease);
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border 0.2s ease;
 }
 
 .saveButton:hover,
 .saveButton:focus {
   background-color: #def2de;
-  color: var(--color-heading, #1b391b);
+  color: #1b391b;
   border: 1px solid #1b391b;
 }
 
 .saveButton:active {
-  background: #254c24;
-  border: 1px solid rgba(255, 255, 255, 0);
-  color: var(--color-white, #fff);
+  background-color: #254c24;
+  color: #fff;
+  border: 1px solid #254c24;
 }
 
 .saveButton:disabled {
-  border: 1px solid #4a9849;
-  background: #4a9849;
+  background-color: #4a9849;
   opacity: 0.3;
-  color: var(--color-white, #fff);
+  color: #fff;
   cursor: not-allowed;
+  border: 1px solid #4a9849;
 }
 
 .errorMessage {
@@ -75,62 +78,21 @@
   margin-top: -8px;
 }
 
-/* Стилі для тимчасової локальної модалки */
-.modalBackdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modalContent {
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 16px;
-  max-width: 300px;
-  width: 90%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.modalText {
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--color-text, #374151);
-}
-
-.modalCloseButton {
-  background: var(--color-primary, #4a9849);
-  color: #ffffff;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 16px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 14px;
-}
-
+/* Планшетна версія від 768px */
 @media screen and (min-width: 768px) {
   .saveContainer {
     max-width: 704px;
     border-radius: 24px;
     padding: 32px;
     gap: 16px;
-    margin-left: auto; /* Зберігаємо центрування на планшеті */
-    margin-right: auto; /* Зберігаємо центрування на планшеті */
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .saveButton {
-    width: auto;
-    max-width: 103px;
+    width: max-content;
+    min-width: 110px;
+    max-width: none;
   }
 }
 
@@ -152,6 +114,7 @@
 
   .saveButton {
     font-size: 20px;
-    max-width: 123px;
+    min-width: 150px;
+    max-width: none;
   }
 }

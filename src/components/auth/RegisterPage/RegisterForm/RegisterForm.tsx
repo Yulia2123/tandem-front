@@ -2,12 +2,12 @@
 
 import * as Yup from 'yup';
 import css from '@/components/auth/RegisterPage/RegisterForm/RegisterForm.module.css';
-import { useId, useState } from 'react';
+import { useId } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRouter } from 'next/navigation';
 import { registerUser, RegisterData } from '@/lib/api/auth';
-import { ApiError } from '@/lib/api/api';
 import { useAuthStore } from '@/lib/store/authStore';
+import { ApiError } from '@/lib/api/api';
 import toast from 'react-hot-toast';
 import Loader from '@/components/common/Loader/Loader';
 
@@ -45,11 +45,25 @@ function RegistrationForm() {
         toast.success(`Ви успішно зареєструвались!`);
         router.push('/');
         router.refresh();
-      } else {
-        toast.error('Помилка реєстрації: неправильно введені дані користувача');
+        return;
       }
+
+      toast.error(`Помилка реєстрації: перевірте правильність заповнених полів`);
     } catch (error) {
-      toast.error('Помилка сервера: спробуйте зареєструватись пізніше');
+      const apiError = error as ApiError;
+      const status = apiError?.response?.status;
+
+      if (status === 400) {
+        toast.error(
+          `Помилка реєстрації: перевірте правильність заповнених полів`,
+        );
+      } else if (status === 401) {
+        toast.error(`Помилка реєстрації: неправильна пошта або пароль`);
+      } else if (status === 409) {
+        toast.error(`Помилка реєстрації: така пошта вже існує`);
+      } else {
+        toast.error(`Помилка сервера: спробуйте зареєструватись пізніше`);
+      }
     }
   };
 

@@ -14,7 +14,6 @@ import Footer from '@/components/layout/Footer/Footer';
 
 import { useCategories } from '@/lib/hooks/useCategories';
 import { useStories } from '@/lib/hooks/useStories';
-import { useAllUsers } from '@/lib/hooks/useAllUsers';
 import { useSaveFavoriteStory } from '@/lib/hooks/useSaveFavoriteStory';
 import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
 import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories';
@@ -22,7 +21,6 @@ import { useAuthStore } from '@/lib/store/authStore';
 
 import type { Story } from '@/types/story';
 import css from './page.module.css';
-import { GetUsersParams } from '@/lib/api/users';
 
 export default function StoriesPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -113,8 +111,11 @@ export default function StoriesPage() {
     }
   };
 
-  const isInitialLoading =
-    isCategoriesLoading || isStoriesLoading;
+
+  const isFavoriteLoading =
+    isSaveStoryLoading || isRemoveStoryLoading || isSavedStoriesLoading;
+
+  const isInitialLoading = isCategoriesLoading || isStoriesLoading;
 
   return (
     <>
@@ -168,7 +169,7 @@ export default function StoriesPage() {
           </div>
 
           {isModalOpen && (
-            <Modal onClose={closeModal}>
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
               <div className={css.modalContainerWrapper}>
                 <div className={css.modalTextWrapper}>
                   <h2 className={css.modalTitle}>Помилка під час збереження</h2>
