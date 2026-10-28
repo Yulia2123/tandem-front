@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 .profileHistoryButtonsWrapper {
     display: inline-flex;
     width: fit-content;
@@ -43,7 +43,7 @@
     }
 
 }
-=======
+
 
 .tabs {
   display: flex;
@@ -160,4 +160,4 @@
     font-size: 20px;
   }
 }
->>>>>>> origin/dev
+
