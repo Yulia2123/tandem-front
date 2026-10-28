@@ -22,11 +22,8 @@ export default function TravellerCard({ traveller, compact }: Props) {
           _id: traveller._id,
           name: traveller.name,
 
-          email: '',
           avatar: traveller.avatarUrl,
           articlesAmount: traveller.articlesAmount,
-          savedArticles: [],
-
         }}
         variant="card"
       />
