@@ -16,7 +16,7 @@ interface StoryListProps {
 }
 
 function StoryCard({
-  owners = [],
+  // owners = [],
   stories = [],
   isSavedStoryIds = [],
   isLoading = false,
@@ -30,9 +30,9 @@ function StoryCard({
   return (
     <ul className={`${css.list} ${className ?? ''}`}>
       {stories.map((story) => {
-        const owner = owners.find(
-          (owner) => String(owner._id) === String(story.ownerId),
-        );
+        // const owner = owners.find(
+        //   (owner: User) => String(owner._id) === String(story.ownerId),
+        // );
         // Перевіряємо, чи є поточна історія в масиві збережених ID
         const isSaved = isSavedStoryIds.includes(story._id);
 
@@ -49,7 +49,7 @@ function StoryCard({
             <div className={css.containerWrapper}>
               <div className={css.textGrid}>
                 <p className={css.name}>
-                  {owner ? owner.name : 'Автор невідомий'}
+                  { story.ownerId?.name }
                 </p>
                 <span className={css.rate}>{story.rate}</span>
                 <svg
