@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 .profileHistoryText {
     width: 303px;
     height: 75px;
@@ -160,7 +160,7 @@
         width: calc((100% - 48px) / 3);
     }
 }
-=======
+
 
 /* Збережені історії */
 
@@ -379,4 +379,4 @@
     padding: 9px 12px;
   }
 }
->>>>>>> origin/dev
+
