@@ -20,6 +20,16 @@
     object-fit: cover;
 }
 
+.photoPlaceholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eef8ee;
+    color: #1b391b;
+    font-size: 40px;
+    font-weight: 600;
+}
+
 .info {
     display: flex;
     flex-direction: column;

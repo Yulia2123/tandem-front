@@ -10,15 +10,23 @@ interface TravellerCardProps {
 export default function TravellerCard({ traveller }: TravellerCardProps) {
   return (
     <li className={styles.card}>
-      <Image
-        className={styles.photo}
-        src={traveller.avatarUrl}
-        alt={`Фото мандрівника ${traveller.name}`}
-        width={130}
-        height={130}
-        unoptimized
-      />
-
+      {traveller.avatarUrl ? (
+        <Image
+          className={styles.photo}
+          src={traveller.avatarUrl}
+          alt={`Фото мандрівника ${traveller.name}`}
+          width={130}
+          height={130}
+          unoptimized
+        />
+      ) : (
+        <div
+          className={`${styles.photo} ${styles.photoPlaceholder}`}
+          aria-hidden="true"
+        >
+          {traveller.name.charAt(0).toUpperCase()}
+        </div>
+      )}
       <div className={styles.info}>
         <h2 className={styles.name}>{traveller.name}</h2>
 
