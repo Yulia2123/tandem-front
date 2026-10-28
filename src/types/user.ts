@@ -1,4 +1,4 @@
-import { Article } from "@/types/article"
+import { Story } from "@/types/story"
 
 export interface User {
   _id: string;
@@ -6,5 +6,5 @@ export interface User {
   email: string;
   avatar: string;
   articlesAmount: number;
-  savedArticles: Article[];
+  savedArticles: Story[];
 }

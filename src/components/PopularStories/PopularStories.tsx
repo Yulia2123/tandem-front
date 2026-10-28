@@ -13,9 +13,8 @@ import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
 import { useSaveFavoriteStory } from '@/lib/hooks/useSaveFavoriteStory';
 import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories';
 import { useAuthStore } from '@/lib/store/authStore';
-import { Article } from '@/types/article';
 import Modal from '@/components/Modal/Modal';
-import { GetStoriesParams } from '@/lib/api/stories';
+import { GetStoriesParams, Story } from '@/lib/api/stories';
 import Loader from '@/components/common/Loader/Loader';
 import { GetUsersParams } from '@/lib/api/users';
 
@@ -58,7 +57,7 @@ function PopularStories() {
   const [swiper, setSwiper] = useState<SwiperInstance | null>(null);
 
   const savedStoriesIds = isAuthenticated
-    ? (savedStories?.data ?? []).map((story: Article) => story._id)
+    ? (savedStories?.data ?? []).map((story: Story) => story._id)
     : [];
 
   const handleSaveStory = async (storyId: string) => {

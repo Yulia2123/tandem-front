@@ -20,7 +20,7 @@ import { useDeleteFavoriteStory } from '@/lib/hooks/useDeleteFavoriteStory';
 import { useGetSavedStories } from '@/lib/hooks/useGetSavedStories';
 import { useAuthStore } from '@/lib/store/authStore';
 
-import type { Article } from '@/types/article';
+import type { Story } from '@/types/story';
 import css from './page.module.css';
 import { GetUsersParams } from '@/lib/api/users';
 
@@ -86,7 +86,7 @@ export default function StoriesPage() {
   // const owners = ownersData?.users ?? [];
 
   const savedStoriesIds = isAuthenticated
-    ? (savedStories?.data ?? []).map((story: Article) => story._id)
+    ? (savedStories?.data ?? []).map((story: Story) => story._id)
     : [];
 
   const handleSaveStory = async (storyId: string) => {

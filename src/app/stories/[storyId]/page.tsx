@@ -23,7 +23,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
 
     if (story?.ownerId) {
       try {
-        const userData = await getUserById(story.ownerId);
+        const userData = await getUserById(story.ownerId._id);
 
         if (userData?.user?.name) {
           authorName = userData.user.name;
