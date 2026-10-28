@@ -23,7 +23,6 @@ export default async function StoryPage({ params }: StoryPageProps) {
 
     if (story?.ownerId) {
       try {
-        // Визначаємо ID незалежно від того, що прийшло (рядок чи об'єкт)
         const ownerIdString =
           typeof story.ownerId === 'object' && story.ownerId !== null
             ? (story.ownerId as { _id?: string })._id
@@ -36,13 +35,9 @@ export default async function StoryPage({ params }: StoryPageProps) {
             authorName = userData.user.name;
           }
         }
-      } catch (userError) {
-        console.error('Не вдалося завантажити автора:', userError);
-      }
+      } catch {}
     }
-  } catch (error: unknown) {
-    console.error('Помилка завантаження історії:', error);
-  }
+  } catch {}
 
   if (!story) {
     return (
@@ -64,7 +59,7 @@ export default async function StoryPage({ params }: StoryPageProps) {
   return (
     <>
       <Header />
-      {/* Використовуємо наш власний ідеальний контейнер без сторонніх конфліктів */}
+
       <main className={styles.pageContainer}>
         <StoryDetails story={story} authorName={authorName} />
         <SaveStory storyId={storyId} />

@@ -182,34 +182,7 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
       )}
 
       {isModalOpen && (
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <div className={styles.containerWrapper}>
-            <div className={styles.modalTextWrapper}>
-              <h2 className={styles.modalTitle}>Помилка під час збереження</h2>
-
-              <p className={styles.modalText}>
-                Щоб зберегти статтю, вам треба увійти. Якщо ще немає облікового
-                запису, зареєструйтесь.
-              </p>
-            </div>
-
-            <div className={styles.modalNavWrapper}>
-              <Link
-                className={`${styles.modalLink} ${styles.Login}`}
-                href="/auth/login"
-              >
-                Увійти
-              </Link>
-
-              <Link
-                className={`${styles.modalLink} ${styles.Register}`}
-                href="/auth/register"
-              >
-                Зареєструватись
-              </Link>
-            </div>
-          </div>
-        </Modal>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       )}
     </section>
   );
