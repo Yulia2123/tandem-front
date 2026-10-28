@@ -89,7 +89,8 @@ export default function TravellersStories({ stories }: TravellersStoriesProps) {
           ))}
         </ul>
       ) : (
-        <div className={css.emptyStateWrapper}>
+        <ul className={css.ProfileHistoryList}>
+          <li key='no-content'>
           <p className={css.profileHistoryText}>
             {isSavedTab
               ? 'У вас ще немає збережених історій, мершій збережіть вашу першу історію!'
@@ -101,7 +102,8 @@ export default function TravellersStories({ stories }: TravellersStoriesProps) {
           >
             {isSavedTab ? 'До історій' : 'Опублікувати історію'}
           </Link>
-        </div>
+          </li>
+        </ul>
       )}
     </div>
   );
