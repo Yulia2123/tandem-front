@@ -1,14 +1,14 @@
 import css from '@/components/StoryCard/StoryCard.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Article } from '@/types/article';
+import { Story } from '@/types/story';
 import { User } from '@/types/user';
 import Loader from '@/components/common/Loader/Loader';
 import 'swiper/css';
 
 interface StoryListProps {
-  // owners?: User[];
-  stories?: Article[];
+  owners?: User[];
+  stories?: Story[];
   isSavedStoryIds?: string[];
   isLoading: boolean;
   onSaveStory: (storyId: string) => void;
