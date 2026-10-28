@@ -181,7 +181,7 @@ function PopularStories() {
           Всі статті
         </Link>
         {isModalOpen && (
-          <Modal onClose={closeModal}>
+          <Modal isOpen={isModalOpen} onClose={closeModal}>
             <div className={css.modalContainerWrapper}>
               <div className={css.modalTextWrapper}>
                 <h2 className={css.modalTitle}>Помилка під час збереження</h2>
