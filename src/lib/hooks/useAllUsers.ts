@@ -1,10 +1,10 @@
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { getAllUsers } from '@/lib/api/users';
+import { getAllUsers, GetUsersParams } from '@/lib/api/users';
 
-export function useAllUsers() {
+export function useAllUsers(params: GetUsersParams = {}) {
   return useQuery({
-    queryKey: ['users'],
-    queryFn: () => getAllUsers(),
+    queryKey: ['users', params],
+    queryFn: () => getAllUsers(params),
     placeholderData: keepPreviousData,
   });
 }

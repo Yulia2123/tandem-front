@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import StoryCard from '@/components/StoryCard/StoryCard';
-import { Article } from '@/types/article';
+import { Story } from '@/types/story';
 import { User } from '@/types/user';
 import { getUserById } from '@/lib/api/api';
 import styles from './RecomendedStories.module.css';
@@ -14,7 +14,7 @@ interface RecommendedStoriesProps {
 export default function RecommendedStories({
   storyId,
 }: RecommendedStoriesProps) {
-  const [recommended, setRecommended] = useState<Article[]>([]);
+  const [recommended, setRecommended] = useState<Story[]>([]);
   const [owners, setOwners] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -34,7 +34,7 @@ export default function RecommendedStories({
         // 2. Збираємо унікальні ownerId
         const ownerIds = Array.from(
           new Set(
-            storiesList.map((story: Article) => story.ownerId).filter(Boolean),
+            storiesList.map((story: Story) => story.ownerId).filter(Boolean),
           ),
         );
 
