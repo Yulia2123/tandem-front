@@ -179,33 +179,7 @@ function PopularStories() {
         <Link href="/stories" className={`${css.buttonAllStories} ${css.bot}`}>
           Всі статті
         </Link>
-        {isModalOpen && (
-          <Modal isOpen={isModalOpen} onClose={closeModal}>
-            <div className={css.modalContainerWrapper}>
-              <div className={css.modalTextWrapper}>
-                <h2 className={css.modalTitle}>Помилка під час збереження</h2>
-                <p className={css.modalText}>
-                  Щоб зберегти статтю вам треба увійти, якщо ще немає облікового
-                  запису зареєструйтесь
-                </p>
-              </div>
-              <div className={css.modalNavWrapper}>
-                <Link
-                  className={`${css.modalLink} ${css.Login}`}
-                  href="/auth/login"
-                >
-                  Увійти
-                </Link>
-                <Link
-                  className={`${css.modalLink} ${css.Register}`}
-                  href="/auth/register"
-                >
-                  Зареєструватись
-                </Link>
-              </div>
-            </div>
-          </Modal>
-        )}
+        {isModalOpen && <Modal isOpen={isModalOpen} onClose={closeModal} />}
       </div>
     </section>
   );
