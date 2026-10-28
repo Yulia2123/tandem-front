@@ -3,7 +3,7 @@
 import * as Yup from 'yup';
 import css from '@/components/auth/LoginPage/LoginForm/LoginForm.module.css';
 import toast from 'react-hot-toast';
-import { useId, useState } from 'react';
+import { useId } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRouter } from 'next/navigation';
 import { loginUser, LoginData } from '@/lib/api/auth';
@@ -37,14 +37,26 @@ function LoginForm() {
 
       if (user) {
         setUser(user);
-        toast.success(`Ви успішно увійшли!`)
+        toast.success(`Ви успішно увійшли!`);
         router.push('/');
         router.refresh();
-      } else {
-        toast.error('Помилка логіну: неправильно введені дані користувача');
+        return;
       }
+
+      toast.error('Помилка логіну: перевірте правильність заповнених полів');
     } catch (error) {
-      toast.error('Помилка сервера: спробуйте залогінитись пізніше');
+      const apiError = error as ApiError;
+      const status = apiError?.response?.status;
+
+      if (status === 400) {
+        toast.error(
+          `Помилка логіну: перевірте правильність заповнених полів`,
+        );
+      } else if (status == 401) {
+        toast.error(`Помилка логіну: неправильна пошта або пароль`);
+      } else {
+        toast.error(`Помилка сервера: спробуйте ввійти пізніше`);
+      }
     }
   };
 

@@ -1,4 +1,4 @@
-import api from '@/lib/api/api';
+import api, { ApiError } from '@/lib/api/api';
 import { User } from '@/types/user';
 
 export interface RegisterData {
