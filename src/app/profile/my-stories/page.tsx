@@ -1,6 +1,5 @@
-
-import TravellersStories from '@/components/TravellersStories/TravellersStories';
+import ProfileStoriesByType from '@/components/TravellersStories/ProfileStoriesByType';
 
 export default function MyStoriesPage() {
-  return <TravellersStories type="my-stories" />;
+  return <ProfileStoriesByType type="my-stories" />;
 }
