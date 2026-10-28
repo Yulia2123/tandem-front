@@ -7,17 +7,15 @@ import Loader from '@/components/common/Loader/Loader';
 import 'swiper/css';
 
 interface StoryListProps {
-  owners?: User[];
   stories?: Story[];
   isSavedStoryIds?: string[];
-  loadingStoryId?: string | null;
   isLoading?: boolean;
+  loadingStoryId?: string | null;
   onSaveStory: (storyId: string) => void;
   className?: string;
 }
 
 function StoryCard({
-  owners = [],
   stories = [],
   isSavedStoryIds = [],
   loadingStoryId = null,
@@ -36,27 +34,28 @@ function StoryCard({
 
       <ul className={`${css.list} ${className ?? ''}`}>
         {stories.map((story) => {
-          const owner = owners.find(
-            (owner) => String(owner._id) === String(story.ownerId),
-          );
 
           const isSaved = isSavedStoryIds.includes(story._id);
           const isStorySaving = loadingStoryId === story._id;
 
-          return (
-            <li key={story._id} className={css.item}>
-              <Image
-                className={css.image}
-                src={story.img}
-                alt={story.title}
-                width={340}
-                height={340}
-              />
+        // Завантаження для конкретної історії, а не для всього списку
+        const isStoryLoading =
+          loadingStoryId !== null ? loadingStoryId === story._id : isLoading;
+
+        return (
+          <li key={story._id} className={css.item}>
+            <Image
+              className={css.image}
+              src={story.img}
+              alt={story.title}
+              width={340}
+              height={340}
+            />
 
               <div className={css.containerWrapper}>
                 <div className={css.textGrid}>
                   <p className={css.name}>
-                    {owner?.name ?? story.ownerId?.name}
+                    {story.ownerId?.name}
                   </p>
 
                   <span className={css.rate}>{story.rate}</span>
@@ -85,43 +84,36 @@ function StoryCard({
                     Переглянути статтю
                   </Link>
 
-                  <button
-                    type="button"
-                    onClick={() => onSaveStory(story._id)}
-                    disabled={isStorySaving}
-                    aria-busy={isStorySaving}
-                    aria-label={
-                      isSaved
-                        ? 'Видалити статтю з обраного'
-                        : 'Додати статтю до обраного'
-                    }
-                    className={`${css.saveBtn} ${isSaved ? css.saved : ''}`}
+                <button
+                  key={`${story._id}-${isSaved ? 'saved' : 'default'}`}
+                  type="button"
+                  onClick={() => onSaveStory(story._id)}
+                  disabled={isStoryLoading}
+                  className={`${css.saveBtn} ${isSaved ? css.saved : ''}`}
+                >
+                  {isStoryLoading && (
+                    <Loader size="small" className={css.inlineLoader} />
+                  )}
+                  <svg
+                    className={`${css.svgButton} ${isSaved ? css.saved : ''} ${
+                      isStoryLoading ? css.svgHidden : ''
+                    }`}
+                    width="15"
+                    height="18"
+                    viewBox="0 0 15 18"
+                    fill="#1b391b;"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    {isStorySaving && (
-                      <Loader size="small" className={css.inlineLoader} />
-                    )}
-
-                    <svg
-                      className={`${css.svgButton} ${
-                        isSaved ? css.saved : ''
-                      } ${isStorySaving ? css.svgHidden : ''}`}
-                      width="15"
-                      height="18"
-                      viewBox="0 0 15 18"
-                      fill="#1b391b"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M7.1495 15.448L2.381 17.488C1.81333 17.7327 1.27458 17.6867 0.76475 17.3502C0.254917 17.0137 0 16.5376 0 15.9218V1.70925C0 1.24758 0.168916 0.847332 0.50675 0.508499C0.844416 0.169499 1.24325 0 1.70325 0H12.5957C13.0574 0 13.4577 0.169499 13.7965 0.508499C14.1355 0.847332 14.305 1.24758 14.305 1.70925V15.9218C14.305 16.5376 14.0491 17.0137 13.5372 17.3502C13.0254 17.7327 12.4857 17.7327 11.918 17.488L7.1495 15.448ZM7.1495 13.6257L12.5957 15.9218V1.70925H1.70325V15.9218L7.1495 13.6257ZM7.1495 1.70925H1.70325H12.5957H7.1495Z" />
-                    </svg>
-                  </button>
-                </div>
+                    <path d="M7.1495 15.448L2.381 17.488C1.81333 17.7327 1.27458 17.6867 0.76475 17.3502C0.254917 17.0137 0 16.5376 0 15.9218V1.70925C0 1.24758 0.168916 0.847332 0.50675 0.508499C0.844416 0.169499 1.24325 0 1.70325 0H12.5957C13.0574 0 13.4577 0.169499 13.7965 0.508499C14.1355 0.847332 14.305 1.24758 14.305 1.70925V15.9218C14.305 16.5376 14.0491 17.0137 13.5372 17.3502C13.0254 17.6867 12.4857 17.7327 11.918 17.488L7.1495 15.448ZM7.1495 13.6257L12.5957 15.9218V1.70925H1.70325V15.9218L7.1495 13.6257ZM7.1495 1.70925H1.70325H12.5957H7.1495Z" />
+                  </svg>
+                </button>
               </div>
-            </li>
-          );
-        })}
-      </ul>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
     </>
   );
 }
-
 export default StoryCard;
