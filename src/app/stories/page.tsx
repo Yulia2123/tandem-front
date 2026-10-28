@@ -111,9 +111,7 @@ export default function StoriesPage() {
     }
   };
 
-
-  const isFavoriteLoading =
-    isSaveStoryLoading || isRemoveStoryLoading || isSavedStoriesLoading;
+  const isFavoriteLoading = loadingStoryId !== null;
 
   const isInitialLoading = isCategoriesLoading || isStoriesLoading;
 
