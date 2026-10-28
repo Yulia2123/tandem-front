@@ -79,7 +79,7 @@ export default function TravellersStories({ stories }: TravellersStoriesProps) {
         </div>
       )}
     </div>
-{/* 
+/* 
 'use client';
 
 import { useEffect, useState, useSyncExternalStore } from 'react';
@@ -296,4 +296,4 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
     </section>
 
   );
-} */}
+} */
