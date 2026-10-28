@@ -18,7 +18,20 @@ export default function AuthNavigation() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const user = useAuthStore((state) => state.user);
+  type NavigationUser = {
+    name: string;
+    avatarUrl?: string;
+  };
+
+  const userData = useAuthStore((state) => state.user);
+
+  const user: NavigationUser | null = userData
+    ? 'data' in userData
+      ? (userData.data as NavigationUser)
+      : (userData as NavigationUser)
+    : null;
+
+  // const user = userData && 'data' in userData ? userData.data : userData;
 
   const profileHref = '/profile';
 
@@ -63,7 +76,6 @@ export default function AuthNavigation() {
       root.style.overflow = previousOverflow;
     };
   }, [isOpen]);
-
   return (
     <div className={css.side}>
       {/*Burger*/}
@@ -165,17 +177,17 @@ export default function AuthNavigation() {
               className={css.profileButton}
               aria-label="Профіль користувача"
             >
-              {user?.avatar ? (
+              {user?.avatarUrl ? (
                 <img
                   className={css.avatar}
-                  src={user.avatar}
+                  src={user.avatarUrl}
                   alt=""
                   width={32}
                   height={32}
                 />
               ) : (
                 <span className={css.avatarFallback}>
-                  {user?.name?.charAt(0)?.toUpperCase() || 'U'}
+                  {user?.name?.trim()?.charAt(0)?.toUpperCase() || 'U'}
                 </span>
               )}
 
