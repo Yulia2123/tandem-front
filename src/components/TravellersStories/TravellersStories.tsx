@@ -3,7 +3,7 @@
 import css from './TravellersStories.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Story } from '@/lib/api/stories';
+import type { Story } from '@/types/story';
 import { useProfileStore } from '@/lib/store/historyPageStore';
 
 interface TravellersStoriesProps {
@@ -20,10 +20,10 @@ export default function TravellersStories({ stories }: TravellersStoriesProps) {
       {stories && stories.length > 0 ? (
         <ul className={css.ProfileHistoryList}>
           {stories.map((story) => (
-            <li className={css.ProfileHistoryItems} key={story._id as string}>
+            <li className={css.ProfileHistoryItems} key={story._id}>
               <div className={css.ProfileHistoryImgWrapper}>
                 <Image
-                  src={story.img as string}
+                  src={story.img}
                   alt="Photo of travel."
                   fill
                   className={css.ProfileHistoryImg}
@@ -32,7 +32,7 @@ export default function TravellersStories({ stories }: TravellersStoriesProps) {
 
               <div className={css.ProfileHistoryItemInfo}>
                 <p className={css.ProfileHistoryAutor}>
-                  <span>{story.ownerId as string}</span>
+                  <span>{story.ownerId}</span>
                   <span>•</span>
                   <span>{story.rate}</span>
                   <svg
@@ -78,7 +78,7 @@ export default function TravellersStories({ stories }: TravellersStoriesProps) {
           >
             {isSavedTab ? 'До історій' : 'Опублікувати історію'}
           </Link>
-         </div>
+        </div>
       )}
     </div>
   );

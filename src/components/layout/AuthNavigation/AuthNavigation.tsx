@@ -140,7 +140,7 @@ export default function AuthNavigation() {
             <>
               <Link
                 className={`${css.button} ${css.buttonPrimary}`}
-                href="auth/login"
+                href="/auth/login"
                 onClick={() => setIsOpen(false)}
               >
                 Вхід
@@ -148,7 +148,7 @@ export default function AuthNavigation() {
 
               <Link
                 className={`${css.button} ${css.buttonSecondary}`}
-                href="auth/register"
+                href="/auth/register"
                 onClick={() => setIsOpen(false)}
               >
                 Реєстрація
