@@ -182,7 +182,7 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
       )}
 
       {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <div className={styles.containerWrapper}>
             <div className={styles.modalTextWrapper}>
               <h2 className={styles.modalTitle}>Помилка під час збереження</h2>
