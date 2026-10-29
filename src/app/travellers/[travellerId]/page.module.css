@@ -83,6 +83,10 @@
   .storiesGrid > div > ul {
     row-gap: 40px;
   }
+
+  .profileInfo > div:first-child .avatarPlaceholder {
+    font-size: 52px;
+  }
 }
 
 /* Desktop */
