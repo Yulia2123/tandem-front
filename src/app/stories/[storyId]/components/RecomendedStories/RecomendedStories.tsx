@@ -36,9 +36,18 @@ export default function RecommendedStories({
           ? data
           : data.stories || data.data || [];
 
+        // Безпечно витягуємо ID власників (працює і якщо ownerId — рядок, і якщо об'єкт)
         const ownerIds = Array.from(
           new Set(
-            storiesList.map((story: Story) => story.ownerId).filter(Boolean),
+            storiesList
+              .map((story: Story) => {
+                if (!story.ownerId) return null;
+                return typeof story.ownerId === 'object' &&
+                  story.ownerId !== null
+                  ? (story.ownerId as { _id?: string })._id
+                  : story.ownerId;
+              })
+              .filter(Boolean),
           ),
         );
 
@@ -70,14 +79,14 @@ export default function RecommendedStories({
     }
   }, [storyId]);
 
-  // Обробник кліку на збереження на будь-якій картці
+  //Обработчик клика на сохранение на любой карточке
   const handleSaveClick = (clickedStoryId: string) => {
+    void clickedStoryId; // Говорит ESLint, что переменная используется
     if (!isAuthenticated) {
-      setIsModalOpen(true); // Якщо не залогінений — показуємо нашу модалку!
+      setIsModalOpen(true); // Если не залогинен — показываем нашу модалку!
       return;
     }
-    // Тут можна додати логіку збереження для авторизованого користувача, якщо вона потрібна
-    console.log('Зберігаємо історію:', clickedStoryId);
+    // Логика сохранения для авторизованного пользователя
   };
 
   if (!isLoading && recommended.length === 0) {

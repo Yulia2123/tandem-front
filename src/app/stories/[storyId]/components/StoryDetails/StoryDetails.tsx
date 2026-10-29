@@ -67,8 +67,6 @@ export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
     fetchCategoryName();
   }, [story.category]);
 
-  // Дістаємо ID автора прямо з об'єкта ownerId
-
   return (
     <article className={`${styles.wrapper}`}>
       <div className={styles.topRow}>
