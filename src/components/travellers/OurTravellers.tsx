@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useTravellers } from '@/lib/hooks/useTravellers';
 import TravellerCard from './TravellerCard';
 import styles from './OurTravellers.module.css';
+import Loader from '@/components/common/Loader/Loader';
 
 export default function OurTravellers() {
   const { data, isPending, isError } = useTravellers(36);
@@ -47,7 +48,7 @@ export default function OurTravellers() {
   if (isPending) {
     return (
       <section className={styles.section}>
-        <p role="status">Завантаження мандрівників...</p>
+        <Loader size="large" />
       </section>
     );
   }
