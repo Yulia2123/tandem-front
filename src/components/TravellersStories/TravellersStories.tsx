@@ -19,7 +19,7 @@ export default function TravellersStories({ stories }: TravellersStoriesProps) {
   const { mutate: removeFromSaved, isPending } = useMutation({
     mutationFn: (storyId: string) => removeSavedStory(storyId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['stories'] });
+      queryClient.invalidateQueries({ queryKey: ['stories', 'user'] });
     },
   });
 
