@@ -1,5 +1,6 @@
 import api from '@/lib/api/api';
 import { User } from '@/types/user';
+import { refreshUserSession } from './auth';
 
 export interface GetUsersParams {
   page?: number;
@@ -52,3 +53,12 @@ export const getAllUsers = async (
   const response = await api.get(`/users/`, { params });
   return response.data;
 };
+
+export async function checkSession() {
+  try {
+    const data = await refreshUserSession();
+    return data;
+  } catch {
+    throw new Error("Session check failed");
+  }
+}
