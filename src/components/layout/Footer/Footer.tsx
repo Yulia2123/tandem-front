@@ -5,10 +5,26 @@ import { usePathname } from 'next/navigation';
 import css from './Footer.module.css';
 
 const socials = [
-  { id: 'facebook', label: 'Facebook', href: '#' },
-  { id: 'instagram', label: 'Instagram', href: '#' },
-  { id: 'x', label: 'X', href: '#' },
-  { id: 'youtube', label: 'YouTube', href: '#' },
+  {
+    id: 'facebook',
+    label: 'Facebook',
+    href: 'https://www.facebook.com/',
+  },
+  {
+    id: 'instagram',
+    label: 'Instagram',
+    href: 'https://www.instagram.com/',
+  },
+  {
+    id: 'x',
+    label: 'X',
+    href: 'https://x.com/',
+  },
+  {
+    id: 'youtube',
+    label: 'YouTube',
+    href: 'https://www.youtube.com/',
+  },
 ];
 
 const AUTH_PAGES = [

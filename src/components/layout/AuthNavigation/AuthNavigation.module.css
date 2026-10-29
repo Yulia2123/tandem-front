@@ -1,8 +1,20 @@
 .side {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
-  position: relative;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
 }
 
 .menuLinks {
