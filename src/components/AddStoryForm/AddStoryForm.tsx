@@ -31,6 +31,103 @@ type CreateStoryResponse = {
 };
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+const DB_NAME = 'tandem-story-drafts';
+const STORE_NAME = 'drafts';
+const DRAFT_KEY = 'new-story';
+
+type StoryDraft = {
+  title: string;
+  category: string;
+  article: string;
+  image: File | null;
+};
+
+function openDraftDB(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, 1);
+
+    request.onupgradeneeded = () => {
+      if (!request.result.objectStoreNames.contains(STORE_NAME)) {
+        request.result.createObjectStore(STORE_NAME);
+      }
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function saveDraft(draft: StoryDraft): Promise<void> {
+  const db = await openDraftDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(STORE_NAME, 'readwrite');
+
+    transaction.objectStore(STORE_NAME).put(draft, DRAFT_KEY);
+
+    transaction.oncomplete = () => {
+      db.close();
+      resolve();
+    };
+
+    transaction.onerror = () => {
+      const error = transaction.error;
+      db.close();
+      reject(error);
+    };
+
+    transaction.onabort = () => {
+      const error = transaction.error;
+      db.close();
+      reject(error);
+    };
+  });
+}
+
+async function getDraft(): Promise<StoryDraft | undefined> {
+  const db = await openDraftDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(STORE_NAME, 'readonly');
+    const request = transaction.objectStore(STORE_NAME).get(DRAFT_KEY);
+
+    request.onsuccess = () => resolve(request.result as StoryDraft | undefined);
+    request.onerror = () => reject(request.error);
+
+    transaction.oncomplete = () => db.close();
+    transaction.onerror = () => {
+      db.close();
+      reject(transaction.error);
+    };
+  });
+}
+
+async function deleteDraft(): Promise<void> {
+  const db = await openDraftDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(STORE_NAME, 'readwrite');
+
+    transaction.objectStore(STORE_NAME).delete(DRAFT_KEY);
+
+    transaction.oncomplete = () => {
+      db.close();
+      resolve();
+    };
+
+    transaction.onerror = () => {
+      const error = transaction.error;
+      db.close();
+      reject(error);
+    };
+
+    transaction.onabort = () => {
+      const error = transaction.error;
+      db.close();
+      reject(error);
+    };
+  });
+}
 
 const initialValues: FormValues = {
   image: null,
@@ -71,6 +168,7 @@ const validationSchema = Yup.object({
 export default function AddStoryForm() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const draftLoaded = useRef(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const {
@@ -115,17 +213,74 @@ export default function AddStoryForm() {
         if (!storyId) {
           throw new Error('Backend не повернув ID створеної історії');
         }
-
+        await deleteDraft();
         router.push(`/stories/${storyId}`);
-      } catch (error) {
-        console.error('Не вдалося зберегти історію:', error);
-
+      } catch {
         toast.error(
           'Не вдалося зберегти історію. Перевірте дані та спробуйте ще раз.',
         );
       }
     },
   });
+
+  // Восстановление черновика после перезагрузки
+  useEffect(() => {
+    let cancelled = false;
+
+    const restoreDraft = async () => {
+      try {
+        const draft = await getDraft();
+
+        if (cancelled) return;
+
+        if (draft) {
+          await formik.setValues({
+            title: draft.title ?? '',
+            category: draft.category ?? '',
+            article: draft.article ?? '',
+            image: draft.image ?? null,
+          });
+
+          if (draft.image) {
+            setImagePreview(URL.createObjectURL(draft.image));
+          }
+        }
+      } catch {
+        toast.error('Не вдалося відновити чернетку.');
+      } finally {
+        if (!cancelled) {
+          draftLoaded.current = true;
+        }
+      }
+    };
+
+    void restoreDraft();
+
+    return () => {
+      cancelled = true;
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Автоматическое сохранение изменений
+  useEffect(() => {
+    if (!draftLoaded.current) return;
+
+    void saveDraft({
+      title: formik.values.title,
+      category: formik.values.category,
+      article: formik.values.article,
+      image: formik.values.image,
+    }).catch(() => {
+      toast.error('Не вдалося зберегти чернетку.');
+    });
+  }, [
+    formik.values.title,
+    formik.values.category,
+    formik.values.article,
+    formik.values.image,
+  ]);
 
   useEffect(() => {
     return () => {
@@ -172,12 +327,18 @@ export default function AddStoryForm() {
     setImagePreview(URL.createObjectURL(file));
   };
 
-  const handleCancel = () => {
+  const handleCancel = async () => {
     formik.resetForm();
     setImagePreview(null);
 
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
+    }
+
+    try {
+      await deleteDraft();
+    } catch {
+      toast.error('Не вдалося видалити чернетку.');
     }
   };
 

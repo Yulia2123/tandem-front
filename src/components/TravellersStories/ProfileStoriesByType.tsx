@@ -53,13 +53,12 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
 
   const [visibleCount, setVisibleCount] = useState(initialLimit);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loadingStoryId, setLoadingStoryId] = useState<string | null>(null);
 
   const { isAuthenticated } = useAuthStore();
 
-  const { saveStory, isLoading: isSaveStoryLoading } = useSaveFavoriteStory();
-
-  const { removeSavedStory, isLoading: isRemoveStoryLoading } =
-    useDeleteFavoriteStory();
+  const { saveStory } = useSaveFavoriteStory();
+  const { removeSavedStory } = useDeleteFavoriteStory();
 
   const { savedStories } = useGetSavedStories();
 
@@ -111,6 +110,8 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
       return;
     }
 
+    setLoadingStoryId(storyId);
+
     try {
       if (savedStoriesIds.includes(storyId)) {
         await removeSavedStory(storyId);
@@ -123,6 +124,8 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
       toast.error(
         'Помилка при зміні статусу збереження, спробуйте знову пізніше',
       );
+    } finally {
+      setLoadingStoryId(null);
     }
   };
 
@@ -161,7 +164,7 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
               stories={[story]}
               owners={ownersData?.users ?? []}
               isSavedStoryIds={savedStoriesIds}
-              isLoading={isSaveStoryLoading || isRemoveStoryLoading}
+              loadingStoryId={loadingStoryId}
               onSaveStory={handleSaveStory}
             />
           </div>
@@ -181,34 +184,7 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
       )}
 
       {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <div className={styles.containerWrapper}>
-            <div className={styles.modalTextWrapper}>
-              <h2 className={styles.modalTitle}>Помилка під час збереження</h2>
-
-              <p className={styles.modalText}>
-                Щоб зберегти статтю, вам треба увійти. Якщо ще немає облікового
-                запису, зареєструйтесь.
-              </p>
-            </div>
-
-            <div className={styles.modalNavWrapper}>
-              <Link
-                className={`${styles.modalLink} ${styles.Login}`}
-                href="/auth/login"
-              >
-                Увійти
-              </Link>
-
-              <Link
-                className={`${styles.modalLink} ${styles.Register}`}
-                href="/auth/register"
-              >
-                Зареєструватись
-              </Link>
-            </div>
-          </div>
-        </Modal>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       )}
     </section>
   );

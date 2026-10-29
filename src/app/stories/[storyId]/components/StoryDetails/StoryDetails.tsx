@@ -91,7 +91,16 @@ export default function StoryDetails({ story, authorName }: StoryDetailsProps) {
           <div className={styles.metaContainer}>
             <div className={styles.metaItem}>
               <span className={styles.metaLabel}>Автор статті</span>{' '}
-              <span className={styles.metaValue}>{authorName}</span>
+              {story.ownerId?._id ? (
+                <Link
+                  href={`/travellers/${story.ownerId._id}`}
+                  className={styles.metaValueLink}
+                >
+                  {authorName}
+                </Link>
+              ) : (
+                <span className={styles.metaValue}>{authorName}</span>
+              )}
             </div>
             <div className={styles.metaItem}>
               <span className={styles.metaLabel}>Опубліковано</span>{' '}

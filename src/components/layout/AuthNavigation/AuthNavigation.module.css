@@ -290,66 +290,32 @@
   color: var(--color-text);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1439px) {
   .side {
-    gap: 16px;
-  }
-
-  .menuButton {
-    order: 2;
-  }
-
-  .nav,
-  .navOpen {
-    display: contents;
-  }
-
-  .menuActions {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 16px;
-
     width: auto;
-    margin-top: 0;
-    padding-top: 0;
-    order: 1;
+    flex: 1;
+    justify-content: flex-end;
   }
 
-  .button {
+  .container {
     width: auto;
     max-width: none;
     margin: 0;
-    font-size: 16px;
-  }
-  .buttonPrimary {
-    max-width: 56px;
-    min-height: 32px;
+    padding: 0;
   }
 
-  .buttonSecondary {
-    max-width: 114px;
-    min-height: 32px;
+  .menuButton {
+    display: inline-flex;
+    order: 1;
   }
 
-  .publishButton {
-    width: 196px;
-    height: 32px;
-    max-width: none;
-    padding: 4px 10px;
-    white-space: nowrap;
-  }
-
-  .menuLinks,
-  .profile {
+  .nav {
     display: none;
   }
 
-  .navOpen .menuLinks {
+  .navOpen {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 24px;
 
     position: fixed;
     top: 68px;
@@ -357,31 +323,76 @@
     right: 0;
     bottom: 0;
 
-    padding: 24px 20px 92px;
+    z-index: 1001;
+    min-height: 0;
+    padding: 24px 20px 32px;
     overflow-y: auto;
 
     background: #def2de;
-    z-index: 25;
+    color: var(--color-text);
+    border-top: 1px solid var(--color-border);
   }
 
-  .navOpen .profile {
+  .menuLinks {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
 
-    position: fixed;
-    top: auto;
-    bottom: 24px;
-    left: 0;
-    right: 0;
+  .menuActions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
 
-    z-index: 26;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 32px;
+  }
+
+  .button {
+    width: 100%;
+    max-width: 335px;
+    margin: 0 auto;
+    font-size: 16px;
+  }
+
+  .menuButton[aria-expanded='false'] {
+    display: inline-flex;
+  }
+
+  .nav:not(.navOpen) .menuLinks,
+  .nav:not(.navOpen) .menuActions,
+  .nav:not(.navOpen) .profile {
+    display: none;
+  }
+
+  .profile {
+    display: flex;
     justify-content: center;
-    margin-top: 0;
+    margin-top: 24px;
   }
 }
 
 @media (min-width: 1440px) {
   .side {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    justify-content: flex-end;
     gap: 32px;
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
   }
 
   .menuButton {
@@ -390,22 +401,32 @@
 
   .nav,
   .navOpen {
-    display: contents;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 24px;
+
+    position: static;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    overflow: visible;
+
+    background: transparent;
+    border: 0;
   }
 
   .menuLinks,
   .navOpen .menuLinks {
     display: flex;
+    flex: 1;
     flex-direction: row;
     align-items: center;
-    gap: 32px;
-
-    position: static;
-    height: auto;
-    padding: 0;
-    overflow: visible;
-
-    background: transparent;
+    justify-content: flex-end;
+    gap: 24px;
+    margin-left: auto;
   }
 
   .link,
@@ -413,12 +434,23 @@
     font-size: 18px;
   }
 
-  .menuActions {
-    order: 2;
+  .menuActions,
+  .navOpen .menuActions {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
     gap: 16px;
+    width: auto;
+    margin: 0;
+    padding: 0;
   }
 
-  .button {
+  .button,
+  .navOpen .button {
+    width: auto;
+    max-width: none;
+    margin: 0;
     font-size: 20px;
   }
 
@@ -433,23 +465,25 @@
   }
 
   .publishButton {
-    width: 240px;
+    width: auto;
     min-width: 240px;
-    max-width: 240px;
-
-    height: 38px;
+    max-width: none;
     min-height: 38px;
+    height: 38px;
+    padding: 4px 16px;
 
+    white-space: nowrap;
     flex-shrink: 0;
+    box-sizing: border-box;
   }
 
   .profile,
   .navOpen .profile {
     display: flex;
-
+    flex: 0 0 auto;
     position: static;
-    margin-top: 0;
-    order: 3;
+    justify-content: center;
+    margin: 0;
   }
 
   .name {

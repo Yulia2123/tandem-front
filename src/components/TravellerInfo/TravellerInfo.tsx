@@ -1,19 +1,15 @@
+
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import css from './TravellerInfo.module.css';
-import { getCurrentUser, getCurrentUserStories } from '@/lib/api/users';
+import { getCurrentUser } from '@/lib/api/users';
 
 export default function TravellerInfo() {
   const { data, isError } = useQuery({
     queryKey: ['user'],
     queryFn: getCurrentUser,
-  });
-
-  const { data: myStories } = useQuery({
-    queryKey: ['my-stories-count'],
-    queryFn: () => getCurrentUserStories({ page: 1, perPage: 1 }),
   });
 
   if (!data || isError) {
@@ -44,7 +40,7 @@ export default function TravellerInfo() {
 
       <div className={css.profileAboutWrapper}>
         <h3 className={css.name}>{data.name}</h3>
-        <p className={css.meta}>Мої історії: {myStories?.totalItems ?? 0}</p>
+        <p className={css.meta}>Статей: {data.articlesAmount}</p>
       </div>
     </div>
   );

@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import StoryCard from '@/components/StoryCard/StoryCard';
+import Modal from '@/components/Modal/Modal'; // Імпортуємо нашу модалку
 import { Story } from '@/types/story';
 import { User } from '@/types/user';
 import { getUserById } from '@/lib/api/api';
+import { useAuthStore } from '@/lib/store/authStore'; // Перевірка авторизації
 import styles from './RecomendedStories.module.css';
 
 interface RecommendedStoriesProps {
@@ -18,12 +20,15 @@ export default function RecommendedStories({
   const [owners, setOwners] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  // Стейт для модалки та статус авторизації
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   useEffect(() => {
     const fetchRecommendedData = async () => {
       try {
         setIsLoading(true);
 
-        // 1. Отримуємо рекомендовані історії
         const res = await fetch(`/api/stories/${storyId}/recommended`);
         const data = await res.json();
 
@@ -31,14 +36,21 @@ export default function RecommendedStories({
           ? data
           : data.stories || data.data || [];
 
-        // 2. Збираємо унікальні ownerId
+        // Безпечно витягуємо ID власників (працює і якщо ownerId — рядок, і якщо об'єкт)
         const ownerIds = Array.from(
           new Set(
-            storiesList.map((story: Story) => story.ownerId).filter(Boolean),
+            storiesList
+              .map((story: Story) => {
+                if (!story.ownerId) return null;
+                return typeof story.ownerId === 'object' &&
+                  story.ownerId !== null
+                  ? (story.ownerId as { _id?: string })._id
+                  : story.ownerId;
+              })
+              .filter(Boolean),
           ),
         );
 
-        // 3. Завантажуємо всіх авторів паралельно
         const ownersPromises = ownerIds.map(async (id) => {
           try {
             const userData = await getUserById(id as string);
@@ -53,11 +65,10 @@ export default function RecommendedStories({
           (owner): owner is User => owner !== null,
         );
 
-        // 4. Оновлюємо обидва стейти
         setRecommended(storiesList);
         setOwners(validOwners);
       } catch {
-        // Тихо обробляємо помилку без виведення в консоль
+        // Тихо обробляємо помилку
       } finally {
         setIsLoading(false);
       }
@@ -67,6 +78,16 @@ export default function RecommendedStories({
       fetchRecommendedData();
     }
   }, [storyId]);
+
+  //Обработчик клика на сохранение на любой карточке
+  const handleSaveClick = (clickedStoryId: string) => {
+    void clickedStoryId; // Говорит ESLint, что переменная используется
+    if (!isAuthenticated) {
+      setIsModalOpen(true); // Если не залогинен — показываем нашу модалку!
+      return;
+    }
+    // Логика сохранения для авторизованного пользователя
+  };
 
   if (!isLoading && recommended.length === 0) {
     return null;
@@ -81,10 +102,13 @@ export default function RecommendedStories({
             owners={owners}
             stories={recommended}
             isLoading={isLoading}
-            onSaveStory={() => {}}
+            onSaveStory={handleSaveClick} // Передаємо нашу перевірку замість пустої функції
           />
         </div>
       </div>
+
+      {/* Наша автономна модалка, яка вискакує при кліку неавторизованого користувача */}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 }

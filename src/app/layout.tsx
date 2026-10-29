@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   },
   description:
     'Відкривай, ділися історіями подорожей та знаходь однодумців для мандрів.',
+  icons: {
+    icon: '/favicon.svg',
+  },
   openGraph: {
     title: 'Природні мандри',
     description:

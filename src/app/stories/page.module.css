@@ -113,6 +113,52 @@
   color: #fff;
 }
 
+.loadMoreWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.loadMoreButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 133px;
+  height: 48px;
+  padding: 6px 12px;
+  border: 1px solid #4a9849;
+  border-radius: 6px;
+  background-color: #4a9849;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loadMoreButton:hover,
+.loadMoreButton:focus-visible {
+  background-color: #def2de;
+  color: #1b391b;
+}
+
+.loadMoreButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.loadMoreButtonText {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: inherit;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.inlineLoader {
+  padding: 0;
+}
+
 /* ========================================================================================
 ======================================== Tablet ========================================
 ======================================================================================== */
