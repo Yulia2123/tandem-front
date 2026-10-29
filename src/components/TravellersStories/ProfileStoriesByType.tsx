@@ -1,8 +1,7 @@
 'use client';
-
+import Link from 'next/link';
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
 import toast from 'react-hot-toast';
 
 import StoryCard from '@/components/StoryCard/StoryCard';
@@ -147,8 +146,8 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
       <MessageNoStories
         text={
           type === 'saved'
-            ? 'У тебе ще немає збережених історій. Знайди цікаві мандрівки та збережи їх!'
-            : 'Ти ще не опублікував(-ла) жодної історії. Поділися своєю першою мандрівкою!'
+            ? 'У вас ще немає збережених історій, мершій збережіть вашу першу історію!'
+            : 'Ви ще нічого не публікували, поділіться своєю першою історією!'
         }
         buttonText={type === 'saved' ? 'До історій' : 'Створити історію'}
         linkTo={type === 'saved' ? '/stories' : '/new-story'}

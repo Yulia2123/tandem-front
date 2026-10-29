@@ -1,3 +1,4 @@
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { saveStory } from '../api/users';
 
@@ -8,6 +9,11 @@ export function useSaveFavoriteStory() {
     mutationFn: (storyId: string) => saveStory(storyId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['savedArticles'] });
+      queryClient.invalidateQueries({
+        queryKey: ['profile-stories', 'saved'],
+      });
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+      queryClient.invalidateQueries({ queryKey: ['current-user'] });
     },
   });
 

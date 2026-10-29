@@ -1,18 +1,29 @@
-
 .wrapper {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
   gap: 24px;
-  padding: 40px 16px;
-  text-align: center;
+
+  width: 335px;
+    max-width: 100%;
+  height: 235px;
+  padding: 24px 16px;
+
+  border-radius: 24px;
+  background-color: var(--color-background-card);
+
+  text-align: left;
 }
 
 .text {
-  max-width: 520px;
-  color: var(--color-heading);
-  font-size: 16px;
-  line-height: 1.6;
+  max-width: 100%;
+  margin: 0;
+  color: #000;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
 }
 
 .button {
@@ -20,12 +31,17 @@
   min-height: 44px;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   padding: 10px 24px;
+
   border: 1px solid var(--color-primary);
   border-radius: var(--radius-button);
   background-color: var(--color-primary);
   color: var(--color-white);
   font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+
   transition: background-color var(--transition-base);
 }
 
@@ -33,8 +49,32 @@
   background-color: var(--color-primary-hover);
 }
 
-@media (min-width: 768px) {
+@media screen and (min-width: 768px) {
   .wrapper {
-    padding: 56px 24px;
+    width: 533px;
+    height: 210px;
+    padding: 24px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .wrapper {
+    height: 268px;
+  }
+
+  .text {
+    font-size: 26px;
+    line-height: 36px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .wrapper:has(.button[href="/stories"]) {
+    align-items: center;
+  }
+
+  .wrapper:has(.button[href="/stories"]) .button {
+    width: 100%;
+    max-width: 100%;
   }
 }
