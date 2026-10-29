@@ -1,106 +1,91 @@
-
-.wrapper {
+.profileAbout {
   display: flex;
   align-items: center;
-  gap: 16px;
   width: 100%;
+  min-width: 0;
+  margin-bottom: 32px;
+}
+
+.profileAboutAvatar {
+  margin-right: 24px;
+}
+
+.profileAboutWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
   min-width: 0;
 }
 
-.avatarWrapper {
+.profileAboutWrapper p:first-child {
+  width: 100%;
+  margin: 0;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 130%;
+  letter-spacing: -0.01em;
+  color: #1b391b;
+}
+
+.profileAboutWrapper p:last-child {
+  width: 100%;
+  margin: 0;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #1b391b;
+}
+
+.profileAboutAvatar {
+  position: relative;
+  width: 113px;
+  height: 113px;
   flex-shrink: 0;
-}
-
-.avatar,
-.avatarPlaceholder {
-  display: block;
-  width: 80px;
-  height: 80px;
   border-radius: 50%;
+  overflow: hidden;
 }
 
-.avatar {
+.profileAboutAvatarImg {
   object-fit: cover;
 }
 
-.avatarPlaceholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--color-background-card);
-  color: var(--color-heading);
-  font-family: var(--font-primary);
-  font-size: 32px;
-  font-weight: var(--font-semibold);
-}
-
-.details {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  min-width: 0;
-  gap: 8px;
-}
-
-.name {
-  color: var(--color-heading);
-  font-family: var(--font-primary);
-  font-size: 22px;
-  font-weight: var(--font-semibold);
-  line-height: 1.3;
-  overflow-wrap: anywhere;
-}
-
-.articles {
-  color: var(--color-text);
-  font-family: var(--font-primary);
-  font-size: 16px;
-  font-weight: var(--font-regular);
-  line-height: 1.5;
-}
-
-@media screen and (min-width: 375px) {
-  .avatar,
-  .avatarPlaceholder {
-    width: 96px;
-    height: 96px;
-  }
-
-  .avatarPlaceholder {
-    font-size: 36px;
-  }
-
-  .wrapper {
-    gap: 20px;
-  }
+.errorMessage {
+  color: red;
+  margin-bottom: 15px;
 }
 
 @media screen and (min-width: 768px) {
-  .avatar,
-  .avatarPlaceholder {
-    width: 112px;
-    height: 112px;
+  .profileAbout {
+    max-width: 704px;
   }
 
-  .avatarPlaceholder {
-    font-size: 40px;
+  .profileAboutAvatar {
+    width: 145px;
+    height: 145px;
   }
 
-  .name {
-    font-size: 26px;
+  .profileAboutWrapper p:first-child {
+    font-size: 20px;
   }
 
-  .articles {
-    font-size: 18px;
+  .profileAboutWrapper p:last-child {
+    font-size: 16px;
   }
 }
 
 @media screen and (min-width: 1440px) {
-  .name {
+  .profileAbout {
+    max-width: 590px;
+  }
+
+  .profileAboutWrapper p:first-child {
     font-size: 32px;
   }
 
-  .articles {
+  .profileAboutWrapper p:last-child {
     font-size: 20px;
   }
 }

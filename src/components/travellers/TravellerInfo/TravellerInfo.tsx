@@ -1,66 +1,26 @@
-import Image from 'next/image';
-import type { ReactNode } from 'react';
-// import type { User } from '@/types/user';
-import styles from './TravellerInfo.module.css';
-
-// interface TravellerInfoProps {
-//   user: User;
-//   variant?: 'card' | 'profile';
-//   isPriority?: boolean;
-//   className?: string;
-//   children?: ReactNode;
-// }
-
-interface TravellerInfoUser {
-  _id?: string;
-  name: string;
-  avatar?: string;
-  articlesAmount?: number;
-}
-
-interface TravellerInfoProps {
-  user: TravellerInfoUser;
-  variant?: 'card' | 'profile';
-  isPriority?: boolean;
-  className?: string;
-  children?: ReactNode;
-}
-
-export default function TravellerInfo({
-  user,
-  variant = 'profile',
-  isPriority = false,
-  className = '',
-  children,
-}: TravellerInfoProps) {
-  return (
-    <div className={`${styles.wrapper} ${styles[variant]} ${className}`}>
-      <div className={styles.avatarWrapper}>
-        {user.avatar ? (
-          <Image
-            className={styles.avatar}
-            src={user.avatar}
-            alt={`Аватар ${user.name}`}
-            width={96}
-            height={96}
-            priority={isPriority}
-          />
-        ) : (
-          <div className={styles.avatarPlaceholder} aria-hidden="true">
-            {user.name.charAt(0).toUpperCase()}
-          </div>
-        )}
-      </div>
-
-      <div className={styles.content}>
-        <div className={styles.title}>
-          <h1 className={styles.name}>{user.name}</h1>
-        </div>
-
-        <p className={styles.meta}>Мої історії: {user.articlesAmount ?? 0}</p>
-
-        {children}
-      </div>
-    </div>
-  );
+'use client'
+import { useQuery } from '@tanstack/react-query'
+import css from './TravellerInfo.module.css'
+import Image from 'next/image'
+import { getCurrentUser } from '@/lib/api/users'
+export default function TravellerInfo(){
+    const {data, isError} = useQuery({
+        queryKey: ['user'],
+        queryFn: getCurrentUser
+    })
+    if(!data || isError){
+        return <p className={css.errorMessage}>Помилка завантаження інформації про користувача.</p>
+    }
+    return(
+        <div className={css.profileAbout}>
+                    <div></div>
+                    <div className={css.profileAboutAvatar}>
+                        <Image src={data.avatarUrl} alt='Your avatar' fill className={css.profileAboutAvatarImg}></Image>
+                    </div>
+                    <div className={css.profileAboutWrapper}>
+                        <p>{data.name}</p>
+                        <p>Статей: {data.articlesAmount}</p>
+                    </div>
+                </div>
+    )
 }
