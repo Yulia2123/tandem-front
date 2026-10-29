@@ -1,3 +1,4 @@
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { removeSavedStory } from '../api/users';
 
@@ -6,8 +7,21 @@ export function useDeleteFavoriteStory() {
 
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: (storyId: string) => removeSavedStory(storyId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['savedArticles'] });
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['savedArticles'],
+      });
+
+      await queryClient.invalidateQueries({
+        predicate: (query) =>
+          query.queryKey.some(
+            (key) =>
+              typeof key === 'string' &&
+              (key.toLowerCase().includes('saved') ||
+                key.toLowerCase().includes('profile')),
+          ),
+      });
     },
   });
 

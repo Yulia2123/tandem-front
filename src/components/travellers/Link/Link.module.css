@@ -79,9 +79,9 @@
 }
 
 .primary:hover {
-  color: #1B391B;
-  background: #DEF2DE;
-  border: 1px solid #4A9849;
+  color: #1b391b;
+  background: #def2de;
+  border: 1px solid #4a9849;
   border-radius: 6px;
 }
 
@@ -171,21 +171,84 @@
   width: fit-content;
 }
 
-@media only screen and (max-width: 375px) {
-  .link {
+/* Кнопка в порожньому стані профілю */
+.buttonProfileHistory {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 6px 12px;
+
+  border: 1px solid #4a9849;
+  border-radius: 6px;
+  background-color: #4a9849;
+  color: #fff;
+
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 150%;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.buttonProfileHistory:hover {
+  background-color: #def2de;
+  color: #1b391b;
+}
+
+.buttonProfileHistory:focus-visible {
+  outline: 2px solid #1b391b;
+  outline-offset: 3px;
+}
+
+/* Телефон */
+@media only screen and (max-width: 767px) {
+  .link:not(.buttonProfileHistory) {
     width: 100%;
+  }
+
+  .buttonProfileHistory {
+    width: 100%;
+    max-width: 100%;
+    flex: 1 1 auto;
+    white-space: normal;
   }
 }
 
-@media (min-width: 768px) {
+/* Планшет */
+@media (min-width: 768px) and (max-width: 1439px) {
   .secondary {
     font-size: 16px;
     min-width: 292px;
-}
+  }
+
+  .buttonProfileHistory {
+    width: fit-content;
+    flex: 0 0 auto;
+    font-size: 16px;
+  }
 }
 
+/* Комп'ютер */
 @media (min-width: 1440px) {
   .secondary {
-  font-size: 20px;
-}
+    font-size: 20px;
+  }
+
+  .buttonProfileHistory {
+    width: fit-content;
+    flex: 0 0 auto;
+    font-size: 20px;
+  }
 }

@@ -16,7 +16,9 @@ interface CustomLinkProps
   | 'iconButton'
   | 'button'
   | 'buttonProfile'
+  | 'buttonProfileHistory'
   | 'tertiary';
+  
 
   iconId?: string;
   className?: string;

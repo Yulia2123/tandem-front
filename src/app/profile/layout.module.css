@@ -2,7 +2,7 @@
   flex: 1;
   width: 100%;
   min-width: 0;
-  padding: 100px 0 64px;
+  padding: 32px 0 64px;
 }
 
 .container {
@@ -13,9 +13,9 @@
   max-width: 1440px;
   min-width: 0;
   margin: 0 auto;
-  padding: 0 var(--container-padding-mobile);
+  padding: 0 64px;
+  box-sizing: border-box;
 }
-
 
 .container > :first-child {
   margin-bottom: 32px;
@@ -27,8 +27,9 @@
 
 .storiesSection {
   width: 100%;
+  max-width: 1312px;
   min-width: 0;
-  margin-top: 40px;
+  margin: 40px auto 0;
 }
 
 .loadingPage {
@@ -52,14 +53,11 @@
     transform: rotate(360deg);
   }
 }
- 
+
 @media screen and (min-width: 768px) {
   .main {
-    padding-top: 116px;
-  }
-
-  .container {
-    padding: 0 var(--container-padding-tablet);
+    padding-top: 32px;
+    padding-bottom: 64px;
   }
 
   .storiesSection {
@@ -69,12 +67,13 @@
 
 @media screen and (min-width: 1440px) {
   .main {
-    padding-top: 124px;
+    padding-top: 48px;
+    padding-bottom: 72px;
   }
 
-  .container {
-    padding: 0 var(--container-padding-desktop);
-  }
+  .container > :first-child {
+  margin-bottom: 48px;
+}
 
   .storiesSection {
     margin-top: 40px;

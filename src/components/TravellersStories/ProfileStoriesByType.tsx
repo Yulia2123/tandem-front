@@ -142,19 +142,28 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
     );
   }
 
-  if (stories.length === 0) {
-    return (
-      <MessageNoStories
-        text={
-          type === 'saved'
-            ? 'У тебе ще немає збережених історій. Знайди цікаві мандрівки та збережи їх!'
-            : 'Ти ще не опублікував(-ла) жодної історії. Поділися своєю першою мандрівкою!'
-        }
-        buttonText={type === 'saved' ? 'До історій' : 'Створити історію'}
-        linkTo={type === 'saved' ? '/stories' : '/new-story'}
-      />
-    );
-  }
+  
+if (stories.length === 0) {
+  return (
+    <section className={styles.section}>
+      <div className={styles.emptyStateWrapper}>
+        <p className={styles.profileHistoryText}>
+          {type === 'saved'
+            ? 'У вас ще немає збережених історій, мерщій збережіть вашу першу історію!'
+            : 'Ви ще нічого не публікували, поділіться своєю першою історією!'}
+        </p>
+
+        <Link
+          href={type === 'saved' ? '/stories' : '/new-story'}
+          className={styles.profileToHistory}
+        >
+          {type === 'saved' ? 'До історій' : 'Опублікувати історію'}
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 
   return (
     <section className={styles.section}>

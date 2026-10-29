@@ -1,169 +1,177 @@
 
+.profileHistoryWrapper {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Порожній стан */
+.emptyStateWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  min-height: 235px;
+  padding: 40px 16px;
+  gap: 32px;
+  background: #def2de;
+  border-radius: 24px;
+}
+
 .profileHistoryText {
-    width: 303px;
-    height: 75px;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 140%;
-    letter-spacing: -0.01em;
-}
-
-.ProfileHistoryList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    justify-content: center;
-}
-
-.ProfileHistoryItems {
-    position: relative;
-    border: 0px solid rgba(0, 0, 0, 15%);
-    border-radius: 12px;
-    background: #DEF2DE;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 335px;
-    min-height: 517px;
-}
-.ProfileHistoryBtnWrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    margin-top: auto
-}
-
-.ProfileHistoryImgWrapper {
-    position: relative;
-    width: 100%;
-    height: 280px;
-    flex-shrink: 0;
-}
-
-.ProfileHistoryImg {
-    object-fit: cover;
-}
-
-.ProfileHistoryItemInfo {
-    padding: 16px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
-.ProfileHistoryAutor {
-    font-family: var(--font-family);
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 150%;
-    color: #1B391B;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.ProfileHistoryDescription {
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 150%;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    color: #1B391B;
-    margin-bottom: 12px;
-}
-
-.ProfileHistoryOpenTheHistory {
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 150%;
-    color: #1B391B;
-    height: 48px;
-    border: 1px solid rgba(0, 0, 0, 15%);
-    border-radius: 6px;
-    padding: 6px 12px;
-    background: rgba(0, 0, 0, 5%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    width: auto;
-    flex-grow: 1;
-
-}
-
-.ProfileHistorySaveHistory {
-    height: 48px;
-    border: 1px solid rgba(0, 0, 0, 15%);
-    border-radius: 6px;
-    padding: 6px;
-    background: rgba(0, 0, 0, 5%);
-    width: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.01em;
+  color: #000;
 }
 
 .profileToHistory {
-    background-color: #4A9849;
-    color: #FFFFFF;
-    height: 48px;
-    border-radius: 6px;
-    font-weight: 500;
-    font-size: 20px;
-    border: 1px solid var(--color-mantis-dark);
-    padding: 6px 12px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    margin-top: 32px;
-    width: 100%;
-    text-decoration: none;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 6px 12px;
+  border: 1px solid #4a9849;
+  border-radius: 6px;
+  background-color: #4a9849;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
 }
 
-@media screen and (min-width: 768px) {
-    .profileToHistory {
-        max-width: 371px;
-    }
-
-    .profileHistoryText {
-        width: 469px;
-        height: 50px;
-    }
-
-    .ProfileHistoryItems {
-        width: calc((100% - 24px) / 2);
-        max-width: none;
-    }
+.profileToHistory:hover {
+  background-color: #def2de;
+  color: #1b391b;
 }
 
-@media only screen and (min-width: 1440px) {
-    .profileHistoryText {
-        font-weight: 700;
-        font-size: 26px;
-        line-height: 140%;
-        letter-spacing: -0.01em;
-        height: 108px;
-        width: 469px;
-    }
-
-    .profileToHistory {
-        max-width: 250px;
-    }
-
-    .ProfileHistoryItems {
-        width: calc((100% - 48px) / 3);
-    }
+.profileToHistory:focus-visible {
+  outline: 2px solid #1b391b;
+  outline-offset: 3px;
 }
 
+/* Список історій */
+.ProfileHistoryList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+
+.ProfileHistoryItems {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 335px;
+  min-height: 517px;
+  overflow: hidden;
+  border: 0 solid rgba(0, 0, 0, 15%);
+  border-radius: 12px;
+  background: #def2de;
+}
+
+.ProfileHistoryBtnWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  margin-top: auto;
+}
+
+.ProfileHistoryImgWrapper {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  flex-shrink: 0;
+}
+
+.ProfileHistoryImg {
+  object-fit: cover;
+}
+
+.ProfileHistoryItemInfo {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  padding: 16px;
+}
+
+.ProfileHistoryAutor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  color: #1b391b;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 150%;
+}
+
+.ProfileHistoryDescription {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-bottom: 12px;
+  color: #1b391b;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 150%;
+  -webkit-box-orient: vertical;
+}
+
+.ProfileHistoryOpenTheHistory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  width: auto;
+  height: 48px;
+  padding: 6px 12px;
+  border: 1px solid rgba(0, 0, 0, 15%);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 5%);
+  color: #1b391b;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  text-decoration: none;
+}
+
+.ProfileHistorySaveHistory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  padding: 6px;
+  border: 1px solid rgba(0, 0, 0, 15%);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 5%);
+}
 
 /* Збережені історії */
-
 .section {
   width: 100%;
   min-width: 0;
@@ -178,7 +186,7 @@
 }
 
 .card {
-    display: flex;
+  display: flex;
   justify-content: center;
   width: 100%;
   min-width: 0;
@@ -340,7 +348,33 @@
   outline-offset: 3px;
 }
 
+/* Планшет */
 @media screen and (min-width: 768px) {
+  .emptyStateWrapper {
+    width: 533px;
+    max-width: 100%;
+    height: auto;
+    min-height: 210px;
+    padding: 40px 32px;
+  }
+
+  .profileHistoryText {
+    height: auto;
+    font-size: 18px;
+  }
+
+  .profileToHistory {
+    display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  .ProfileHistoryItems {
+    width: calc((100% - 24px) / 2);
+    max-width: none;
+  }
+
   .list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 24px;
@@ -361,7 +395,32 @@
   }
 }
 
+/* Комп'ютер */
 @media screen and (min-width: 1440px) {
+  .emptyStateWrapper {
+    width: 533px;
+    max-width: 100%;
+    height: auto;
+    min-height: 268px;
+    padding: 40px 32px;
+  }
+
+  .profileHistoryText {
+    height: auto;
+    font-size: 26px;
+  }
+
+  .profileToHistory {
+    display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
+    font-size: 20px;
+  }
+
+  .ProfileHistoryItems {
+    width: calc((100% - 48px) / 3);
+  }
+
   .list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
@@ -380,3 +439,12 @@
   }
 }
 
+/* Телефон: кнопка на всю ширину контейнера */
+@media screen and (max-width: 767px) {
+  .profileToHistory {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    align-self: stretch;
+  }
+}
