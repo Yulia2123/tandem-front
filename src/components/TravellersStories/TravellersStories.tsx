@@ -32,7 +32,7 @@ export default function TravellersStories({ stories }: TravellersStoriesProps) {
 
               <div className={css.ProfileHistoryItemInfo}>
                 <p className={css.ProfileHistoryAutor}>
-                  <span>{story.ownerId.name}</span>
+                  <span>{story.ownerId?.name ?? 'Невідомий автор'}</span>
                   <span>•</span>
                   <span>{story.rate}</span>
                   <svg
