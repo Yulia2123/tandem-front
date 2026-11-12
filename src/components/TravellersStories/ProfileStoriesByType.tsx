@@ -158,19 +158,13 @@ export default function TravellersStories({ type }: TravellersStoriesProps) {
 
   return (
     <section className={styles.section}>
-      <div className={styles.list}>
-        {visibleStories.map((story) => (
-          <div className={styles.card} key={story._id}>
-            <StoryCard
-              stories={[story]}
-              owners={ownersData?.users ?? []}
-              isSavedStoryIds={savedStoriesIds}
-              loadingStoryId={loadingStoryId}
-              onSaveStory={handleSaveStory}
-            />
-          </div>
-        ))}
-      </div>
+      <StoryCard
+        stories={visibleStories}
+        owners={ownersData?.users ?? []}
+        isSavedStoryIds={savedStoriesIds}
+        loadingStoryId={loadingStoryId}
+        onSaveStory={handleSaveStory}
+      />
 
       {hasMoreStories && (
         <div className={styles.loadMoreWrapper}>
